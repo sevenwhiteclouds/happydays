@@ -2,18 +2,19 @@ package com.kdub.happydays;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.kdub.happydays.databinding.ActivityLoginBinding;
 import com.kdub.happydays.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-  TextView displayStoreNames;
-  Button singInButton;
-  Button register;
+  TextView mDisplayStoreNames;
+  Button mSingInButton;
+  Button mRegister;
 
   ActivityMainBinding mActivityMainBinding = null;
 
@@ -29,22 +30,25 @@ public class MainActivity extends AppCompatActivity {
     View view = mActivityMainBinding.getRoot();
     setContentView(view);
 
-    displayStoreNames = mActivityMainBinding.logoPosition;
-    singInButton = mActivityMainBinding.signInButton;
-    register = mActivityMainBinding.registerButton;
+    mDisplayStoreNames = mActivityMainBinding.logoPosition;
+    mSingInButton = mActivityMainBinding.signInButton;
+    mRegister = mActivityMainBinding.registerButton;
 
-    singInButton.setOnClickListener(new View.OnClickListener() {
+    mSingInButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
         // this is where the code for when the user clicks on sign in goes
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
       }
     });
 
-    register.setOnClickListener(new View.OnClickListener() {
+    mRegister.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
         // this where the code when the user clicks on register goes
       }
     });
   }
+
 }
