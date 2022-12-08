@@ -33,5 +33,5 @@ public interface LoginDAO {
   User getUserByUsername(String username);
 
   @Query("SELECT * FROM " + AppDataBase.USER_TABLE + " WHERE mUserId = :userId ")
-  User getUserByUsername(int userId);
+  User getUserByUserId(int userId);
 }

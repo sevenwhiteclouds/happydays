@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">HappyDays!</string>
-    <string name="happy_days_stores_text">Happydays Stores</string>
+    <string name="happy_days_stores_text">HappyDays! Stores</string>
     <string name="sign_in_text">Sign in</string>
     <string name="register_text">Register</string>
     <string name="username">Username</string>

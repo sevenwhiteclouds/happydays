@@ -20,19 +20,10 @@ public class User {
   private String mUserName;
   private String mPassword;
 
-  public User(int userId, int isAdmin, String userName, String password) {
-    mUserId = userId;
+  public User(int isAdmin, String userName, String password) {
     mIsAdmin = isAdmin;
     mUserName = userName;
     mPassword = password;
-  }
-
-  public int getIsAdmin() {
-    return mIsAdmin;
-  }
-
-  public void setIsAdmin(int isAdmin) {
-    mIsAdmin = isAdmin;
   }
 
   public int getUserId() {
@@ -41,6 +32,14 @@ public class User {
 
   public void setUserId(int userId) {
     mUserId = userId;
+  }
+
+  public int getIsAdmin() {
+    return mIsAdmin;
+  }
+
+  public void setIsAdmin(int isAdmin) {
+    mIsAdmin = isAdmin;
   }
 
   public String getUserName() {
@@ -58,4 +57,6 @@ public class User {
   public void setPassword(String password) {
     mPassword = password;
   }
+
+  // TODO: still need to do the the to string and the equals
 }

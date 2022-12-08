@@ -1,22 +1,22 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 1,
-    "identityHash": "b4f33f9029eed30dc1f734f010ea0958",
+    "version": 3,
+    "identityHash": "bb933a18b4676b89a382c734bc07112b",
     "entities": [
       {
         "tableName": "USER_TABLE",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mUserId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `mIsAdmin` INTEGER NOT NULL, `mUserName` TEXT, `mPassword` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mIsAdmin` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `mUserId` INTEGER NOT NULL, `mUserName` TEXT, `mPassword` TEXT)",
         "fields": [
           {
-            "fieldPath": "mUserId",
-            "columnName": "mUserId",
+            "fieldPath": "mIsAdmin",
+            "columnName": "mIsAdmin",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "mIsAdmin",
-            "columnName": "mIsAdmin",
+            "fieldPath": "mUserId",
+            "columnName": "mUserId",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -35,7 +35,7 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "mUserId"
+            "mIsAdmin"
           ],
           "autoGenerate": true
         },
@@ -46,7 +46,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b4f33f9029eed30dc1f734f010ea0958')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bb933a18b4676b89a382c734bc07112b')"
     ]
   }
 }
