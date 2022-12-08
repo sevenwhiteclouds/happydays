@@ -8,15 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kdub.happydays.databinding.ActivityLoginBinding;
 import com.kdub.happydays.db.AppDataBase;
 import com.kdub.happydays.db.LoginDAO;
-
-import java.util.List;
-import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
   private EditText mUsername;
@@ -57,13 +53,10 @@ public class LoginActivity extends AppCompatActivity {
         else if (userId > 0) {
           adminAccount = adminUserCheck(userId);
 
-          // TODO: splitting here to admin portal or regular portal
-          if (adminAccount) {
-            Toast.makeText(LoginActivity.this, "you are an admin", Toast.LENGTH_SHORT).show();
-          }
-          else {
-            Toast.makeText(LoginActivity.this, "you are not an admin", Toast.LENGTH_SHORT).show();
-          }
+          Intent intent = new Intent(getApplicationContext(), Homescreen.class);
+          intent.putExtra("userId", userId);
+          intent.putExtra("adminAccount", adminAccount);
+          startActivity(intent);
         }
       }
     });

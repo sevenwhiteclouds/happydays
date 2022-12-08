@@ -31,8 +31,7 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    ActivityMainBinding mActivityMainBinding =
-      mActivityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+    ActivityMainBinding mActivityMainBinding = mActivityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
 
     View view = mActivityMainBinding.getRoot();
     setContentView(view);
@@ -44,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     mSingInButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        // this is where the code for when the user clicks on sign in goes
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
       }
