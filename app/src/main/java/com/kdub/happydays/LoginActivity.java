@@ -47,10 +47,13 @@ public class LoginActivity extends AppCompatActivity {
         boolean adminAccount = false;
         int userId = logIn(mUsername.getText().toString(), mPassword.getText().toString());
 
-        if (userId < 0) {
+        if (fieldEmpty()) {
+          Toast.makeText(LoginActivity.this, "One or more fields are empty. All fields must be filled in.", Toast.LENGTH_SHORT).show();
+        }
+        else if (userId < 0) {
           Toast.makeText(LoginActivity.this, "The User ID or Password is incorrect. Please try again.", Toast.LENGTH_SHORT).show();
         }
-        else if (userId > 0) {
+        else {
           adminAccount = adminUserCheck(userId);
 
           Intent intent = new Intent(getApplicationContext(), Homescreen.class);
@@ -62,6 +65,11 @@ public class LoginActivity extends AppCompatActivity {
     });
 }
 
+// TODO: clean up the whole long .getText.length stuff
+  private boolean fieldEmpty() {
+    return mUsername.getText().toString().length() == 0 || mPassword.getText().toString().length() == 0;
+  }
+
   private void getDatabase() {
     mLoginDao = Room.databaseBuilder(this, AppDataBase.class, AppDataBase.DATABASE_NAME)
       .allowMainThreadQueries().build().LoginDAO();
@@ -69,8 +77,8 @@ public class LoginActivity extends AppCompatActivity {
 
   private void createDefaultUsers() {
     if (mLoginDao.getAllUsers().size() ==  0) {
-      User defaultNormalUser = new User(0, "testuser1", "testuser1");
-      User defaultAdminUser = new User(1, "admin2", "admin2");
+      User defaultNormalUser = new User(0, "user", "default", "testuser1", "testuser1");
+      User defaultAdminUser = new User(1, "admin", "default", "admin2", "admin2");
       mLoginDao.insert(defaultNormalUser);
       mLoginDao.insert(defaultAdminUser);
     }

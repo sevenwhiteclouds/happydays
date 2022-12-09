@@ -1,13 +1,19 @@
 package com.kdub.happydays;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Switch;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.kdub.happydays.databinding.ActivityHomescreenBinding;
 import com.kdub.happydays.db.AppDataBase;
 import com.kdub.happydays.db.HomeDataDAO;
@@ -21,31 +27,49 @@ public class Homescreen extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     int userID = getIntent().getIntExtra("userID", 0);
     boolean adminAccount = getIntent().getBooleanExtra("adminAccount", false);
-
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_homescreen);
-
-    mActivityHomescreenBinding = ActivityHomescreenBinding.inflate(getLayoutInflater());
-
-    View view = mActivityHomescreenBinding.getRoot();
-
-    setContentView(view);
-
-    if (adminAccount) {
-      findViewById(R.id.admin_text).setVisibility(View.VISIBLE);
-    }
-
-
     getDatabase();
 
+    super.onCreate(savedInstanceState);
+    mActivityHomescreenBinding = ActivityHomescreenBinding.inflate(getLayoutInflater());
+    setContentView(mActivityHomescreenBinding.getRoot());
+    // TODO: change this to the homefragment when settings == done
+    replaceFragment(new AccountSettingsFragment());
 
-    // TODO: more here
+    mActivityHomescreenBinding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
+      switch (item.getItemId()) {
+        case R.id.home: {
+          replaceFragment(new HomeFragment());
+          break;
+        }
+        case R.id.cart: {
+          replaceFragment(new CartFragment());
+          break;
+        }
+        case R.id.orders: {
+          replaceFragment(new OrdersFragment());
+          break;
+        }
+        case R.id.account_settings: {
+          replaceFragment(new AccountSettingsFragment());
+          break;
+        }
+      }
 
+      return true;
+    });
+
+  }
+
+  private void replaceFragment(Fragment fragment) {
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+    fragmentTransaction.replace(R.id.frame_layout, fragment);
+    fragmentTransaction.commit();
   }
 
   private void getDatabase() {
     mHomeDataDAO = Room.databaseBuilder(this, AppDataBase.class, AppDataBase.DATABASE_NAME)
-      .allowMainThreadQueries().build().mHomeDataDAO();
+      .allowMainThreadQueries().build().HomeDataDAO();
   }
 }

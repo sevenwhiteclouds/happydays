@@ -17,11 +17,15 @@ public class User {
   private int mUserId;
 
   private int mIsAdmin;
+  private String mFirstName;
+  private String mLastName;
   private String mUserName;
   private String mPassword;
 
-  public User(int isAdmin, String userName, String password) {
+  public User(int isAdmin, String firstName, String lastName, String userName, String password) {
     mIsAdmin = isAdmin;
+    mFirstName = firstName;
+    mLastName = lastName;
     mUserName = userName;
     mPassword = password;
   }
@@ -40,6 +44,22 @@ public class User {
 
   public void setIsAdmin(int isAdmin) {
     mIsAdmin = isAdmin;
+  }
+
+  public String getFirstName() {
+    return mFirstName;
+  }
+
+  public void setFirstName(String firstName) {
+    mFirstName = firstName;
+  }
+
+  public String getLastName() {
+    return mLastName;
+  }
+
+  public void setLastName(String lastName) {
+    mLastName = lastName;
   }
 
   public String getUserName() {

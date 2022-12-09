@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
@@ -51,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
     mRegister.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        // this where the code when the user clicks on register goes
+        Intent intent = new Intent(getApplicationContext(), CreateAccount.class);
+        startActivity(intent);
       }
     });
   }

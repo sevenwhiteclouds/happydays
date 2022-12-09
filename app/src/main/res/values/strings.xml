@@ -5,4 +5,8 @@
     <string name="register_text">Register</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
+    <string name="create_account">Create Account</string>
+    <string name="first_name_text">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="settings_title">Account Settings</string>
 </resources>
