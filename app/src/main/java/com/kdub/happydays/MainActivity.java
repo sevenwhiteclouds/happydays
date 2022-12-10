@@ -64,12 +64,8 @@ public class MainActivity extends AppCompatActivity {
         else {
           adminAccount = adminUserCheck(userId);
 
-
-          Intent intent = new Intent(getApplicationContext(), Homescreen.class);
-
           // preparing to take off!
-          intent.putExtra("userId", userId);
-          intent.putExtra("adminAccount", adminAccount);
+          Intent intent = new Intent(getApplicationContext(), Homescreen.class);
 
           // saving to shared preferences before starting activity
           saveSession(userId, adminAccount);
@@ -95,11 +91,7 @@ public class MainActivity extends AppCompatActivity {
     mEditor.putInt("userId", userId);
     mEditor.putBoolean("isAdmin", isAdmin);
 
-    System.out.println("hold");
     mEditor.commit();
-
-    System.out.println(mPreferences.contains("userId"));
-    System.out.println();
   }
 
   private boolean sessionExists() {

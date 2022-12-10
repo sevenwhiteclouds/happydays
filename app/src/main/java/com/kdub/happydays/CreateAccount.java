@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -68,10 +69,21 @@ public class CreateAccount extends AppCompatActivity {
 
           intent.putExtra("userId", userId);
 
+          saveSession(userId, false);
+
           startActivity(intent);
         }
       }
     });
+  }
+
+  private void saveSession(int userId, boolean isAdmin) {
+    SharedPreferences mPreferences = getSharedPreferences("session", MODE_PRIVATE);
+    SharedPreferences.Editor mEditor = mPreferences.edit();
+    mEditor.putInt("userId", userId);
+    mEditor.putBoolean("isAdmin", isAdmin);
+
+    mEditor.commit();
   }
 
   private boolean fieldEmpty(String first, String last, String user, String pass) {

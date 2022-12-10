@@ -28,6 +28,7 @@
         android:layout_width="331dp"
         android:layout_height="0dp"
         android:layout_marginTop="88dp"
+        android:clickable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settings_title_header">
@@ -37,6 +38,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="@drawable/round_button_background"
+            android:clickable="false"
             android:padding="8dp"
             android:src="@drawable/ic_round_person_white_24" />
 
@@ -48,6 +50,7 @@
             android:layout_marginStart="30dp"
             android:layout_toEndOf="@id/profile_button_icon"
             android:alpha="0.79"
+            android:clickable="false"
             android:text="Profile"
             android:textColor="@color/third"
             android:textSize="24sp"
@@ -59,6 +62,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@id/profile_button_text"
+            android:clickable="false"
             android:src="@drawable/ic_round_chevron_right_24" />
     </RelativeLayout>
 
