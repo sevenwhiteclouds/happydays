@@ -4,24 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.room.Room;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Switch;
-import android.widget.Toast;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.kdub.happydays.databinding.ActivityHomescreenBinding;
 import com.kdub.happydays.db.AppDataBase;
-import com.kdub.happydays.db.HomeDataDAO;
+import com.kdub.happydays.db.LoginDAO;
 
 public class Homescreen extends AppCompatActivity {
   private ActivityHomescreenBinding mActivityHomescreenBinding = null;
 
-  private HomeDataDAO mHomeDataDAO;
+  private LoginDAO mLoginDAO;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +27,7 @@ public class Homescreen extends AppCompatActivity {
     mActivityHomescreenBinding = ActivityHomescreenBinding.inflate(getLayoutInflater());
     setContentView(mActivityHomescreenBinding.getRoot());
     // TODO: change this to the homefragment when settings == done
-    replaceFragment(new AccountSettingsFragment());
+    replaceFragment(new HomeFragment());
 
     mActivityHomescreenBinding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
@@ -69,7 +63,7 @@ public class Homescreen extends AppCompatActivity {
   }
 
   private void getDatabase() {
-    mHomeDataDAO = Room.databaseBuilder(this, AppDataBase.class, AppDataBase.DATABASE_NAME)
-      .allowMainThreadQueries().build().HomeDataDAO();
+    mLoginDAO = Room.databaseBuilder(this, AppDataBase.class, AppDataBase.DATABASE_NAME)
+      .allowMainThreadQueries().build().LoginDAO();
   }
 }

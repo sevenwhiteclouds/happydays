@@ -8,20 +8,185 @@
     tools:context=".AccountSettingsFragment">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/settings_title_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="76dp"
         android:layout_marginEnd="133dp"
-        android:layout_marginBottom="668dp"
         android:text="@string/settings_title"
         android:textColor="@color/third"
         android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/profile_button_layout"
+        android:layout_width="331dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="88dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_title_header">
+
+        <ImageView
+            android:id="@+id/profile_button_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/round_button_background"
+            android:padding="8dp"
+            android:src="@drawable/ic_round_person_white_24" />
+
+        <TextView
+            android:id="@+id/profile_button_text"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="30dp"
+            android:layout_toEndOf="@id/profile_button_icon"
+            android:alpha="0.79"
+            android:text="Profile"
+            android:textColor="@color/third"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/profile_button_text"
+            android:src="@drawable/ic_round_chevron_right_24" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/delete_account_button_layout"
+        android:layout_width="331dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="44dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_button_layout">
+
+        <ImageView
+            android:id="@+id/delete_account_button_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/round_button_background"
+            android:padding="8dp"
+            android:src="@drawable/ic_round_delete_forever_24" />
+
+        <TextView
+            android:id="@+id/delete_account_button_icon_button_text"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="30dp"
+            android:layout_toEndOf="@id/delete_account_button_icon"
+            android:alpha="0.79"
+            android:text="Delete Account"
+            android:textColor="@color/third"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/delete_account_button_icon_button_text"
+            android:src="@drawable/ic_round_chevron_right_24" />
+    </RelativeLayout>
+
+    <!-- about button here -->
+    <RelativeLayout
+        android:id="@+id/about_button_layout"
+        android:layout_width="331dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="44dp"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/delete_account_button_layout">
+
+        <ImageView
+            android:id="@+id/about_button_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/round_button_background"
+            android:clickable="false"
+            android:padding="8dp"
+            android:src="@drawable/ic_outline_read_more_24" />
+
+        <TextView
+            android:id="@+id/about_button_text"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="30dp"
+            android:layout_toEndOf="@id/about_button_icon"
+            android:alpha="0.79"
+            android:clickable="false"
+            android:text="About"
+            android:textColor="@color/third"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/about_button_text"
+            android:clickable="false"
+            android:src="@drawable/ic_round_chevron_right_24" />
+
+    </RelativeLayout>
+
+    <!-- logout button here -->
+    <RelativeLayout
+        android:id="@+id/logout_button_layout"
+        android:layout_width="331dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="44dp"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/about_button_layout">
+
+        <ImageView
+            android:id="@+id/logout_button_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/round_button_background"
+            android:clickable="false"
+            android:padding="8dp"
+            android:src="@drawable/ic_round_logout_24" />
+
+        <TextView
+            android:id="@+id/logout_button_text"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="30dp"
+            android:layout_toEndOf="@id/logout_button_icon"
+            android:alpha="0.79"
+            android:clickable="false"
+            android:text="Logout"
+            android:textColor="@color/third"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/logout_button_text"
+            android:clickable="false"
+            android:src="@drawable/ic_round_chevron_right_24" />
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

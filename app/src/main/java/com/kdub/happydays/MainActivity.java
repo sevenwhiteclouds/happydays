@@ -4,55 +4,162 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.Toast;
 
-import com.kdub.happydays.databinding.ActivityLoginBinding;
 import com.kdub.happydays.databinding.ActivityMainBinding;
 import com.kdub.happydays.db.AppDataBase;
+import com.kdub.happydays.db.LoginDAO;
 
 public class MainActivity extends AppCompatActivity {
-  /*
-   * Author: Keldin Maldonado
-   * Date : 2022-12-06
-   * Abstract: This is the file that run the screen users
-   * see when they first open the app and they are not signed in
-   */
-  TextView mDisplayStoreNames;
-  Button mSingInButton;
-  Button mRegister;
+  private EditText mUsername;
+  private EditText mPassword;
+  private Button mButtonLogin;
+  private Button mButtonRegister;
 
+  private ActivityMainBinding mActivityMainBinding = null;
+
+  private LoginDAO mLoginDao;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    ActivityMainBinding mActivityMainBinding = mActivityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+    mActivityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
 
     View view = mActivityMainBinding.getRoot();
     setContentView(view);
 
-    mDisplayStoreNames = mActivityMainBinding.logoPosition;
-    mSingInButton = mActivityMainBinding.signInButton;
-    mRegister = mActivityMainBinding.registerButton;
+    mUsername = mActivityMainBinding.usernameField;
+    mPassword = mActivityMainBinding.passwordField;
+    mButtonLogin = mActivityMainBinding.signInButton;
+    mButtonRegister = mActivityMainBinding.createAccountButton;
 
-    mSingInButton.setOnClickListener(new View.OnClickListener() {
+    getDatabase();
+
+    if (sessionExists()) {
+      Intent intent = new Intent(getApplicationContext(), Homescreen.class);
+      startActivity(intent);
+    }
+
+    createDefaultUsers();
+
+    mButtonLogin.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-        startActivity(intent);
+        boolean adminAccount = false;
+        int userId = logIn(mUsername.getText().toString(), mPassword.getText().toString());
+
+        if (fieldEmpty()) {
+          Toast.makeText(MainActivity.this, "One or more fields are empty. All fields must be filled in.", Toast.LENGTH_SHORT).show();
+        }
+        else if (userId < 0) {
+          Toast.makeText(MainActivity.this, "The User ID or Password is incorrect. Please try again.", Toast.LENGTH_SHORT).show();
+        }
+        else {
+          adminAccount = adminUserCheck(userId);
+
+
+          Intent intent = new Intent(getApplicationContext(), Homescreen.class);
+
+          // preparing to take off!
+          intent.putExtra("userId", userId);
+          intent.putExtra("adminAccount", adminAccount);
+
+          // saving to shared preferences before starting activity
+          saveSession(userId, adminAccount);
+
+          // take off! from line 72 go go go
+          startActivity(intent);
+        }
       }
     });
 
-    mRegister.setOnClickListener(new View.OnClickListener() {
+    mButtonRegister.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
         Intent intent = new Intent(getApplicationContext(), CreateAccount.class);
         startActivity(intent);
       }
     });
+  }
+
+  private void saveSession(int userId, boolean isAdmin) {
+    SharedPreferences mPreferences = getSharedPreferences("session", MODE_PRIVATE);
+    SharedPreferences.Editor mEditor = mPreferences.edit();
+    mEditor.putInt("userId", userId);
+    mEditor.putBoolean("isAdmin", isAdmin);
+
+    System.out.println("hold");
+    mEditor.commit();
+
+    System.out.println(mPreferences.contains("userId"));
+    System.out.println();
+  }
+
+  private boolean sessionExists() {
+    SharedPreferences mPreferences = getSharedPreferences("session", MODE_PRIVATE);
+
+    return mPreferences.contains("userId");
+  }
+
+  // TODO: clean up the whole long .getText.length stuff
+  private boolean fieldEmpty() {
+    return mUsername.getText().toString().length() == 0 || mPassword.getText().toString().length() == 0;
+  }
+
+  private void getDatabase() {
+    mLoginDao = Room.databaseBuilder(this, AppDataBase.class, AppDataBase.DATABASE_NAME)
+      .allowMainThreadQueries().build().LoginDAO();
+  }
+
+  private void createDefaultUsers() {
+    if (mLoginDao.getAllUsers().size() ==  0) {
+      User defaultNormalUser = new User(0, "user", "default", "testuser1", "testuser1");
+      User defaultAdminUser = new User(1, "admin", "default", "admin2", "admin2");
+      mLoginDao.insert(defaultNormalUser);
+      mLoginDao.insert(defaultAdminUser);
+    }
+  }
+
+  private int logIn(String username, String password) {
+    if (userExists(username)) {
+      if (userMatchPassword(username, password)) {
+        return mLoginDao.getUserByUsername(username).getUserId();
+      }
+    }
+
+    return -9999;
+  }
+
+  private boolean userMatchPassword(String username, String password) {
+    if (mLoginDao.getUserByUsername(username).getPassword().equals(password)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  private boolean userExists(String username) {
+    for (int i = 0; i < mLoginDao.getAllUsers().size(); i++) {
+      if (mLoginDao.getAllUsers().get(i).getUserName().equals(username)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private boolean adminUserCheck(int userId) {
+    if (mLoginDao.getUserByUserId(userId).getIsAdmin() == 1) {
+      return true;
+    }
+
+    return false;
   }
 }
