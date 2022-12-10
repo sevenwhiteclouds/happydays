@@ -66,11 +66,11 @@ public class CreateAccount extends AppCompatActivity {
           int userId = accountCreate(first, last, user, pass);
 
           Intent intent = new Intent(getApplicationContext(), Homescreen.class);
+          intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+          intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-          intent.putExtra("userId", userId);
 
           saveSession(userId, false);
-
           startActivity(intent);
         }
       }

@@ -24,10 +24,9 @@ public class Homescreen extends AppCompatActivity {
     getDatabase();
 
     super.onCreate(savedInstanceState);
+    replaceFragment(new HomeFragment());
     mActivityHomescreenBinding = ActivityHomescreenBinding.inflate(getLayoutInflater());
     setContentView(mActivityHomescreenBinding.getRoot());
-    // TODO: change this to the homefragment when settings == done
-    replaceFragment(new HomeFragment());
 
     mActivityHomescreenBinding.bottomNavigationView.setOnItemSelectedListener(item -> {
 

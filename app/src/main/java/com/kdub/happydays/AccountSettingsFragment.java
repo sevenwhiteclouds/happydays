@@ -1,17 +1,26 @@
 package com.kdub.happydays;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.room.Room;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.kdub.happydays.db.AppDataBase;
+import com.kdub.happydays.db.LoginDAO;
+
 
 public class AccountSettingsFragment extends Fragment {
 
@@ -51,6 +60,8 @@ public class AccountSettingsFragment extends Fragment {
         mEditor.commit();
 
         Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
       }
     });
@@ -59,11 +70,57 @@ public class AccountSettingsFragment extends Fragment {
       @Override
       public void onClick(View view) {
         // here to delete account code
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
+        builder.setCancelable(true);
+        builder.setTitle("Delete Account");
+        builder.setMessage("You are about to delete your account. This process is irreversible. All account data will be lost");
 
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialogInterface, int i) {
+            dialogInterface.cancel();
+          }
+        });
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialogInterface, int i) {
+            TextView alertText = view.findViewById(R.id.delete_account_warning_text);
+
+            Toast.makeText(getActivity(), "Account has been deleted.", Toast.LENGTH_SHORT).show();
+            deleteAccount();
+
+
+          }
+        });
+
+        builder.show();
       }
     });
 
     return view;
+  }
+
+  private void deleteAccount() {
+    LoginDAO mLoginDao = Room.databaseBuilder(getActivity(), AppDataBase.class, AppDataBase.DATABASE_NAME)
+      .allowMainThreadQueries().build().LoginDAO();
+
+    SharedPreferences mPreferences = getActivity().getSharedPreferences("session", Context.MODE_PRIVATE);
+    SharedPreferences.Editor mEditor = mPreferences.edit();
+
+    int userId = mPreferences.getInt("userId", 0);
+
+    mEditor.clear();
+    mEditor.commit();
+
+    User user = mLoginDao.getUserByUserId(userId);
+
+    mLoginDao.delete(user);
+
+    Intent intent = new Intent(getActivity(), MainActivity.class);
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    startActivity(intent);
   }
 
   private void fragmentSwitch(Fragment switchHere) {

@@ -34,4 +34,8 @@ public interface LoginDAO {
 
   @Query("SELECT * FROM " + AppDataBase.USER_TABLE + " WHERE mUserId = :userId ")
   User getUserByUserId(int userId);
+
+  @Query("SELECT EXISTS (SELECT * FROM  USER_TABLE WHERE mUserName = :username )")
+  boolean userExist(String username);
+
 }

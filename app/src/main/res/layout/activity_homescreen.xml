@@ -7,6 +7,14 @@
     android:background="@color/white"
     tools:context=".Homescreen">
 
+    <TextView
+        android:id="@+id/delete_account_warning_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:visibility="invisible"/>
+
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"

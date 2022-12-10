@@ -3,6 +3,7 @@ package com.kdub.happydays;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
     if (sessionExists()) {
       Intent intent = new Intent(getApplicationContext(), Homescreen.class);
+      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
       startActivity(intent);
     }
 
@@ -66,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
 
           // preparing to take off!
           Intent intent = new Intent(getApplicationContext(), Homescreen.class);
+          intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+          intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
           // saving to shared preferences before starting activity
           saveSession(userId, adminAccount);
@@ -111,10 +116,15 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void createDefaultUsers() {
-    if (mLoginDao.getAllUsers().size() ==  0) {
+    // persistent users even if they are deleted sometime in the future
+    // THESE. USERS. ARE. NEEDED. IN. THE. APP.
+    if (!mLoginDao.userExist("testuser1")) {
       User defaultNormalUser = new User(0, "user", "default", "testuser1", "testuser1");
-      User defaultAdminUser = new User(1, "admin", "default", "admin2", "admin2");
       mLoginDao.insert(defaultNormalUser);
+    }
+
+    if (!mLoginDao.userExist("admin2")) {
+      User defaultAdminUser = new User(1, "admin", "default", "admin2", "admin2");
       mLoginDao.insert(defaultAdminUser);
     }
   }
