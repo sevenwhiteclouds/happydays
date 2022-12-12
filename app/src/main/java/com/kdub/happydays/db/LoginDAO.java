@@ -6,6 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.kdub.happydays.GroceryItem;
 import com.kdub.happydays.User;
 
 import java.util.List;
@@ -17,6 +18,8 @@ public interface LoginDAO {
    * Date: 2022-12-06
    * Abstract: Dao file to work with the Android app database
    */
+
+  // starting here is all the user account stuff
   @Insert
   void insert(User... users);
 
@@ -38,4 +41,19 @@ public interface LoginDAO {
   @Query("SELECT EXISTS (SELECT * FROM  USER_TABLE WHERE mUserName = :username )")
   boolean userExist(String username);
 
+  // starting here is all the grocery item stuff
+  @Insert
+  void insert(GroceryItem... groceryItems);
+
+  @Update
+  void update(GroceryItem... groceryItems);
+
+  @Delete
+  void delete(GroceryItem groceryItems);
+
+  @Query("SELECT * FROM " + AppDataBase.GROCERY_ITEM_TABLE)
+  List<GroceryItem> getAllGroceryItems();
+
+  @Query("SELECT * FROM " + AppDataBase.GROCERY_ITEM_TABLE + " WHERE mGroceryItemId = :groceryItemId ")
+  GroceryItem getGroceryItemById(int groceryItemId);
 }

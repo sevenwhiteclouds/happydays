@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "9f2d384e69f318f96df37bbd35cc1f9b",
+    "identityHash": "ecfdba55014b5c9fe736d0349dd48278",
     "entities": [
       {
         "tableName": "USER_TABLE",
@@ -53,12 +53,68 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "GROCERY_ITEM_TABLE",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mGroceryItemId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `mCategory` TEXT, `mName` TEXT, `mQuantity` REAL NOT NULL, `mDenomination` TEXT, `mPrice` REAL NOT NULL, `mAmountOfThisItem` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "mGroceryItemId",
+            "columnName": "mGroceryItemId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mCategory",
+            "columnName": "mCategory",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mName",
+            "columnName": "mName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mQuantity",
+            "columnName": "mQuantity",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mDenomination",
+            "columnName": "mDenomination",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mPrice",
+            "columnName": "mPrice",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mAmountOfThisItem",
+            "columnName": "mAmountOfThisItem",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "mGroceryItemId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9f2d384e69f318f96df37bbd35cc1f9b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ecfdba55014b5c9fe736d0349dd48278')"
     ]
   }
 }
