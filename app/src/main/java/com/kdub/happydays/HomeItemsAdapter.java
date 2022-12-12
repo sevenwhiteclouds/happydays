@@ -17,11 +17,13 @@ import java.util.Locale;
 public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyViewHolder> {
   private Context context = null;
   private List<GroceryItem> groceryItems = null;
+  private String category;
 
 
-  public HomeItemsAdapter(Context context, List<GroceryItem> groceryItems) {
+  public HomeItemsAdapter(String category, Context context, List<GroceryItem> groceryItems) {
     this.context = context;
     this.groceryItems = groceryItems;
+    this.category = category;
   }
 
   @NonNull
@@ -55,7 +57,20 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
     holder.itemNameLeft.setText(itemName);
     holder.itemPriceLeft.setText("$" + groceryItems.get(position).getPrice());
 
-    holder.itemPictureLeft.setImageResource(R.drawable.beverages);
+    switch (category) {
+      case "produce" : holder.itemPictureLeft.setImageResource(R.drawable.produce); break;
+      case "bread" : holder.itemPictureLeft.setImageResource(R.drawable.bread); break;
+      case "meat" : holder.itemPictureLeft.setImageResource(R.drawable.meat); break;
+      case "dairy" : holder.itemPictureLeft.setImageResource(R.drawable.dairy); break;
+      case "frozen goods" : holder.itemPictureLeft.setImageResource(R.drawable.frozen); break;
+      case "canned goods" : holder.itemPictureLeft.setImageResource(R.drawable.canned_food); break;
+      case "beverages" : holder.itemPictureLeft.setImageResource(R.drawable.beverages); break;
+      case "baking goods" : holder.itemPictureLeft.setImageResource(R.drawable.bake); break;
+      case "cleaners" : holder.itemPictureLeft.setImageResource(R.drawable.cleaners); break;
+      case "paper goods" : holder.itemPictureLeft.setImageResource(R.drawable.paper_goods); break;
+      case "personal care" : holder.itemPictureLeft.setImageResource(R.drawable.personal_hygiene); break;
+      case "other" : holder.itemPictureLeft.setImageResource(R.drawable.other); break;
+    }
   }
 
   private String beautify(String beautifyThis) {

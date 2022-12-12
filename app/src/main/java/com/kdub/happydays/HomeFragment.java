@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -18,6 +19,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.TextView;
 
 import com.kdub.happydays.db.AppDataBase;
@@ -82,20 +84,19 @@ public class HomeFragment extends Fragment {
     button11 = view.findViewById(R.id.category_button_11);
     button12 = view.findViewById(R.id.category_button_12);
 
-    // TODO: clean this so that less code rewriting
-    deselectAllOtherExcept(0);
+    GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+    HomeItemsAdapter adapter = new HomeItemsAdapter("produce", getContext(), (ArrayList<GroceryItem>) mLoginDao.getGroceryByCategory("produce"));
+
+    RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+
+    recyclerView.setLayoutManager(gridLayoutManager);
+    recyclerView.setAdapter(adapter);
 
     button1.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
         deselectAllOtherExcept(0);
-
-        RecyclerView recyclerView = getView().findViewById(R.id.recycler_view);
-
-        HomeItemsAdapter adapter = new HomeItemsAdapter(getContext(), (ArrayList<GroceryItem>) mLoginDao.getGroceryByCategory("produce"));
-
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        loadRecycleView("produce");
       }
     });
 
@@ -103,13 +104,7 @@ public class HomeFragment extends Fragment {
       @Override
       public void onClick(View view) {
         deselectAllOtherExcept(1);
-        HomeItemsAdapter adapter = new HomeItemsAdapter(getContext(), (ArrayList<GroceryItem>) mLoginDao.getGroceryByCategory("bread"));
-        RecyclerView recyclerView = getView().findViewById(R.id.recycler_view);
-
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        loadRecycleView("bread");
       }
     });
 
@@ -117,6 +112,7 @@ public class HomeFragment extends Fragment {
       @Override
       public void onClick(View view) {
         deselectAllOtherExcept(2);
+        loadRecycleView("meat");
       }
     });
 
@@ -124,6 +120,7 @@ public class HomeFragment extends Fragment {
       @Override
       public void onClick(View view) {
         deselectAllOtherExcept(3);
+        loadRecycleView("dairy");
       }
     });
 
@@ -131,6 +128,7 @@ public class HomeFragment extends Fragment {
       @Override
       public void onClick(View view) {
         deselectAllOtherExcept(4);
+        loadRecycleView("frozen goods");
       }
     });
 
@@ -138,6 +136,7 @@ public class HomeFragment extends Fragment {
       @Override
       public void onClick(View view) {
         deselectAllOtherExcept(5);
+        loadRecycleView("canned goods");
       }
     });
 
@@ -145,13 +144,7 @@ public class HomeFragment extends Fragment {
       @Override
       public void onClick(View view) {
         deselectAllOtherExcept(6);
-        HomeItemsAdapter adapter = new HomeItemsAdapter(getContext(), (ArrayList<GroceryItem>) mLoginDao.getGroceryByCategory("beverages"));
-        RecyclerView recyclerView = getView().findViewById(R.id.recycler_view);
-
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        loadRecycleView("beverages");
       }
     });
 
@@ -159,13 +152,7 @@ public class HomeFragment extends Fragment {
       @Override
       public void onClick(View view) {
         deselectAllOtherExcept(7);
-        HomeItemsAdapter adapter = new HomeItemsAdapter(getContext(), (ArrayList<GroceryItem>) mLoginDao.getGroceryByCategory("dry/baking goods"));
-        RecyclerView recyclerView = getView().findViewById(R.id.recycler_view);
-
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        loadRecycleView("baking goods");
       }
     });
 
@@ -173,6 +160,7 @@ public class HomeFragment extends Fragment {
       @Override
       public void onClick(View view) {
         deselectAllOtherExcept(8);
+        loadRecycleView("cleaners");
       }
     });
 
@@ -180,6 +168,7 @@ public class HomeFragment extends Fragment {
       @Override
       public void onClick(View view) {
         deselectAllOtherExcept(9);
+        loadRecycleView("paper goods");
       }
     });
 
@@ -187,6 +176,7 @@ public class HomeFragment extends Fragment {
       @Override
       public void onClick(View view) {
         deselectAllOtherExcept(10);
+        loadRecycleView("personal care");
       }
     });
 
@@ -194,6 +184,7 @@ public class HomeFragment extends Fragment {
       @Override
       public void onClick(View view) {
         deselectAllOtherExcept(11);
+        loadRecycleView("other");
       }
     });
 
@@ -202,6 +193,15 @@ public class HomeFragment extends Fragment {
   }
 
   // TODO: fix the stuff missing that SuppressLint is not needed
+  private void loadRecycleView(String category) {
+    GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+    HomeItemsAdapter adapter = new HomeItemsAdapter(category, getContext(), (ArrayList<GroceryItem>) mLoginDao.getGroceryByCategory(category));
+
+    RecyclerView recyclerView = getView().findViewById(R.id.recycler_view);
+
+    recyclerView.setLayoutManager(gridLayoutManager);
+    recyclerView.setAdapter(adapter);
+  }
   private void deselectAllOtherExcept(int currentButton) {
     ConstraintLayout constraintLayout = view.findViewById(R.id.horizontal_categories);
     ConstraintSet constraintSet = new ConstraintSet();

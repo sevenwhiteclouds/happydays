@@ -138,10 +138,17 @@ public class MainActivity extends AppCompatActivity {
       GroceryItem item7 = new GroceryItem("produce", "bananas", 3, "PIECE", 3.00);
       GroceryItem item8 = new GroceryItem("produce", "cucumber", 1, "PIECE", 2.00);
       GroceryItem item9 = new GroceryItem("produce", "lettuce", 1, "PIECE", 2.00);
-      GroceryItem item10 = new GroceryItem("beverages", "12 Coke", 1, "piece", 8.75);
-      GroceryItem item11 = new GroceryItem("beverages", "12 Coke", 1, "piece", 8.75);
-      GroceryItem item12 = new GroceryItem("Bread", "Ezekiel Bread", 1, "piece", 6.49);
-      GroceryItem item13 = new GroceryItem("dry/baking goods", "rice", 2.5, "lb", 3.20);
+      GroceryItem item10 = new GroceryItem("beverages", "Pina colada", 2, "piece", 8.75);
+      GroceryItem item11 = new GroceryItem("beverages", "Mai tai", 1, "piece", 4.25);
+      GroceryItem item12 = new GroceryItem("beverages", "Sprite", 1.5, "lt", 3.75);
+      GroceryItem item13 = new GroceryItem("beverages", "Orange juice", 1, "piece", 3.99);
+      GroceryItem item14 = new GroceryItem("beverages", "Nescafe Coffee", 1, "piece", 4.65);
+      GroceryItem item15 = new GroceryItem("beverages", "Don Julio 1942", 1, "piece", 249.99);
+      GroceryItem item16 = new GroceryItem("Bread", "Ezekiel Bread", 1, "piece", 6.49);
+      GroceryItem item17 = new GroceryItem("produce", "Grapefruit", 10, "piece", 5.15);
+      GroceryItem item18 = new GroceryItem("produce", "Strawberries", 15, "piece", 7.65);
+      GroceryItem item19 = new GroceryItem("dry/baking goods", "rice", 2.5, "lb", 3.20);
+      GroceryItem item20 = new GroceryItem("dry/baking goods", "rice", 2.5, "lb", 3.20);
 
       addItemToStore(item1);
       addItemToStore(item2);
@@ -156,6 +163,13 @@ public class MainActivity extends AppCompatActivity {
       addItemToStore(item11);
       addItemToStore(item12);
       addItemToStore(item13);
+      addItemToStore(item14);
+      addItemToStore(item15);
+      addItemToStore(item16);
+      addItemToStore(item17);
+      addItemToStore(item18);
+      addItemToStore(item19);
+      addItemToStore(item20);
     }
   }
 
