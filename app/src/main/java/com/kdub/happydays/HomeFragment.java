@@ -10,6 +10,8 @@ import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import android.text.Html;
@@ -21,6 +23,7 @@ import android.widget.TextView;
 import com.kdub.happydays.db.AppDataBase;
 import com.kdub.happydays.db.LoginDAO;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class HomeFragment extends Fragment {
@@ -79,11 +82,20 @@ public class HomeFragment extends Fragment {
     button11 = view.findViewById(R.id.category_button_11);
     button12 = view.findViewById(R.id.category_button_12);
 
+    // TODO: clean this so that less code rewriting
+    deselectAllOtherExcept(0);
 
     button1.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
         deselectAllOtherExcept(0);
+
+        RecyclerView recyclerView = getView().findViewById(R.id.recycler_view);
+
+        HomeItemsAdapter adapter = new HomeItemsAdapter(getContext(), (ArrayList<GroceryItem>) mLoginDao.getGroceryByCategory("produce"));
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
       }
     });
 
@@ -91,6 +103,13 @@ public class HomeFragment extends Fragment {
       @Override
       public void onClick(View view) {
         deselectAllOtherExcept(1);
+        HomeItemsAdapter adapter = new HomeItemsAdapter(getContext(), (ArrayList<GroceryItem>) mLoginDao.getGroceryByCategory("bread"));
+        RecyclerView recyclerView = getView().findViewById(R.id.recycler_view);
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
       }
     });
 
@@ -126,6 +145,13 @@ public class HomeFragment extends Fragment {
       @Override
       public void onClick(View view) {
         deselectAllOtherExcept(6);
+        HomeItemsAdapter adapter = new HomeItemsAdapter(getContext(), (ArrayList<GroceryItem>) mLoginDao.getGroceryByCategory("beverages"));
+        RecyclerView recyclerView = getView().findViewById(R.id.recycler_view);
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
       }
     });
 
@@ -133,6 +159,13 @@ public class HomeFragment extends Fragment {
       @Override
       public void onClick(View view) {
         deselectAllOtherExcept(7);
+        HomeItemsAdapter adapter = new HomeItemsAdapter(getContext(), (ArrayList<GroceryItem>) mLoginDao.getGroceryByCategory("dry/baking goods"));
+        RecyclerView recyclerView = getView().findViewById(R.id.recycler_view);
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
       }
     });
 
@@ -203,6 +236,7 @@ public class HomeFragment extends Fragment {
     String subHeadingWord2 = "<b><font color='#ff5522'>cooking</font></b>";
     String subHeadingWord3 = " time!";
 
+    // TODO: find a better solution for this
     subHeadingText.setText(Html.fromHtml(subHeadingWord1 + subHeadingWord2 + subHeadingWord3));
 
     int userId = preferences.getInt("userId", 0);

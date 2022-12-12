@@ -56,4 +56,7 @@ public interface LoginDAO {
 
   @Query("SELECT * FROM " + AppDataBase.GROCERY_ITEM_TABLE + " WHERE mGroceryItemId = :groceryItemId ")
   GroceryItem getGroceryItemById(int groceryItemId);
+
+  @Query("SELECT * FROM " + AppDataBase.GROCERY_ITEM_TABLE + " WHERE mCategory = :category ")
+  List<GroceryItem> getGroceryByCategory(String category);
 }

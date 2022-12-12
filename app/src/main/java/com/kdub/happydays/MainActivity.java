@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
     });
   }
 
-  private void testAddSameItem(GroceryItem testThisItem) {
+  private void addItemToStore(GroceryItem testThisItem) {
     List<GroceryItem> groceryItems = mLoginDao.getAllGroceryItems();
 
     boolean itemExists = false;
@@ -132,35 +132,30 @@ public class MainActivity extends AppCompatActivity {
       GroceryItem item1 = new GroceryItem("produce", "aPpLe", 1, "PIECE", 1.50);
       GroceryItem item2 = new GroceryItem("produce", "cucumber", 1, "PIECE", 2.00);
       GroceryItem item3 = new GroceryItem("produce", "bananas", 3, "PIECE", 3.00);
-
-      GroceryItem item10 = new GroceryItem("beverages", "12 Coke", 1, "piece", 8.75);
-
-      mLoginDao.insert(item1);
-      mLoginDao.insert(item2);
-      mLoginDao.insert(item3);
-
-      // these are the same items to test adding
       GroceryItem item4 = new GroceryItem("produce", "apple", 1, "PIECE", 1.50);
       GroceryItem item5 = new GroceryItem("produce", "bananas", 3, "PIECE", 3.00);
       GroceryItem item6 = new GroceryItem("produce", "bananas", 3, "PIECE", 3.00);
       GroceryItem item7 = new GroceryItem("produce", "bananas", 3, "PIECE", 3.00);
       GroceryItem item8 = new GroceryItem("produce", "cucumber", 1, "PIECE", 2.00);
       GroceryItem item9 = new GroceryItem("produce", "lettuce", 1, "PIECE", 2.00);
+      GroceryItem item10 = new GroceryItem("beverages", "12 Coke", 1, "piece", 8.75);
+      GroceryItem item11 = new GroceryItem("beverages", "12 Coke", 1, "piece", 8.75);
+      GroceryItem item12 = new GroceryItem("Bread", "Ezekiel Bread", 1, "piece", 6.49);
+      GroceryItem item13 = new GroceryItem("dry/baking goods", "rice", 2.5, "lb", 3.20);
 
-      // saving them in an array for easy add through loop
-      GroceryItem[] arrayOfItems = new GroceryItem[6];
-
-      arrayOfItems[0] = item4;
-      arrayOfItems[1] = item5;
-      arrayOfItems[2] = item6;
-      arrayOfItems[3] = item7;
-      arrayOfItems[4] = item8;
-      arrayOfItems[5] = item9;
-
-
-      for (int i = 0; i < 6; i++) {
-        testAddSameItem(arrayOfItems[i]);
-      }
+      addItemToStore(item1);
+      addItemToStore(item2);
+      addItemToStore(item3);
+      addItemToStore(item4);
+      addItemToStore(item5);
+      addItemToStore(item6);
+      addItemToStore(item7);
+      addItemToStore(item8);
+      addItemToStore(item9);
+      addItemToStore(item10);
+      addItemToStore(item11);
+      addItemToStore(item12);
+      addItemToStore(item13);
     }
   }
 
