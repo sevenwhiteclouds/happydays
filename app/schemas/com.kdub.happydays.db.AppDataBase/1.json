@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ecfdba55014b5c9fe736d0349dd48278",
+    "identityHash": "980b91ce61c22a0a37f6b0bc3540fc88",
     "entities": [
       {
         "tableName": "USER_TABLE",
@@ -56,19 +56,13 @@
       },
       {
         "tableName": "GROCERY_ITEM_TABLE",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mGroceryItemId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `mCategory` TEXT, `mName` TEXT, `mQuantity` REAL NOT NULL, `mDenomination` TEXT, `mPrice` REAL NOT NULL, `mAmountOfThisItem` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mGroceryItemId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `mName` TEXT, `mQuantity` REAL NOT NULL, `mDenomination` TEXT, `mPrice` REAL NOT NULL, `mAmountOfThisItem` INTEGER NOT NULL, `mCategory` TEXT, `itemImage` INTEGER NOT NULL, `itemAddButton` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "mGroceryItemId",
             "columnName": "mGroceryItemId",
             "affinity": "INTEGER",
             "notNull": true
-          },
-          {
-            "fieldPath": "mCategory",
-            "columnName": "mCategory",
-            "affinity": "TEXT",
-            "notNull": false
           },
           {
             "fieldPath": "mName",
@@ -99,6 +93,24 @@
             "columnName": "mAmountOfThisItem",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "mCategory",
+            "columnName": "mCategory",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "itemImage",
+            "columnName": "itemImage",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemAddButton",
+            "columnName": "itemAddButton",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -114,7 +126,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ecfdba55014b5c9fe736d0349dd48278')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '980b91ce61c22a0a37f6b0bc3540fc88')"
     ]
   }
 }

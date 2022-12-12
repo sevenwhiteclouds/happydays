@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -196,9 +197,17 @@ public class HomeFragment extends Fragment {
     int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
 
     TextView homeHeadingText = view.findViewById(R.id.home_heading_text);
+    TextView subHeadingText = view.findViewById(R.id.home_sub_heading_text_one);
+
+    String subHeadingWord1 = "it's ";
+    String subHeadingWord2 = "<b><font color='#ff5522'>cooking</font></b>";
+    String subHeadingWord3 = " time!";
+
+    subHeadingText.setText(Html.fromHtml(subHeadingWord1 + subHeadingWord2 + subHeadingWord3));
 
     int userId = preferences.getInt("userId", 0);
     String firstName = mLoginDao.getUserByUserId(userId).getFirstName();
+    firstName = firstName.toLowerCase();
     firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
 
     if (currentHour < 12) {

@@ -129,21 +129,23 @@ public class MainActivity extends AppCompatActivity {
 
   private void createDefaultGroceryItems() {
     if (mLoginDao.getAllGroceryItems().size() == 0) {
-      GroceryItem item1 = new GroceryItem("Fruit", "aPpLe", 1, "PIECE", 1.50);
-      GroceryItem item2 = new GroceryItem("vegetable", "cucumber", 1, "PIECE", 2.00);
-      GroceryItem item3 = new GroceryItem("FRUIT", "bananas", 3, "PIECE", 3.00);
+      GroceryItem item1 = new GroceryItem("produce", "aPpLe", 1, "PIECE", 1.50);
+      GroceryItem item2 = new GroceryItem("produce", "cucumber", 1, "PIECE", 2.00);
+      GroceryItem item3 = new GroceryItem("produce", "bananas", 3, "PIECE", 3.00);
+
+      GroceryItem item10 = new GroceryItem("beverages", "12 Coke", 1, "piece", 8.75);
 
       mLoginDao.insert(item1);
       mLoginDao.insert(item2);
       mLoginDao.insert(item3);
 
       // these are the same items to test adding
-      GroceryItem item4 = new GroceryItem("Fruit", "apple", 1, "PIECE", 1.50);
-      GroceryItem item5 = new GroceryItem("FRUIT", "bananas", 3, "PIECE", 3.00);
-      GroceryItem item6 = new GroceryItem("FRUIT", "bananas", 3, "PIECE", 3.00);
-      GroceryItem item7 = new GroceryItem("FRUIT", "bananas", 3, "PIECE", 3.00);
-      GroceryItem item8 = new GroceryItem("vegetable", "cucumber", 1, "PIECE", 2.00);
-      GroceryItem item9 = new GroceryItem("vegetable", "lettuce", 1, "PIECE", 2.00);
+      GroceryItem item4 = new GroceryItem("produce", "apple", 1, "PIECE", 1.50);
+      GroceryItem item5 = new GroceryItem("produce", "bananas", 3, "PIECE", 3.00);
+      GroceryItem item6 = new GroceryItem("produce", "bananas", 3, "PIECE", 3.00);
+      GroceryItem item7 = new GroceryItem("produce", "bananas", 3, "PIECE", 3.00);
+      GroceryItem item8 = new GroceryItem("produce", "cucumber", 1, "PIECE", 2.00);
+      GroceryItem item9 = new GroceryItem("produce", "lettuce", 1, "PIECE", 2.00);
 
       // saving them in an array for easy add through loop
       GroceryItem[] arrayOfItems = new GroceryItem[6];
