@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -234,8 +235,9 @@ public class HomeFragment extends Fragment {
     String subHeadingWord2 = "<b><font color='#ff5522'>cooking</font></b>";
     String subHeadingWord3 = " time!";
 
-    // TODO: find a better solution for this
-    subHeadingText.setText(Html.fromHtml(subHeadingWord1 + subHeadingWord2 + subHeadingWord3));
+    // not really happy  about using html.fromhtml considering i had to do hack
+    // to get it to stop giving me the deprecated message. find a better solution?
+    subHeadingText.setText(Html.fromHtml(subHeadingWord1 + subHeadingWord2 + subHeadingWord3, HtmlCompat.FROM_HTML_MODE_LEGACY));
 
     int userId = preferences.getInt("userId", 0);
     String firstName = mLoginDao.getUserByUserId(userId).getFirstName();

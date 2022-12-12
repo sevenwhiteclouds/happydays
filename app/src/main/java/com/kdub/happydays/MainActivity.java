@@ -19,6 +19,7 @@ import com.kdub.happydays.db.LoginDAO;
 
 import java.util.List;
 
+// TODO: make the back buttons inside account settings nicer. also, a confirm logout button
 public class MainActivity extends AppCompatActivity {
   private EditText mUsername;
   private EditText mPassword;

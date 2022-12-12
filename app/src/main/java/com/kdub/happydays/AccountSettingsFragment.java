@@ -73,7 +73,7 @@ public class AccountSettingsFragment extends Fragment {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
         builder.setCancelable(true);
         builder.setTitle("Delete Account");
-        builder.setMessage("You are about to delete your account. This process is irreversible. All account data will be lost");
+        builder.setMessage("You are about to delete your account. This process is irreversible. All account data will be lost.");
 
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
           @Override
