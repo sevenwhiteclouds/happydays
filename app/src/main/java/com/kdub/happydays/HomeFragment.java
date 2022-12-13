@@ -32,6 +32,7 @@ public class HomeFragment extends Fragment {
   private View view = null;
   private SharedPreferences preferences = null;
   private LoginDAO mLoginDao = null;
+  private TextView button0 = null;
   private TextView button1 = null;
   private TextView button2 = null;
   private TextView button3 = null;
@@ -44,7 +45,7 @@ public class HomeFragment extends Fragment {
   private TextView button10 = null;
   private TextView button11 = null;
   private TextView button12 = null;
-  private int[] categoryIds = new int[12];
+  private int[] categoryIds = new int[13];
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,19 +58,23 @@ public class HomeFragment extends Fragment {
 
     setTimeOfDayHiMessage();
 
-    categoryIds[0] = R.id.category_button_1;
-    categoryIds[1] = R.id.category_button_2;
-    categoryIds[2] = R.id.category_button_3;
-    categoryIds[3] = R.id.category_button_4;
-    categoryIds[4] = R.id.category_button_5;
-    categoryIds[5] = R.id.category_button_6;
-    categoryIds[6] = R.id.category_button_7;
-    categoryIds[7] = R.id.category_button_8;
-    categoryIds[8] = R.id.category_button_9;
-    categoryIds[9] = R.id.category_button_10;
-    categoryIds[10] = R.id.category_button_11;
-    categoryIds[11] = R.id.category_button_12;
+    // need to save the int value corresponding to each button to easily loop through them later
+    categoryIds[0] = R.id.category_button_0;
+    categoryIds[1] = R.id.category_button_1;
+    categoryIds[2] = R.id.category_button_2;
+    categoryIds[3] = R.id.category_button_3;
+    categoryIds[4] = R.id.category_button_4;
+    categoryIds[5] = R.id.category_button_5;
+    categoryIds[6] = R.id.category_button_6;
+    categoryIds[7] = R.id.category_button_7;
+    categoryIds[8] = R.id.category_button_8;
+    categoryIds[9] = R.id.category_button_9;
+    categoryIds[10] = R.id.category_button_10;
+    categoryIds[11] = R.id.category_button_11;
+    categoryIds[12] = R.id.category_button_12;
 
+    // this just makes it easier to reference each button later
+    button0 = view.findViewById(R.id.category_button_0);
     button1 = view.findViewById(R.id.category_button_1);
     button2 = view.findViewById(R.id.category_button_2);
     button3 = view.findViewById(R.id.category_button_3);
@@ -84,17 +89,25 @@ public class HomeFragment extends Fragment {
     button12 = view.findViewById(R.id.category_button_12);
 
     GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-    HomeItemsAdapter adapter = new HomeItemsAdapter("produce", getContext(), (ArrayList<GroceryItem>) mLoginDao.getGroceryByCategory("produce"));
+    HomeItemsAdapter adapter = new HomeItemsAdapter(getContext(), (ArrayList<GroceryItem>) mLoginDao.getAllGroceryItems());
 
     RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
 
     recyclerView.setLayoutManager(gridLayoutManager);
     recyclerView.setAdapter(adapter);
 
-    button1.setOnClickListener(new View.OnClickListener() {
+    button0.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
         deselectAllOtherExcept(0);
+        loadRecycleView("all");
+      }
+    });
+
+    button1.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        deselectAllOtherExcept(1);
         loadRecycleView("produce");
       }
     });
@@ -102,7 +115,7 @@ public class HomeFragment extends Fragment {
     button2.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        deselectAllOtherExcept(1);
+        deselectAllOtherExcept(2);
         loadRecycleView("bread");
       }
     });
@@ -110,7 +123,7 @@ public class HomeFragment extends Fragment {
     button3.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        deselectAllOtherExcept(2);
+        deselectAllOtherExcept(3);
         loadRecycleView("meat");
       }
     });
@@ -118,7 +131,7 @@ public class HomeFragment extends Fragment {
     button4.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        deselectAllOtherExcept(3);
+        deselectAllOtherExcept(4);
         loadRecycleView("dairy");
       }
     });
@@ -126,7 +139,7 @@ public class HomeFragment extends Fragment {
     button5.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        deselectAllOtherExcept(4);
+        deselectAllOtherExcept(5);
         loadRecycleView("frozen goods");
       }
     });
@@ -134,7 +147,7 @@ public class HomeFragment extends Fragment {
     button6.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        deselectAllOtherExcept(5);
+        deselectAllOtherExcept(6);
         loadRecycleView("canned goods");
       }
     });
@@ -142,7 +155,7 @@ public class HomeFragment extends Fragment {
     button7.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        deselectAllOtherExcept(6);
+        deselectAllOtherExcept(7);
         loadRecycleView("beverages");
       }
     });
@@ -150,7 +163,7 @@ public class HomeFragment extends Fragment {
     button8.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        deselectAllOtherExcept(7);
+        deselectAllOtherExcept(8);
         loadRecycleView("baking goods");
       }
     });
@@ -158,7 +171,7 @@ public class HomeFragment extends Fragment {
     button9.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        deselectAllOtherExcept(8);
+        deselectAllOtherExcept(9);
         loadRecycleView("cleaners");
       }
     });
@@ -166,7 +179,7 @@ public class HomeFragment extends Fragment {
     button10.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        deselectAllOtherExcept(9);
+        deselectAllOtherExcept(10);
         loadRecycleView("paper goods");
       }
     });
@@ -174,7 +187,7 @@ public class HomeFragment extends Fragment {
     button11.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        deselectAllOtherExcept(10);
+        deselectAllOtherExcept(11);
         loadRecycleView("personal care");
       }
     });
@@ -182,7 +195,7 @@ public class HomeFragment extends Fragment {
     button12.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        deselectAllOtherExcept(11);
+        deselectAllOtherExcept(12);
         loadRecycleView("other");
       }
     });
@@ -194,13 +207,21 @@ public class HomeFragment extends Fragment {
   // TODO: fix the stuff missing that SuppressLint is not needed
   private void loadRecycleView(String category) {
     GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-    HomeItemsAdapter adapter = new HomeItemsAdapter(category, getContext(), (ArrayList<GroceryItem>) mLoginDao.getGroceryByCategory(category));
+    HomeItemsAdapter adapter = null;
+
+    if (category.equals("all")) {
+      adapter = new HomeItemsAdapter(getContext(), (ArrayList<GroceryItem>) mLoginDao.getAllGroceryItems());
+    }
+    else {
+      adapter = new HomeItemsAdapter(getContext(), (ArrayList<GroceryItem>) mLoginDao.getGroceryByCategory(category));
+    }
 
     RecyclerView recyclerView = getView().findViewById(R.id.recycler_view);
 
     recyclerView.setLayoutManager(gridLayoutManager);
     recyclerView.setAdapter(adapter);
   }
+
   private void deselectAllOtherExcept(int currentButton) {
     ConstraintLayout constraintLayout = view.findViewById(R.id.horizontal_categories);
     ConstraintSet constraintSet = new ConstraintSet();

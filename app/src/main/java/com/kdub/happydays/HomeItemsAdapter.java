@@ -17,13 +17,10 @@ import java.util.Locale;
 public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyViewHolder> {
   private Context context = null;
   private List<GroceryItem> groceryItems = null;
-  private String category;
 
-
-  public HomeItemsAdapter(String category, Context context, List<GroceryItem> groceryItems) {
+  public HomeItemsAdapter(Context context, List<GroceryItem> groceryItems) {
     this.context = context;
     this.groceryItems = groceryItems;
-    this.category = category;
   }
 
   @NonNull
@@ -57,7 +54,7 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
     holder.itemNameLeft.setText(itemName);
     holder.itemPriceLeft.setText("$" + groceryItems.get(position).getPrice());
 
-    switch (category) {
+    switch (groceryItems.get(position).getCategory()) {
       case "produce" : holder.itemPictureLeft.setImageResource(R.drawable.produce); break;
       case "bread" : holder.itemPictureLeft.setImageResource(R.drawable.bread); break;
       case "meat" : holder.itemPictureLeft.setImageResource(R.drawable.meat); break;
