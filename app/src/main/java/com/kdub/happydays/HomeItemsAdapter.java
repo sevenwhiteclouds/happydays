@@ -36,10 +36,10 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
   @SuppressLint("SetTextI18n")
   @Override
   public void onBindViewHolder(@NonNull HomeItemsAdapter.MyViewHolder holder, int position) {
-    holder.itemPictureLeft.setImageResource(groceryItems.get(position).getItemImage());
-    holder.itemNameLeft.setText(beautifyItemName(groceryItems.get(position).getName()));
-    holder.itemDenominationLeft.setText(beautifyItemQuantityAndDenomination(groceryItems.get(position).getQuantity(), groceryItems.get(position).getDenomination()));
-    holder.itemPriceLeft.setText(beautifyItemPrice(groceryItems.get(position).getPrice()));
+    holder.itemPicture.setImageResource(groceryItems.get(position).getItemImage());
+    holder.itemName.setText(beautifyItemName(groceryItems.get(position).getName()));
+    holder.itemDenomination.setText(beautifyItemQuantityAndDenomination(groceryItems.get(position).getQuantity(), groceryItems.get(position).getDenomination()));
+    holder.itemPrice.setText(beautifyItemPrice(groceryItems.get(position).getPrice()));
   }
 
   private String beautifyItemPrice(Double beautifyThisPrice) {
@@ -112,19 +112,19 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
   }
 
   public static class MyViewHolder extends RecyclerView.ViewHolder {
-    ImageView itemPictureLeft;
-    TextView itemNameLeft;
-    TextView itemDenominationLeft;
-    TextView itemPriceLeft;
+    ImageView itemPicture;
+    TextView itemName;
+    TextView itemDenomination;
+    TextView itemPrice;
 
     public MyViewHolder(@NonNull View itemView) {
       super(itemView);
 
-      itemPictureLeft = itemView.findViewById(R.id.recycle_item_picture_left);
-      itemNameLeft = itemView.findViewById(R.id.recycle_item_name_left);
-      itemDenominationLeft = itemView.findViewById(R.id.recycle_item_denomination_left);
-      itemDenominationLeft = itemView.findViewById(R.id.recycle_item_denomination_left);
-      itemPriceLeft = itemView.findViewById(R.id.recycle_item_price_left);
+      itemPicture = itemView.findViewById(R.id.recycle_item_picture);
+      itemName = itemView.findViewById(R.id.recycle_item_name);
+      itemDenomination = itemView.findViewById(R.id.recycle_item_denomination);
+      itemDenomination = itemView.findViewById(R.id.recycle_item_denomination);
+      itemPrice = itemView.findViewById(R.id.recycle_item_price);
     }
   }
 }
