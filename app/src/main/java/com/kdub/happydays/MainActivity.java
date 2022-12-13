@@ -128,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
+  // TODO: this desperately needs to be cleaned up some way so i don't have this huge method lol
   private void createDefaultGroceryItems() {
     if (mLoginDao.getAllGroceryItems().size() == 0) {
       GroceryItem item1 = new GroceryItem("produce", "aPpLe", 1, "PIECE", 1.50);
@@ -150,6 +151,15 @@ public class MainActivity extends AppCompatActivity {
       GroceryItem item18 = new GroceryItem("produce", "Strawberries", 15, "piece", 7.65);
       GroceryItem item19 = new GroceryItem("dry/baking goods", "rice", 2.5, "lb", 3.20);
       GroceryItem item20 = new GroceryItem("dry/baking goods", "rice", 2.5, "lb", 3.20);
+      GroceryItem item21 = new GroceryItem("meat", "Bacon", 10, "piece", 4.20);
+      GroceryItem item22 = new GroceryItem("dairy", "milk", 1, "gal", 3.25);
+      GroceryItem item23 = new GroceryItem("frozen goods", "ice cream", 1, "piece", 4.25);
+      GroceryItem item24 = new GroceryItem("canned goods", "Canned beans", 1, "piece", 5.65);
+      GroceryItem item25 = new GroceryItem("baking goods", "sugar", 2.2, "lb", 4.99);
+      GroceryItem item26 = new GroceryItem("cleaners", "Clorox bleach", 1, "gal", 5.99);
+      GroceryItem item27 = new GroceryItem("paper goods", "Toilet paper", 1, "piece", 3.95);
+      GroceryItem item28 = new GroceryItem("personal care", "shaving cream", 1, "piece", 5.95);
+      GroceryItem item29 = new GroceryItem("other", "Toy car", 1, "piece", 10.95);
 
       addItemToStore(item1);
       addItemToStore(item2);
@@ -171,6 +181,15 @@ public class MainActivity extends AppCompatActivity {
       addItemToStore(item18);
       addItemToStore(item19);
       addItemToStore(item20);
+      addItemToStore(item21);
+      addItemToStore(item22);
+      addItemToStore(item23);
+      addItemToStore(item24);
+      addItemToStore(item25);
+      addItemToStore(item26);
+      addItemToStore(item27);
+      addItemToStore(item28);
+      addItemToStore(item29);
     }
   }
 
@@ -198,12 +217,12 @@ public class MainActivity extends AppCompatActivity {
     // persistent users even if they are deleted sometime in the future
     // THESE. USERS. ARE. NEEDED. IN. THE. APP.
     if (!mLoginDao.userExist("testuser1")) {
-      User defaultNormalUser = new User(0, "user", "default", "testuser1", "testuser1");
+      User defaultNormalUser = new User(0, "Joe", "Blow", "testuser1", "testuser1");
       mLoginDao.insert(defaultNormalUser);
     }
 
     if (!mLoginDao.userExist("admin2")) {
-      User defaultAdminUser = new User(1, "admin", "default", "admin2", "admin2");
+      User defaultAdminUser = new User(1, "Drew", "Clinkenbeard", "admin2", "admin2");
       mLoginDao.insert(defaultAdminUser);
     }
   }
