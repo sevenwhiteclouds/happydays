@@ -5,9 +5,7 @@ import androidx.room.Room;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -131,35 +129,36 @@ public class MainActivity extends AppCompatActivity {
   // TODO: this desperately needs to be cleaned up some way so i don't have this huge method lol
   private void createDefaultGroceryItems() {
     if (mLoginDao.getAllGroceryItems().size() == 0) {
-      GroceryItem item1 = new GroceryItem("produce", "aPpLe", 1, "PIECE", 1.50);
-      GroceryItem item2 = new GroceryItem("produce", "cucumber", 1, "PIECE", 2.00);
-      GroceryItem item3 = new GroceryItem("produce", "bananas", 3, "PIECE", 3.00);
-      GroceryItem item4 = new GroceryItem("produce", "apple", 1, "PIECE", 1.50);
-      GroceryItem item5 = new GroceryItem("produce", "bananas", 3, "PIECE", 3.00);
-      GroceryItem item6 = new GroceryItem("produce", "bananas", 3, "PIECE", 3.00);
-      GroceryItem item7 = new GroceryItem("produce", "bananas", 3, "PIECE", 3.00);
-      GroceryItem item8 = new GroceryItem("produce", "cucumber", 1, "PIECE", 2.00);
-      GroceryItem item9 = new GroceryItem("produce", "lettuce", 1, "PIECE", 2.00);
-      GroceryItem item10 = new GroceryItem("beverages", "Pina colada", 2, "piece", 8.75);
-      GroceryItem item11 = new GroceryItem("beverages", "Mai tai", 1, "piece", 4.25);
-      GroceryItem item12 = new GroceryItem("beverages", "Sprite", 1.5, "lt", 3.75);
-      GroceryItem item13 = new GroceryItem("beverages", "Orange juice", 1, "piece", 3.99);
-      GroceryItem item14 = new GroceryItem("beverages", "Nescafe Coffee", 1, "piece", 4.65);
-      GroceryItem item15 = new GroceryItem("beverages", "Don Julio 1942", 1, "piece", 249.99);
-      GroceryItem item16 = new GroceryItem("Bread", "Ezekiel Bread", 1, "piece", 6.49);
-      GroceryItem item17 = new GroceryItem("produce", "Grapefruit", 10, "piece", 5.15);
-      GroceryItem item18 = new GroceryItem("produce", "Strawberries", 15, "piece", 7.65);
-      GroceryItem item19 = new GroceryItem("dry/baking goods", "rice", 2.5, "lb", 3.20);
-      GroceryItem item20 = new GroceryItem("dry/baking goods", "rice", 2.5, "lb", 3.20);
-      GroceryItem item21 = new GroceryItem("meat", "Bacon", 10, "piece", 4.20);
-      GroceryItem item22 = new GroceryItem("dairy", "milk", 1, "gal", 3.25);
-      GroceryItem item23 = new GroceryItem("frozen goods", "ice cream", 1, "piece", 4.25);
-      GroceryItem item24 = new GroceryItem("canned goods", "Canned beans", 1, "piece", 5.65);
-      GroceryItem item25 = new GroceryItem("baking goods", "sugar", 2.2, "lb", 4.99);
-      GroceryItem item26 = new GroceryItem("cleaners", "Clorox bleach", 1, "gal", 5.99);
-      GroceryItem item27 = new GroceryItem("paper goods", "Toilet paper", 1, "piece", 3.95);
-      GroceryItem item28 = new GroceryItem("personal care", "shaving cream", 1, "piece", 5.95);
-      GroceryItem item29 = new GroceryItem("other", "Toy car", 1, "piece", 10.95);
+      GroceryItem item1 = new GroceryItem("produce", "aPpLe", 1, "PIECE", 1.50, R.drawable.produce);
+      GroceryItem item2 = new GroceryItem("produce", "cucumber", 1, "PIECE", 2.00, R.drawable.produce);
+      GroceryItem item3 = new GroceryItem("produce", "bananas", 3, "PIECE", 3.00, R.drawable.produce);
+      GroceryItem item4 = new GroceryItem("produce", "apple", 1, "PIECE", 1.50, R.drawable.produce);
+      GroceryItem item5 = new GroceryItem("produce", "bananas", 3, "PIECE", 3.00, R.drawable.produce);
+      GroceryItem item6 = new GroceryItem("produce", "bananas", 3, "PIECE", 3.00, R.drawable.produce);
+      GroceryItem item7 = new GroceryItem("produce", "bananas", 3, "PIECE", 3.00, R.drawable.produce);
+      GroceryItem item8 = new GroceryItem("produce", "cucumber", 1, "PIECE", 2.00, R.drawable.produce);
+      GroceryItem item9 = new GroceryItem("produce", "lettuce", 1, "PIECE", 2.00, R.drawable.produce);
+      GroceryItem item10 = new GroceryItem("beverages", "Pina colada", 2, "piece", 8.75, R.drawable.beverages);
+      GroceryItem item11 = new GroceryItem("beverages", "Mai tai", 1, "piece", 4.25, R.drawable.beverages);
+      GroceryItem item12 = new GroceryItem("beverages", "Sprite", 1.5, "lt", 3.75, R.drawable.beverages);
+      GroceryItem item13 = new GroceryItem("beverages", "Orange juice", 1, "piece", 3.99, R.drawable.beverages);
+      GroceryItem item14 = new GroceryItem("beverages", "Nescafe Coffee", 1, "piece", 4.65, R.drawable.beverages);
+      GroceryItem item15 = new GroceryItem("beverages", "Don Julio 1942", 1, "piece", 249.99, R.drawable.beverages);
+      GroceryItem item16 = new GroceryItem("Bread", "Ezekiel Bread", 1, "piece", 6.49, R.drawable.bread);
+      GroceryItem item17 = new GroceryItem("produce", "Grapefruit", 10, "piece", 5.15, R.drawable.produce);
+      GroceryItem item18 = new GroceryItem("produce", "Strawberries", 15, "piece", 7.65, R.drawable.produce);
+      GroceryItem item19 = new GroceryItem("dry/baking goods", "rice", 2.5, "lb", 3.20, R.drawable.bake);
+      GroceryItem item20 = new GroceryItem("dry/baking goods", "rice", 2.5, "lb", 3.20, R.drawable.bake);
+      GroceryItem item21 = new GroceryItem("meat", "Bacon", 10, "piece", 4.20, R.drawable.meat);
+      GroceryItem item22 = new GroceryItem("dairy", "milk", 1, "gal", 3.25, R.drawable.dairy);
+      GroceryItem item23 = new GroceryItem("frozen goods", "ice cream", 1, "piece", 4.25, R.drawable.frozen);
+      GroceryItem item24 = new GroceryItem("canned goods", "Canned beans", 1, "piece", 5.65, R.drawable.canned_food);
+      GroceryItem item25 = new GroceryItem("baking goods", "sugar", 2.2, "lb", 4.99, R.drawable.bake);
+      GroceryItem item26 = new GroceryItem("cleaners", "Clorox bleach", 1, "gal", 5.99, R.drawable.cleaners);
+      GroceryItem item27 = new GroceryItem("paper goods", "Toilet paper", 1, "piece", 3.95, R.drawable.paper_goods);
+      GroceryItem item28 = new GroceryItem("personal care", "shaving cream", 1, "piece", 5.95, R.drawable.personal_hygiene);
+      GroceryItem item29 = new GroceryItem("other", "Toy car", 1, "piece", 10.95, R.drawable.other);
+      GroceryItem item30 = new GroceryItem("baking goods", "flower", 2.05, "lb", 2.99, R.drawable.bake);
 
       addItemToStore(item1);
       addItemToStore(item2);
@@ -190,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
       addItemToStore(item27);
       addItemToStore(item28);
       addItemToStore(item29);
+      addItemToStore(item30);
     }
   }
 

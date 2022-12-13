@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "980b91ce61c22a0a37f6b0bc3540fc88",
+    "identityHash": "8a5d1bc219daa37d512cd0fcdad62c31",
     "entities": [
       {
         "tableName": "USER_TABLE",
@@ -56,7 +56,7 @@
       },
       {
         "tableName": "GROCERY_ITEM_TABLE",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mGroceryItemId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `mName` TEXT, `mQuantity` REAL NOT NULL, `mDenomination` TEXT, `mPrice` REAL NOT NULL, `mAmountOfThisItem` INTEGER NOT NULL, `mCategory` TEXT, `itemImage` INTEGER NOT NULL, `itemAddButton` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mGroceryItemId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `mName` TEXT, `mQuantity` REAL NOT NULL, `mDenomination` TEXT, `mPrice` REAL NOT NULL, `mAmountOfThisItem` INTEGER NOT NULL, `mCategory` TEXT, `mItemImage` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "mGroceryItemId",
@@ -101,14 +101,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "itemImage",
-            "columnName": "itemImage",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "itemAddButton",
-            "columnName": "itemAddButton",
+            "fieldPath": "mItemImage",
+            "columnName": "mItemImage",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -126,7 +120,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '980b91ce61c22a0a37f6b0bc3540fc88')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8a5d1bc219daa37d512cd0fcdad62c31')"
     ]
   }
 }

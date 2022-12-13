@@ -18,33 +18,25 @@ public class GroceryItem {
   private double mPrice;
   private int mAmountOfThisItem = 1;
   private String mCategory;
-  private int itemImage;
-  private int itemAddButton;
+  private int mItemImage;
 
   // note: any method that sets private variables do a to lower before setting
   // this is done to have equal() method have predictable outcomes
-  public GroceryItem(String category, String name, double quantity, String denomination, double price) {
+  public GroceryItem(String category, String name, double quantity, String denomination, double price, int itemImage) {
     mCategory = category.toLowerCase();
     mName = name.toLowerCase();
     mQuantity = quantity;
     mDenomination = denomination.toLowerCase();
     mPrice = price;
+    mItemImage = itemImage;
   }
 
   public int getItemImage() {
-    return itemImage;
+    return mItemImage;
   }
 
   public void setItemImage(int itemImage) {
-    this.itemImage = itemImage;
-  }
-
-  public int getItemAddButton() {
-    return itemAddButton;
-  }
-
-  public void setItemAddButton(int itemAddButton) {
-    this.itemAddButton = itemAddButton;
+    mItemImage = itemImage;
   }
 
   public int getGroceryItemId() {

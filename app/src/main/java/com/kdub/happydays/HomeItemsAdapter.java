@@ -32,49 +32,78 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
     return new HomeItemsAdapter.MyViewHolder(view);
   }
 
-  // TODO: find a fix so i don't have to sdmiuppress here
+  // TODO: find a fix so i don't have to supresslint here
   @SuppressLint("SetTextI18n")
   @Override
   public void onBindViewHolder(@NonNull HomeItemsAdapter.MyViewHolder holder, int position) {
-    Double quantity = groceryItems.get(position).getQuantity();
-    String[] split = quantity.toString().split("[.]");
-
-    if (split[1].length() == 1 && split[1].equals("0")) {
-      int wholeNumber = 0;
-      wholeNumber = Integer.parseInt(split[0]);
-      holder.itemDenominationLeft.setText(wholeNumber + " " + beautify(groceryItems.get(position).getDenomination()));
-
-      System.out.println(split.length);
-    }
-    else {
-      holder.itemDenominationLeft.setText(quantity + " " + beautify(groceryItems.get(position).getDenomination()));
-    }
-
-    String itemName = beautify(groceryItems.get(position).getName());
-    holder.itemNameLeft.setText(itemName);
-    holder.itemPriceLeft.setText("$" + groceryItems.get(position).getPrice());
-
-    switch (groceryItems.get(position).getCategory()) {
-      case "produce" : holder.itemPictureLeft.setImageResource(R.drawable.produce); break;
-      case "bread" : holder.itemPictureLeft.setImageResource(R.drawable.bread); break;
-      case "meat" : holder.itemPictureLeft.setImageResource(R.drawable.meat); break;
-      case "dairy" : holder.itemPictureLeft.setImageResource(R.drawable.dairy); break;
-      case "frozen goods" : holder.itemPictureLeft.setImageResource(R.drawable.frozen); break;
-      case "canned goods" : holder.itemPictureLeft.setImageResource(R.drawable.canned_food); break;
-      case "beverages" : holder.itemPictureLeft.setImageResource(R.drawable.beverages); break;
-      case "baking goods" : holder.itemPictureLeft.setImageResource(R.drawable.bake); break;
-      case "cleaners" : holder.itemPictureLeft.setImageResource(R.drawable.cleaners); break;
-      case "paper goods" : holder.itemPictureLeft.setImageResource(R.drawable.paper_goods); break;
-      case "personal care" : holder.itemPictureLeft.setImageResource(R.drawable.personal_hygiene); break;
-      case "other" : holder.itemPictureLeft.setImageResource(R.drawable.other); break;
-    }
+    holder.itemPictureLeft.setImageResource(groceryItems.get(position).getItemImage());
+    holder.itemNameLeft.setText(beautifyItemName(groceryItems.get(position).getName()));
+    holder.itemDenominationLeft.setText(beautifyItemQuantityAndDenomination(groceryItems.get(position).getQuantity(), groceryItems.get(position).getDenomination()));
+    holder.itemPriceLeft.setText(beautifyItemPrice(groceryItems.get(position).getPrice()));
   }
 
-  private String beautify(String beautifyThis) {
-    beautifyThis = beautifyThis.toLowerCase(Locale.ROOT);
-    beautifyThis = beautifyThis.substring(0, 1).toUpperCase() + beautifyThis.substring(1);
+  private String beautifyItemPrice(Double beautifyThisPrice) {
+    String[] splitPrice = beautifyThisPrice.toString().split("[.]");
+    StringBuilder beautifiedItemPrice = new StringBuilder();
 
-    return beautifyThis;
+    beautifiedItemPrice.append("$");
+
+    if (splitPrice[1].length() == 1) {
+      beautifiedItemPrice.append(splitPrice[0]).append(".").append(splitPrice[1]).append("0 ");
+    }
+    else {
+      beautifiedItemPrice.append(splitPrice[0]).append(".").append(splitPrice[1]).append(" ");
+    }
+
+    beautifiedItemPrice = new StringBuilder(beautifiedItemPrice.substring(0, beautifiedItemPrice.length() - 1));
+
+    return beautifiedItemPrice.toString();
+  }
+
+  private String beautifyItemQuantityAndDenomination(Double beautifyThisItemQuantity, String beautifyThisItemDenomination) {
+    String[] splitQuantity = beautifyThisItemQuantity.toString().split("[.]");
+    String[] splitDenomination = beautifyThisItemDenomination.toString().split("\\s");
+
+    StringBuilder beautifiedItemQuantityAndDenomination = new StringBuilder();
+
+    if (splitQuantity[1].length() == 1) {
+      if (splitQuantity[1].equals("0")) {
+        beautifiedItemQuantityAndDenomination.append(splitQuantity[0]).append(" ");
+      }
+      else {
+        beautifiedItemQuantityAndDenomination.append(splitQuantity[0]).append(".").append(splitQuantity[1]).append("0 ");
+      }
+    }
+    else {
+      beautifiedItemQuantityAndDenomination.append(splitQuantity[0]).append(".").append(splitQuantity[1]).append(" ");
+    }
+
+    for (int i = 0; i < splitDenomination.length; i++) {
+      splitDenomination[i] = splitDenomination[i].toLowerCase(Locale.ROOT);
+      splitDenomination[i] = splitDenomination[i].substring(0, 1).toUpperCase() + splitDenomination[i].substring(1);
+      beautifiedItemQuantityAndDenomination.append(splitDenomination[i]).append(" ");
+    }
+
+    // cleaning up the last character that is always a space that was added by the previous loop
+    beautifiedItemQuantityAndDenomination = new StringBuilder(beautifiedItemQuantityAndDenomination.substring(0, beautifiedItemQuantityAndDenomination.length() - 1));
+
+    return beautifiedItemQuantityAndDenomination.toString();
+  }
+
+  private  String beautifyItemName(String beautifyThisName) {
+    String[] split = beautifyThisName.split("\\s");
+    StringBuilder beautifiedName = new StringBuilder();
+
+    for (int i = 0; i < split.length; i++) {
+      split[i] = split[i].toLowerCase(Locale.ROOT);
+      split[i] = split[i].substring(0, 1).toUpperCase() + split[i].substring(1);
+      beautifiedName.append(split[i]).append(" ");
+    }
+
+    // cleaning up the last character that is always a space that was added by the previous loop
+    beautifiedName = new StringBuilder(beautifiedName.substring(0, beautifiedName.length() - 1));
+
+    return beautifiedName.toString();
   }
 
   @Override
