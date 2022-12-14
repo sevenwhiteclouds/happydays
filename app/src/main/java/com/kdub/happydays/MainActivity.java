@@ -159,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
       GroceryItem item28 = new GroceryItem("personal care", "shaving cream", 1, "piece", 5.95, R.drawable.personal_hygiene);
       GroceryItem item29 = new GroceryItem("other", "Toy car", 1, "piece", 10.95, R.drawable.other);
       GroceryItem item30 = new GroceryItem("baking goods", "flower", 2.05, "lb", 2.99, R.drawable.bake);
+      GroceryItem item31 = new GroceryItem("meat", "Chicken", 2.5, "lb", 5.00, R.drawable.meat);
 
       addItemToStore(item1);
       addItemToStore(item2);
@@ -190,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
       addItemToStore(item28);
       addItemToStore(item29);
       addItemToStore(item30);
+      addItemToStore(item31);
     }
   }
 
