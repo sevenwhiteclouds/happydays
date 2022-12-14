@@ -15,9 +15,6 @@ import com.kdub.happydays.databinding.ActivityCreateAccountBinding;
 import com.kdub.happydays.db.AppDataBase;
 import com.kdub.happydays.db.LoginDAO;
 
-import java.util.HashMap;
-import java.util.HashSet;
-
 public class CreateAccount extends AppCompatActivity {
   TextView mFirstName;
   TextView mLastName;
@@ -65,7 +62,7 @@ public class CreateAccount extends AppCompatActivity {
         else {
           int userId = accountCreate(first, last, user, pass);
 
-          Intent intent = new Intent(getApplicationContext(), Homescreen.class);
+          Intent intent = new Intent(getApplicationContext(), LandingPageActivity.class);
           intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
           intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 

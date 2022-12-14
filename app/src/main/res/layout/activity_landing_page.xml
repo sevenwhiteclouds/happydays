@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".Homescreen">
+    tools:context=".LandingPageActivity">
 
     <TextView
         android:id="@+id/delete_account_warning_text"
@@ -35,4 +35,5 @@
         app:layout_constraintTop_toBottomOf="@+id/frame_layout"
         android:background="@color/white"
         app:menu="@menu/bottom_nav_menu" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

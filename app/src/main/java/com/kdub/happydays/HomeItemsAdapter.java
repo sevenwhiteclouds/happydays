@@ -7,9 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.kdub.happydays.db.LoginDAO;
 
 import java.util.List;
 import java.util.Locale;
@@ -40,6 +43,12 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
     holder.itemName.setText(beautifyItemName(groceryItems.get(position).getName()));
     holder.itemDenomination.setText(beautifyItemQuantityAndDenomination(groceryItems.get(position).getQuantity(), groceryItems.get(position).getDenomination()));
     holder.itemPrice.setText(beautifyItemPrice(groceryItems.get(position).getPrice()));
+    holder.itemAddButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        // TODO: code to add to cart here (when clicked on the orange plus button
+      }
+    });
   }
 
   private String beautifyItemPrice(Double beautifyThisPrice) {
@@ -116,6 +125,7 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
     TextView itemName;
     TextView itemDenomination;
     TextView itemPrice;
+    ImageView itemAddButton;
 
     public MyViewHolder(@NonNull View itemView) {
       super(itemView);
@@ -125,6 +135,7 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
       itemDenomination = itemView.findViewById(R.id.recycle_item_denomination);
       itemDenomination = itemView.findViewById(R.id.recycle_item_denomination);
       itemPrice = itemView.findViewById(R.id.recycle_item_price);
+      itemAddButton = itemView.findViewById(R.id.recycle_item_add_button);
     }
   }
 }

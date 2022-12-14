@@ -63,11 +63,9 @@ public class ProfileFragment extends Fragment {
     saveChanges.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-
         EditText firstName = getView().findViewById(R.id.show_change_first_name);
         EditText lastName = getView().findViewById(R.id.show_change_last_name);
         EditText passWord = getView().findViewById(R.id.show_change_pass);
-
 
         user.setFirstName(firstName.getText().toString());
         user.setLastName(lastName.getText().toString());

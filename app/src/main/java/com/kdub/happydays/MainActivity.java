@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     getDatabase();
 
     if (sessionExists()) {
-      Intent intent = new Intent(getApplicationContext(), Homescreen.class);
+      Intent intent = new Intent(getApplicationContext(), LandingPageActivity.class);
       intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
       startActivity(intent);
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
           adminAccount = adminUserCheck(userId);
 
           // preparing to take off!
-          Intent intent = new Intent(getApplicationContext(), Homescreen.class);
+          Intent intent = new Intent(getApplicationContext(), LandingPageActivity.class);
           intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
           intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 

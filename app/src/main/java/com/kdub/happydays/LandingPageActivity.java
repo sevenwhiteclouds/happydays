@@ -8,12 +8,12 @@ import androidx.room.Room;
 
 import android.os.Bundle;
 
-import com.kdub.happydays.databinding.ActivityHomescreenBinding;
+import com.kdub.happydays.databinding.ActivityLandingPageBinding;
 import com.kdub.happydays.db.AppDataBase;
 import com.kdub.happydays.db.LoginDAO;
 
-public class Homescreen extends AppCompatActivity {
-  private ActivityHomescreenBinding mActivityHomescreenBinding = null;
+public class LandingPageActivity extends AppCompatActivity {
+  private ActivityLandingPageBinding mActivityLandingPageBinding = null;
 
   private LoginDAO mLoginDAO;
 
@@ -25,10 +25,10 @@ public class Homescreen extends AppCompatActivity {
 
     super.onCreate(savedInstanceState);
     replaceFragment(new HomeFragment());
-    mActivityHomescreenBinding = ActivityHomescreenBinding.inflate(getLayoutInflater());
-    setContentView(mActivityHomescreenBinding.getRoot());
+    mActivityLandingPageBinding = ActivityLandingPageBinding.inflate(getLayoutInflater());
+    setContentView(mActivityLandingPageBinding.getRoot());
 
-    mActivityHomescreenBinding.bottomNavigationView.setOnItemSelectedListener(item -> {
+    mActivityLandingPageBinding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
       switch (item.getItemId()) {
         case R.id.home: {
