@@ -13,8 +13,9 @@ import android.widget.Toast;
 
 import com.kdub.happydays.databinding.ActivityMainBinding;
 import com.kdub.happydays.db.AppDataBase;
-import com.kdub.happydays.db.LoginDAO;
+import com.kdub.happydays.db.HappyDAO;import com.kdub.happydays.db.HappyDAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // TODO: make the back buttons inside account settings nicer. also, a confirm logout button
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
   private ActivityMainBinding mActivityMainBinding = null;
 
-  private LoginDAO mLoginDao;
+  private HappyDAO mHappyDao;
 
   // TODO: IMPORTANT if you have time, fix the screen rotation across whole app
   @Override
@@ -100,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void addItemToStore(GroceryItem testThisItem) {
-    List<GroceryItem> groceryItems = mLoginDao.getAllGroceryItems();
+    List<GroceryItem> groceryItems = mHappyDao.getAllGroceryItems();
 
     boolean itemExists = false;
     int atWhatIndexSameItemExists = 0;
@@ -119,79 +120,53 @@ public class MainActivity extends AppCompatActivity {
       int currentAmountSameItemDatabase = groceryItems.get(atWhatIndexSameItemExists).getAmountOfThisItem();
 
       groceryItems.get(atWhatIndexSameItemExists).setAmountOfThisItem(currentAmountSameItemDatabase+1);
-      mLoginDao.update(groceryItems.get(atWhatIndexSameItemExists));
+      mHappyDao.update(groceryItems.get(atWhatIndexSameItemExists));
     }
     else {
-      mLoginDao.insert(testThisItem);
+      mHappyDao.insert(testThisItem);
     }
   }
 
   // TODO: this desperately needs to be cleaned up some way so i don't have this huge method lol
   private void createDefaultGroceryItems() {
-    if (mLoginDao.getAllGroceryItems().size() == 0) {
-      GroceryItem item1 = new GroceryItem("produce", "aPpLe", 1, "PIECE", 1.50, R.drawable.produce);
-      GroceryItem item2 = new GroceryItem("produce", "cucumber", 1, "PIECE", 2.00, R.drawable.produce);
-      GroceryItem item3 = new GroceryItem("produce", "bananas", 3, "PIECE", 3.00, R.drawable.produce);
-      GroceryItem item4 = new GroceryItem("produce", "apple", 1, "PIECE", 1.50, R.drawable.produce);
-      GroceryItem item5 = new GroceryItem("produce", "bananas", 3, "PIECE", 3.00, R.drawable.produce);
-      GroceryItem item6 = new GroceryItem("produce", "bananas", 3, "PIECE", 3.00, R.drawable.produce);
-      GroceryItem item7 = new GroceryItem("produce", "bananas", 3, "PIECE", 3.00, R.drawable.produce);
-      GroceryItem item8 = new GroceryItem("produce", "cucumber", 1, "PIECE", 2.00, R.drawable.produce);
-      GroceryItem item9 = new GroceryItem("produce", "lettuce", 1, "PIECE", 2.00, R.drawable.produce);
-      GroceryItem item10 = new GroceryItem("beverages", "Pina colada", 2, "piece", 8.75, R.drawable.beverages);
-      GroceryItem item11 = new GroceryItem("beverages", "Mai tai", 1, "piece", 4.25, R.drawable.beverages);
-      GroceryItem item12 = new GroceryItem("beverages", "Sprite", 1.5, "lt", 3.75, R.drawable.beverages);
-      GroceryItem item13 = new GroceryItem("beverages", "Orange juice", 1, "piece", 3.99, R.drawable.beverages);
-      GroceryItem item14 = new GroceryItem("beverages", "Nescafe Coffee", 1, "piece", 4.65, R.drawable.beverages);
-      GroceryItem item15 = new GroceryItem("beverages", "Don Julio 1942", 1, "piece", 249.99, R.drawable.beverages);
-      GroceryItem item16 = new GroceryItem("Bread", "Ezekiel Bread", 1, "piece", 6.49, R.drawable.bread);
-      GroceryItem item17 = new GroceryItem("produce", "Grapefruit", 10, "piece", 5.15, R.drawable.produce);
-      GroceryItem item18 = new GroceryItem("produce", "Strawberries", 15, "piece", 7.65, R.drawable.produce);
-      GroceryItem item19 = new GroceryItem("dry/baking goods", "rice", 2.5, "lb", 3.20, R.drawable.bake);
-      GroceryItem item20 = new GroceryItem("dry/baking goods", "rice", 2.5, "lb", 3.20, R.drawable.bake);
-      GroceryItem item21 = new GroceryItem("meat", "Bacon", 10, "piece", 4.20, R.drawable.meat);
-      GroceryItem item22 = new GroceryItem("dairy", "milk", 1, "gal", 3.25, R.drawable.dairy);
-      GroceryItem item23 = new GroceryItem("frozen goods", "ice cream", 1, "piece", 4.25, R.drawable.frozen);
-      GroceryItem item24 = new GroceryItem("canned goods", "Canned beans", 1, "piece", 5.65, R.drawable.canned_food);
-      GroceryItem item25 = new GroceryItem("baking goods", "sugar", 2.2, "lb", 4.99, R.drawable.bake);
-      GroceryItem item26 = new GroceryItem("cleaners", "Clorox bleach", 1, "gal", 5.99, R.drawable.cleaners);
-      GroceryItem item27 = new GroceryItem("paper goods", "Toilet paper", 1, "piece", 3.95, R.drawable.paper_goods);
-      GroceryItem item28 = new GroceryItem("personal care", "shaving cream", 1, "piece", 5.95, R.drawable.personal_hygiene);
-      GroceryItem item29 = new GroceryItem("other", "Toy car", 1, "piece", 10.95, R.drawable.other);
-      GroceryItem item30 = new GroceryItem("baking goods", "flower", 2.05, "lb", 2.99, R.drawable.bake);
-      GroceryItem item31 = new GroceryItem("meat", "Chicken", 2.5, "lb", 5.00, R.drawable.meat);
+    if (mHappyDao.getAllGroceryItems().size() == 0) {
+      List<GroceryItem> allDefaultItems = new ArrayList<>();
 
-      addItemToStore(item1);
-      addItemToStore(item2);
-      addItemToStore(item3);
-      addItemToStore(item4);
-      addItemToStore(item5);
-      addItemToStore(item6);
-      addItemToStore(item7);
-      addItemToStore(item8);
-      addItemToStore(item9);
-      addItemToStore(item10);
-      addItemToStore(item11);
-      addItemToStore(item12);
-      addItemToStore(item13);
-      addItemToStore(item14);
-      addItemToStore(item15);
-      addItemToStore(item16);
-      addItemToStore(item17);
-      addItemToStore(item18);
-      addItemToStore(item19);
-      addItemToStore(item20);
-      addItemToStore(item21);
-      addItemToStore(item22);
-      addItemToStore(item23);
-      addItemToStore(item24);
-      addItemToStore(item25);
-      addItemToStore(item26);
-      addItemToStore(item27);
-      addItemToStore(item28);
-      addItemToStore(item29);
-      addItemToStore(item30);
-      addItemToStore(item31);
+      allDefaultItems.add(new GroceryItem("produce", "aPpLe", 1, "PIECE", 1.50, R.drawable.produce));
+      allDefaultItems.add(new GroceryItem("produce", "cucumber", 1, "PIECE", 2.00, R.drawable.produce));
+      allDefaultItems.add(new GroceryItem("produce", "bananas", 3, "PIECE", 3.00, R.drawable.produce));
+      allDefaultItems.add(new GroceryItem("produce", "apple", 1, "PIECE", 1.50, R.drawable.produce));
+      allDefaultItems.add(new GroceryItem("produce", "bananas", 3, "PIECE", 3.00, R.drawable.produce));
+      allDefaultItems.add(new GroceryItem("produce", "bananas", 3, "PIECE", 3.00, R.drawable.produce));
+      allDefaultItems.add(new GroceryItem("produce", "bananas", 3, "PIECE", 3.00, R.drawable.produce));
+      allDefaultItems.add(new GroceryItem("produce", "cucumber", 1, "PIECE", 2.00, R.drawable.produce));
+      allDefaultItems.add(new GroceryItem("produce", "lettuce", 1, "PIECE", 2.00, R.drawable.produce));
+      allDefaultItems.add(new GroceryItem("beverages", "Pina colada", 2, "piece", 8.75, R.drawable.beverages));
+      allDefaultItems.add(new GroceryItem("beverages", "Mai tai", 1, "piece", 4.25, R.drawable.beverages));
+      allDefaultItems.add(new GroceryItem("beverages", "Sprite", 1.5, "lt", 3.75, R.drawable.beverages));
+      allDefaultItems.add(new GroceryItem("beverages", "Orange juice", 1, "piece", 3.99, R.drawable.beverages));
+      allDefaultItems.add(new GroceryItem("beverages", "Nescafe Coffee", 1, "piece", 4.65, R.drawable.beverages));
+      allDefaultItems.add(new GroceryItem("beverages", "Don Julio 1942", 1, "piece", 249.99, R.drawable.beverages));
+      allDefaultItems.add(new GroceryItem("Bread", "Ezekiel Bread", 1, "piece", 6.49, R.drawable.bread));
+      allDefaultItems.add(new GroceryItem("produce", "Grapefruit", 10, "piece", 5.15, R.drawable.produce));
+      allDefaultItems.add(new GroceryItem("produce", "Strawberries", 15, "piece", 7.65, R.drawable.produce));
+      allDefaultItems.add(new GroceryItem("dry/baking goods", "rice", 2.5, "lb", 3.20, R.drawable.bake));
+      allDefaultItems.add(new GroceryItem("dry/baking goods", "rice", 2.5, "lb", 3.20, R.drawable.bake));
+      allDefaultItems.add(new GroceryItem("meat", "Bacon", 10, "piece", 4.20, R.drawable.meat));
+      allDefaultItems.add(new GroceryItem("dairy", "milk", 1, "gal", 3.25, R.drawable.dairy));
+      allDefaultItems.add(new GroceryItem("frozen goods", "ice cream", 1, "piece", 4.25, R.drawable.frozen));
+      allDefaultItems.add(new GroceryItem("canned goods", "Canned beans", 1, "piece", 5.65, R.drawable.canned_food));
+      allDefaultItems.add(new GroceryItem("baking goods", "sugar", 2.2, "lb", 4.99, R.drawable.bake));
+      allDefaultItems.add(new GroceryItem("cleaners", "Clorox bleach", 1, "gal", 5.99, R.drawable.cleaners));
+      allDefaultItems.add(new GroceryItem("paper goods", "Toilet paper", 1, "piece", 3.95, R.drawable.paper_goods));
+      allDefaultItems.add(new GroceryItem("personal care", "shaving cream", 1, "piece", 5.95, R.drawable.personal_hygiene));
+      allDefaultItems.add(new GroceryItem("other", "Toy car", 1, "piece", 10.95, R.drawable.other));
+      allDefaultItems.add(new GroceryItem("baking goods", "flower", 2.05, "lb", 2.99, R.drawable.bake));
+      allDefaultItems.add(new GroceryItem("meat", "Chicken", 2.5, "lb", 5.00, R.drawable.meat));
+
+      for (int i = 0; i < allDefaultItems.size(); i++) {
+        addItemToStore(allDefaultItems.get(i));
+      }
     }
   }
 
@@ -211,28 +186,28 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void getDatabase() {
-    mLoginDao = Room.databaseBuilder(this, AppDataBase.class, AppDataBase.DATABASE_NAME)
-      .allowMainThreadQueries().build().LoginDAO();
+    mHappyDao = Room.databaseBuilder(this, AppDataBase.class, AppDataBase.DATABASE_NAME)
+      .allowMainThreadQueries().build().happyDAO();
   }
 
   private void createDefaultUsers() {
     // persistent users even if they are deleted sometime in the future
     // THESE. USERS. ARE. NEEDED. IN. THE. APP.
-    if (!mLoginDao.userExist("testuser1")) {
+    if (!mHappyDao.userExist("testuser1")) {
       User defaultNormalUser = new User(0, "Joe", "Blow", "testuser1", "testuser1");
-      mLoginDao.insert(defaultNormalUser);
+      mHappyDao.insert(defaultNormalUser);
     }
 
-    if (!mLoginDao.userExist("admin2")) {
+    if (!mHappyDao.userExist("admin2")) {
       User defaultAdminUser = new User(1, "Drew", "Clinkenbeard", "admin2", "admin2");
-      mLoginDao.insert(defaultAdminUser);
+      mHappyDao.insert(defaultAdminUser);
     }
   }
 
   private int logIn(String username, String password) {
     if (userExists(username)) {
       if (userMatchPassword(username, password)) {
-        return mLoginDao.getUserByUsername(username).getUserId();
+        return mHappyDao.getUserByUsername(username).getUserId();
       }
     }
 
@@ -240,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private boolean userMatchPassword(String username, String password) {
-    if (mLoginDao.getUserByUsername(username).getPassword().equals(password)) {
+    if (mHappyDao.getUserByUsername(username).getPassword().equals(password)) {
       return true;
     }
 
@@ -248,8 +223,8 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private boolean userExists(String username) {
-    for (int i = 0; i < mLoginDao.getAllUsers().size(); i++) {
-      if (mLoginDao.getAllUsers().get(i).getUserName().equals(username)) {
+    for (int i = 0; i < mHappyDao.getAllUsers().size(); i++) {
+      if (mHappyDao.getAllUsers().get(i).getUserName().equals(username)) {
         return true;
       }
     }
@@ -258,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private boolean adminUserCheck(int userId) {
-    if (mLoginDao.getUserByUserId(userId).getIsAdmin() == 1) {
+    if (mHappyDao.getUserByUserId(userId).getIsAdmin() == 1) {
       return true;
     }
 

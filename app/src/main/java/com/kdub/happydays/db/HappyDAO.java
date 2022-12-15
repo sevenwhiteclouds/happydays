@@ -12,7 +12,7 @@ import com.kdub.happydays.User;
 import java.util.List;
 
 @Dao
-public interface LoginDAO {
+public interface HappyDAO {
   /*
    * Author: Keldin Maldonado
    * Date: 2022-12-06

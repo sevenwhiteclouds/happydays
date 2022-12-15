@@ -19,11 +19,9 @@ import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.kdub.happydays.db.AppDataBase;
-import com.kdub.happydays.db.LoginDAO;
-
+import com.kdub.happydays.db.HappyDAO;
 
 public class AccountSettingsFragment extends Fragment {
-
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
@@ -89,8 +87,6 @@ public class AccountSettingsFragment extends Fragment {
 
             Toast.makeText(getActivity(), "Account has been deleted.", Toast.LENGTH_SHORT).show();
             deleteAccount();
-
-
           }
         });
 
@@ -102,8 +98,8 @@ public class AccountSettingsFragment extends Fragment {
   }
 
   private void deleteAccount() {
-    LoginDAO mLoginDao = Room.databaseBuilder(getActivity(), AppDataBase.class, AppDataBase.DATABASE_NAME)
-      .allowMainThreadQueries().build().LoginDAO();
+    HappyDAO mHappyDao = Room.databaseBuilder(getActivity(), AppDataBase.class, AppDataBase.DATABASE_NAME)
+      .allowMainThreadQueries().build().happyDAO();
 
     SharedPreferences mPreferences = getActivity().getSharedPreferences("session", Context.MODE_PRIVATE);
     SharedPreferences.Editor mEditor = mPreferences.edit();
@@ -113,9 +109,9 @@ public class AccountSettingsFragment extends Fragment {
     mEditor.clear();
     mEditor.commit();
 
-    User user = mLoginDao.getUserByUserId(userId);
+    User user = mHappyDao.getUserByUserId(userId);
 
-    mLoginDao.delete(user);
+    mHappyDao.delete(user);
 
     Intent intent = new Intent(getActivity(), MainActivity.class);
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

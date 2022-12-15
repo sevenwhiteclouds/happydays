@@ -2,7 +2,6 @@ package com.kdub.happydays;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -15,11 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kdub.happydays.db.AppDataBase;
-import com.kdub.happydays.db.LoginDAO;
+import com.kdub.happydays.db.HappyDAO;
 
 public class ProfileFragment extends Fragment {
 
@@ -31,8 +29,8 @@ public class ProfileFragment extends Fragment {
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-    LoginDAO mLoginDao = Room.databaseBuilder(getActivity(), AppDataBase.class, AppDataBase.DATABASE_NAME)
-      .allowMainThreadQueries().build().LoginDAO();
+    HappyDAO mLoginDao = Room.databaseBuilder(getActivity(), AppDataBase.class, AppDataBase.DATABASE_NAME)
+      .allowMainThreadQueries().build().happyDAO();
 
     EditText firstName = view.findViewById(R.id.show_change_first_name);
     EditText lastName = view.findViewById(R.id.show_change_last_name);

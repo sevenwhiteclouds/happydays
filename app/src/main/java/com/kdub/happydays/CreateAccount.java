@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.kdub.happydays.databinding.ActivityCreateAccountBinding;
 import com.kdub.happydays.db.AppDataBase;
-import com.kdub.happydays.db.LoginDAO;
+import com.kdub.happydays.db.HappyDAO;import com.kdub.happydays.db.HappyDAO;
 
 public class CreateAccount extends AppCompatActivity {
   TextView mFirstName;
@@ -24,7 +24,7 @@ public class CreateAccount extends AppCompatActivity {
 
   private ActivityCreateAccountBinding mActivityCreateAccountBinding = null;
 
-  private LoginDAO mLoginDao;
+  private HappyDAO mHappyDAO;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -90,14 +90,14 @@ public class CreateAccount extends AppCompatActivity {
   private int accountCreate(String firstName, String lastName, String userName, String password) {
     User user = new User(0, firstName, lastName, userName, password);
 
-    mLoginDao.insert(user);
+    mHappyDAO.insert(user);
 
-    return mLoginDao.getUserByUsername(userName).getUserId();
+    return mHappyDAO.getUserByUsername(userName).getUserId();
   }
 
   private boolean userNameTaken(String userName) {
-    for (int i = 0; i < mLoginDao.getAllUsers().size(); i++) {
-      if (mLoginDao.getAllUsers().get(i).getUserName().equals(userName)) {
+    for (int i = 0; i < mHappyDAO.getAllUsers().size(); i++) {
+      if (mHappyDAO.getAllUsers().get(i).getUserName().equals(userName)) {
         return true;
       }
     }
@@ -106,7 +106,7 @@ public class CreateAccount extends AppCompatActivity {
   }
 
   private void getDatabase() {
-    mLoginDao = Room.databaseBuilder(this, AppDataBase.class, AppDataBase.DATABASE_NAME)
-      .allowMainThreadQueries().build().LoginDAO();
+    mHappyDAO = Room.databaseBuilder(this, AppDataBase.class, AppDataBase.DATABASE_NAME)
+      .allowMainThreadQueries().build().happyDAO();
   }
 }

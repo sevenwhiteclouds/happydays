@@ -10,12 +10,12 @@ import android.os.Bundle;
 
 import com.kdub.happydays.databinding.ActivityLandingPageBinding;
 import com.kdub.happydays.db.AppDataBase;
-import com.kdub.happydays.db.LoginDAO;
+import com.kdub.happydays.db.HappyDAO;
 
 public class LandingPageActivity extends AppCompatActivity {
   private ActivityLandingPageBinding mActivityLandingPageBinding = null;
 
-  private LoginDAO mLoginDAO;
+  private HappyDAO mHappyDAO;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class LandingPageActivity extends AppCompatActivity {
   }
 
   private void getDatabase() {
-    mLoginDAO = Room.databaseBuilder(this, AppDataBase.class, AppDataBase.DATABASE_NAME)
-      .allowMainThreadQueries().build().LoginDAO();
+    mHappyDAO = Room.databaseBuilder(this, AppDataBase.class, AppDataBase.DATABASE_NAME)
+      .allowMainThreadQueries().build().happyDAO();
   }
 }

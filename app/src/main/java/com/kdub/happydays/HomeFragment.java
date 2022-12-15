@@ -22,7 +22,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.kdub.happydays.db.AppDataBase;
-import com.kdub.happydays.db.LoginDAO;
+import com.kdub.happydays.db.HappyDAO;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,7 +31,7 @@ public class HomeFragment extends Fragment {
 
   private View view = null;
   private SharedPreferences preferences = null;
-  private LoginDAO mLoginDao = null;
+  private HappyDAO mHappyDao = null;
   private TextView button0 = null;
   private TextView button1 = null;
   private TextView button2 = null;
@@ -53,8 +53,8 @@ public class HomeFragment extends Fragment {
     view = inflater.inflate(R.layout.fragment_home, container, false);
 
     preferences = getActivity().getSharedPreferences("session", MODE_PRIVATE);
-    mLoginDao = Room.databaseBuilder(getActivity(), AppDataBase.class, AppDataBase.DATABASE_NAME)
-      .allowMainThreadQueries().build().LoginDAO();
+    mHappyDao = Room.databaseBuilder(getActivity(), AppDataBase.class, AppDataBase.DATABASE_NAME)
+      .allowMainThreadQueries().build().happyDAO();
 
     setTimeOfDayHiMessage();
 
@@ -89,7 +89,7 @@ public class HomeFragment extends Fragment {
     button12 = view.findViewById(R.id.category_button_12);
 
     GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-    HomeItemsAdapter adapter = new HomeItemsAdapter(getContext(), (ArrayList<GroceryItem>) mLoginDao.getAllGroceryItems());
+    HomeItemsAdapter adapter = new HomeItemsAdapter(getContext(), (ArrayList<GroceryItem>) mHappyDao.getAllGroceryItems());
 
     RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
 
@@ -210,10 +210,10 @@ public class HomeFragment extends Fragment {
     HomeItemsAdapter adapter = null;
 
     if (category.equals("all")) {
-      adapter = new HomeItemsAdapter(getContext(), (ArrayList<GroceryItem>) mLoginDao.getAllGroceryItems());
+      adapter = new HomeItemsAdapter(getContext(), (ArrayList<GroceryItem>) mHappyDao.getAllGroceryItems());
     }
     else {
-      adapter = new HomeItemsAdapter(getContext(), (ArrayList<GroceryItem>) mLoginDao.getGroceryByCategory(category));
+      adapter = new HomeItemsAdapter(getContext(), (ArrayList<GroceryItem>) mHappyDao.getGroceryByCategory(category));
     }
 
     RecyclerView recyclerView = getView().findViewById(R.id.recycler_view);
@@ -261,7 +261,7 @@ public class HomeFragment extends Fragment {
     subHeadingText.setText(Html.fromHtml(subHeadingWord1 + subHeadingWord2 + subHeadingWord3, HtmlCompat.FROM_HTML_MODE_LEGACY));
 
     int userId = preferences.getInt("userId", 0);
-    String firstName = mLoginDao.getUserByUserId(userId).getFirstName();
+    String firstName = mHappyDao.getUserByUserId(userId).getFirstName();
     firstName = firstName.toLowerCase();
     firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
 
