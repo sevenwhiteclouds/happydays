@@ -266,13 +266,13 @@ public class HomeFragment extends Fragment {
     firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
 
     if (currentHour < 12) {
-      homeHeadingText.setText("Good morning, " + firstName);
+      homeHeadingText.setText("Good morning, " + firstName + " \uD83D\uDC4B");
     }
     else if (currentHour < 18) {
-      homeHeadingText.setText("Good afternoon, " + firstName);
+      homeHeadingText.setText("Good afternoon, " + firstName + " \uD83D\uDC4B");
     }
     else {
-      homeHeadingText.setText("Good evening, " + firstName);
+      homeHeadingText.setText("Good evening, " + firstName + " \uD83D\uDC4B");
     }
   }
 }
