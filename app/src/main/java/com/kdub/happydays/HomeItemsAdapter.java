@@ -6,9 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -40,10 +43,19 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
     holder.itemName.setText(beautifyItemName(groceryItems.get(position).getName()));
     holder.itemDenomination.setText(beautifyItemQuantityAndDenomination(groceryItems.get(position).getQuantity(), groceryItems.get(position).getDenomination()));
     holder.itemPrice.setText(beautifyItemPrice(groceryItems.get(position).getPrice()));
+    holder.itemEntire.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        // TODO: code to add to cart here (when clicked on the orange plus button
+        Toast.makeText(context, "entire item clicked", Toast.LENGTH_SHORT).show();
+      }
+    });
+
     holder.itemAddButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
         // TODO: code to add to cart here (when clicked on the orange plus button
+        Toast.makeText(context, "add button clicked", Toast.LENGTH_SHORT).show();
       }
     });
   }
@@ -118,6 +130,7 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
   }
 
   public static class MyViewHolder extends RecyclerView.ViewHolder {
+    RelativeLayout itemEntire;
     ImageView itemPicture;
     TextView itemName;
     TextView itemDenomination;
@@ -127,6 +140,7 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
     public MyViewHolder(@NonNull View itemView) {
       super(itemView);
 
+      itemEntire = itemView.findViewById(R.id.recycle_view_relative_layout);
       itemPicture = itemView.findViewById(R.id.recycle_item_picture);
       itemName = itemView.findViewById(R.id.recycle_item_name);
       itemDenomination = itemView.findViewById(R.id.recycle_item_denomination);
