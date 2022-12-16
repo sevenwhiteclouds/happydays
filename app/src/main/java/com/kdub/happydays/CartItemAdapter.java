@@ -26,7 +26,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyView
   private HappyDAO mHappyDao;
   private Double runningSubTotal;
   private Double runningTax;
-  private Double runningFinalTotal;
+  public static Double runningFinalTotal;
   private TextView cartItemSubTotalText;
   private TextView cartItemTaxText;
   private TextView cartItemFinalTotalText;

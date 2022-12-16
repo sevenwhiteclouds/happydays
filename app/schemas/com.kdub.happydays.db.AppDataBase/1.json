@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "97317272fa05de0f1013aab1eaa400c4",
+    "identityHash": "d068d1362a25f0684a973a68cabd86a0",
     "entities": [
       {
         "tableName": "USER_TABLE",
@@ -153,12 +153,62 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "ORDERS_TABLE",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mOrderEntryId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `mActiveOrder` INTEGER NOT NULL, `mUserId` INTEGER NOT NULL, `mItems` TEXT, `mAmountOfItems` TEXT, `mTotalOrderPrice` REAL)",
+        "fields": [
+          {
+            "fieldPath": "mOrderEntryId",
+            "columnName": "mOrderEntryId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mActiveOrder",
+            "columnName": "mActiveOrder",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mUserId",
+            "columnName": "mUserId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mItems",
+            "columnName": "mItems",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mAmountOfItems",
+            "columnName": "mAmountOfItems",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mTotalOrderPrice",
+            "columnName": "mTotalOrderPrice",
+            "affinity": "REAL",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "mOrderEntryId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '97317272fa05de0f1013aab1eaa400c4')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd068d1362a25f0684a973a68cabd86a0')"
     ]
   }
 }

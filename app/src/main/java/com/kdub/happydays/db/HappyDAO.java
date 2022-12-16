@@ -8,6 +8,7 @@ import androidx.room.Update;
 
 import com.kdub.happydays.CartItem;
 import com.kdub.happydays.GroceryItem;
+import com.kdub.happydays.Order;
 import com.kdub.happydays.User;
 
 import java.util.List;
@@ -76,4 +77,17 @@ public interface HappyDAO {
 
   @Query("SELECT * FROM " + AppDataBase.CART_ITEMS_TABLE + " WHERE mUserId = :userId ")
   List<CartItem> getCartItemsByUserId(int userId);
+
+  @Query("DELETE FROM " + AppDataBase.CART_ITEMS_TABLE + " WHERE mUserId = :userId ")
+  void deleteAllCartEntriesByUserId(int userId);
+
+  // starting here is all the order item entry stuff
+  @Insert
+  void insert(Order... orders);
+
+  @Update
+  void update(Order... orders);
+
+  @Delete
+  void delete(Order orders);
 }
