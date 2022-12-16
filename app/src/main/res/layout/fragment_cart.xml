@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="It's awfully quiet here..."
-        android:textColor="@color/third"
+        android:textColor="@color/secondary"
         android:textSize="24sp"
         android:textStyle="bold"
         android:visibility="gone"

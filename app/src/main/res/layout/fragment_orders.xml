@@ -8,4 +8,32 @@
     android:background="@color/white"
     tools:context=".OrdersFragment">
 
+    <TextView
+        android:id="@+id/orders_no_order_emoji"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="284dp"
+        android:text="🤔"
+        android:textSize="100sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/orders_no_order_message"
+        android:layout_width="wrap_content"
+        android:layout_height="34dp"
+        android:text="You have no orders yet..."
+        android:textAlignment="center"
+        android:textColor="@color/secondary"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orders_no_order_emoji"
+        app:layout_constraintVertical_bias="0.04000002" />
 </androidx.constraintlayout.widget.ConstraintLayout>

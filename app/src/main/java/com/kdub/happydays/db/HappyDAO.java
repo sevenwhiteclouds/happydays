@@ -90,4 +90,7 @@ public interface HappyDAO {
 
   @Delete
   void delete(Order orders);
+
+  @Query("SELECT * FROM " + AppDataBase.ORDERS_TABLE + " WHERE mUserId = :userId ")
+  List<Order> getOrdersByUserId(int userId);
 }
