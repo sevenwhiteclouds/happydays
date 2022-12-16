@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import android.view.LayoutInflater;
@@ -34,6 +36,12 @@ public class OrdersFragment extends Fragment {
     }
     else {
       ordersNotEmpty();
+      RecyclerView recyclerView = view.findViewById(R.id.orders_recycle_view);
+
+      OrderItemAdapter adapter = new OrderItemAdapter(getContext(), mHappyDAO.getOrdersByUserIdDesc(userId));
+
+      recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+      recyclerView.setAdapter(adapter);
     }
 
     return view;
@@ -46,5 +54,6 @@ public class OrdersFragment extends Fragment {
 
   private void ordersNotEmpty() {
     view.findViewById(R.id.orders_header_text).setVisibility(View.VISIBLE);
+    view.findViewById(R.id.orders_recycle_view).setVisibility(View.VISIBLE);
   }
 }

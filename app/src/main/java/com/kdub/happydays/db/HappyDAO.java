@@ -93,4 +93,7 @@ public interface HappyDAO {
 
   @Query("SELECT * FROM " + AppDataBase.ORDERS_TABLE + " WHERE mUserId = :userId ")
   List<Order> getOrdersByUserId(int userId);
+
+  @Query("SELECT * FROM " + AppDataBase.ORDERS_TABLE +  " WHERE mUserId = :userId " + " ORDER BY mOrderEntryId DESC ")
+  List<Order> getOrdersByUserIdDesc(int userId);
 }
