@@ -56,7 +56,7 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
     holder.itemEntire.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        // TODO: code to add to cart here (when clicked on the orange plus button
+        // TODO: code to view the entire item here
         Toast.makeText(context, "entire item clicked", Toast.LENGTH_SHORT).show();
       }
     });
@@ -64,7 +64,7 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
     holder.itemAddButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        // TODO: when functioning, and if you have time, refactor into it's own methods
+        // TODO: refactor into separate methods?
         mPreferences = context.getSharedPreferences("session", MODE_PRIVATE);
         mHappyDAO = Room.databaseBuilder(context, AppDataBase.class, AppDataBase.DATABASE_NAME)
           .allowMainThreadQueries().build().happyDAO();
@@ -73,7 +73,7 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
 
         List<CartItem> allUserEntriesInCartDatabase = mHappyDAO.getCartItemsByUserId(mPreferences.getInt("userId", 0));
 
-        // TODO: this is so confusing, desperately needs to be rewritten into seperate methods
+        // TODO: this is so confusing, desperately needs to be rewritten into separate methods
         boolean itemExists = false;
         int positionWhereItemExist = 0;
 

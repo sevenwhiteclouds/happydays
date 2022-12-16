@@ -30,14 +30,21 @@ public class OrdersFragment extends Fragment {
     view = inflater.inflate(R.layout.fragment_orders, container, false);
 
     if (mHappyDAO.getOrdersByUserId(userId).size() == 0) {
-      emptyOrder();
+      emptyOrders();
+    }
+    else {
+      ordersNotEmpty();
     }
 
     return view;
   }
 
-  private void emptyOrder() {
+  private void emptyOrders() {
     view.findViewById(R.id.orders_no_order_emoji).setVisibility(View.VISIBLE);
     view.findViewById(R.id.orders_no_order_message).setVisibility(View.VISIBLE);
+  }
+
+  private void ordersNotEmpty() {
+    view.findViewById(R.id.orders_header_text).setVisibility(View.VISIBLE);
   }
 }

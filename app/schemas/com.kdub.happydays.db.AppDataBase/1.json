@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d068d1362a25f0684a973a68cabd86a0",
+    "identityHash": "b82ad9de64318218c2d2ab569c9caa72",
     "entities": [
       {
         "tableName": "USER_TABLE",
@@ -156,7 +156,7 @@
       },
       {
         "tableName": "ORDERS_TABLE",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mOrderEntryId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `mActiveOrder` INTEGER NOT NULL, `mUserId` INTEGER NOT NULL, `mItems` TEXT, `mAmountOfItems` TEXT, `mTotalOrderPrice` REAL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mOrderEntryId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `mOrderStatus` INTEGER NOT NULL, `mUserId` INTEGER NOT NULL, `mItems` TEXT, `mAmountOfItems` TEXT, `mTotalOrderPrice` REAL)",
         "fields": [
           {
             "fieldPath": "mOrderEntryId",
@@ -165,8 +165,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "mActiveOrder",
-            "columnName": "mActiveOrder",
+            "fieldPath": "mOrderStatus",
+            "columnName": "mOrderStatus",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -208,7 +208,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd068d1362a25f0684a973a68cabd86a0')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b82ad9de64318218c2d2ab569c9caa72')"
     ]
   }
 }

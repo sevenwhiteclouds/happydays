@@ -36,7 +36,6 @@ public class CreateAccount extends AppCompatActivity {
     View view = mActivityCreateAccountBinding.getRoot();
     setContentView(view);
 
-    // TODO: add a confirm password?
     mFirstName = mActivityCreateAccountBinding.firstNameText;
     mLastName = mActivityCreateAccountBinding.lastNameText;
     mUserName = mActivityCreateAccountBinding.usernameText;

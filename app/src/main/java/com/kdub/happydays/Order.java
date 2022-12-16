@@ -10,7 +10,10 @@ public class Order {
   @PrimaryKey(autoGenerate = true)
   private int mOrderEntryId;
 
-  private int mActiveOrder = 1;
+  // -1 means the order has been canceled
+  // 0 means the order is pending
+  // 1 means the order has been completed
+  private int mOrderStatus = 0;
   private int mUserId;
   private String mItems;
   private String mAmountOfItems;
@@ -23,20 +26,20 @@ public class Order {
     mTotalOrderPrice = totalOrderPrice;
   }
 
+  public int getOrderStatus() {
+    return mOrderStatus;
+  }
+
+  public void setOrderStatus(int orderStatus) {
+    mOrderStatus = orderStatus;
+  }
+
   public int getOrderEntryId() {
     return mOrderEntryId;
   }
 
   public void setOrderEntryId(int orderEntryId) {
     mOrderEntryId = orderEntryId;
-  }
-
-  public int getActiveOrder() {
-    return mActiveOrder;
-  }
-
-  public void setActiveOrder(int activeOrder) {
-    mActiveOrder = activeOrder;
   }
 
   public int getUserId() {

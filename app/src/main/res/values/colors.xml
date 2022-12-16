@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--TODO: not sure about this color white-->
     <color name="white">#F8FAFF</color>-->
     <color name="main">#FE9D34</color>
     <color name="secondary">#ff5522</color>
