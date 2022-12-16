@@ -20,8 +20,6 @@ import android.widget.Toast;
 import com.kdub.happydays.db.AppDataBase;
 import com.kdub.happydays.db.HappyDAO;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 public class CartFragment extends Fragment {

@@ -43,6 +43,9 @@ public interface HappyDAO {
   @Query("SELECT EXISTS (SELECT * FROM  USER_TABLE WHERE mUserName = :username )")
   boolean userExist(String username);
 
+  @Query("DELETE FROM " + AppDataBase.USER_TABLE + " WHERE mUserId = :userId ")
+  void deleteUserByUserId(int userId);
+
   // starting here is all the grocery item stuff
   @Insert
   void insert(GroceryItem... groceryItems);
@@ -96,4 +99,7 @@ public interface HappyDAO {
 
   @Query("SELECT * FROM " + AppDataBase.ORDERS_TABLE +  " WHERE mUserId = :userId " + " ORDER BY mOrderEntryId DESC ")
   List<Order> getOrdersByUserIdDesc(int userId);
+
+  @Query("DELETE FROM " + AppDataBase.ORDERS_TABLE + " WHERE mUserId = :userId ")
+  void deleteAllOrdersByUserId(int userId);
 }

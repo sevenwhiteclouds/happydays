@@ -26,7 +26,6 @@ public class AccountSettingsFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
 
-    // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_account_settings, container, false);
 
     RelativeLayout profileButton = view.findViewById(R.id.profile_button_layout);
@@ -85,7 +84,7 @@ public class AccountSettingsFragment extends Fragment {
           public void onClick(DialogInterface dialogInterface, int i) {
             TextView alertText = view.findViewById(R.id.delete_account_warning_text);
 
-            Toast.makeText(getActivity(), "Account has been deleted.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Account has been deleted.", Toast.LENGTH_LONG).show();
             deleteAccount();
           }
         });
@@ -109,9 +108,9 @@ public class AccountSettingsFragment extends Fragment {
     mEditor.clear();
     mEditor.commit();
 
-    User user = mHappyDao.getUserByUserId(userId);
-
-    mHappyDao.delete(user);
+    mHappyDao.deleteAllCartEntriesByUserId(userId);
+    mHappyDao.deleteAllOrdersByUserId(userId);
+    mHappyDao.deleteUserByUserId(userId);
 
     Intent intent = new Intent(getActivity(), MainActivity.class);
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

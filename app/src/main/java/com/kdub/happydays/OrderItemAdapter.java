@@ -17,7 +17,6 @@ import com.kdub.happydays.db.HappyDAO;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
