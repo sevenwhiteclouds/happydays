@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     createDefaultUsers();
     createDefaultGroceryItems();
+    createDefaultTaxAmount();
 
     mButtonLogin.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -176,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
     mEditor.putInt("userId", userId);
     mEditor.putBoolean("isAdmin", isAdmin);
 
-    mEditor.commit();
+    mEditor.apply();
   }
 
   private boolean sessionExists() {
@@ -188,6 +189,13 @@ public class MainActivity extends AppCompatActivity {
   private void getDatabase() {
     mHappyDao = Room.databaseBuilder(this, AppDataBase.class, AppDataBase.DATABASE_NAME)
       .allowMainThreadQueries().build().happyDAO();
+  }
+
+  private void createDefaultTaxAmount() {
+    SharedPreferences mPreferences = getSharedPreferences("defaultTaxEntry", MODE_PRIVATE);
+    SharedPreferences.Editor mEditor = mPreferences.edit();
+    mEditor.putFloat("tax", 0.08f);
+    mEditor.apply();
   }
 
   private void createDefaultUsers() {

@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +15,8 @@ import androidx.room.Room;
 import com.kdub.happydays.db.AppDataBase;
 import com.kdub.happydays.db.HappyDAO;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Locale;
 
@@ -23,12 +24,23 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyView
   private Context context;
   private List<CartItem> userCartItemEntries;
   private HappyDAO mHappyDao = null;
+  private Double runningSubTotal;
+  private Double runningTax;
+  private Double runningFinalTotal;
+  private TextView cartItemSubTotalText;
+  private TextView cartItemTaxText;
+  private TextView cartItemFinalTotalText;
 
-  public CartItemAdapter(Context context, List<CartItem> userCartItemEntries) {
+  public CartItemAdapter(TextView cartItemSubTotalText, TextView cartItemTaxText, TextView cartItemFinalTotalText, Context context, List<CartItem> userCartItemEntries) {
+    this.cartItemSubTotalText = cartItemSubTotalText;
+    this.cartItemTaxText = cartItemTaxText;
+    this.cartItemFinalTotalText = cartItemFinalTotalText;
     this.context = context;
     this.userCartItemEntries = userCartItemEntries;
     mHappyDao = Room.databaseBuilder(context, AppDataBase.class, AppDataBase.DATABASE_NAME)
       .allowMainThreadQueries().build().happyDAO();
+
+    inits();
   }
 
   @NonNull
@@ -44,6 +56,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyView
   @Override
   public void onBindViewHolder(@NonNull CartItemAdapter.MyViewHolder holder, int position) {
     // TODO: ability to remove an item, right now we are able to go < -1
+
     int itemId = userCartItemEntries.get(position).getGroceryItemId();
 
     GroceryItem groceryItem = mHappyDao.getGroceryItemById(itemId);
@@ -53,13 +66,14 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyView
     holder.cartItemDenomination.setText(beautifyItemQuantityAndDenomination(groceryItem.getQuantity(), groceryItem.getDenomination()));
     holder.cartItemPrice.setText(beautifyItemPrice(groceryItem.getPrice()));
     holder.cartItemAmountOfItem.setText(howManyGroceryItemInCart(position));
-    
+
     holder.addButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
         userCartItemEntries.get(position).setHowManyGroceryItemInCart(userCartItemEntries.get(position).getHowManyGroceryItemInCart() + 1);
         mHappyDao.update(userCartItemEntries.get(position));
         holder.cartItemAmountOfItem.setText(howManyGroceryItemInCart(position));
+        inits();
       }
     });
 
@@ -69,8 +83,108 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyView
         userCartItemEntries.get(position).setHowManyGroceryItemInCart(userCartItemEntries.get(position).getHowManyGroceryItemInCart() - 1);
         mHappyDao.update(userCartItemEntries.get(position));
         holder.cartItemAmountOfItem.setText(howManyGroceryItemInCart(position));
+        inits();
       }
     });
+  }
+
+  private void inits() {
+    initRunningSubtotal();
+    initTaxes();
+    initRunningFinalTotal();
+
+    cartItemSubTotalText.setText(beautifySubTotal());
+    cartItemTaxText.setText(beautifyTaxes());
+    cartItemFinalTotalText.setText(beautifyFinalTotal());
+  }
+  private double roundTwoDecimals(Double value, int places) {
+    if (places < 0) {
+      throw new IllegalArgumentException();
+    }
+
+    BigDecimal bd = BigDecimal.valueOf(value);
+    bd = bd.setScale(places, RoundingMode.HALF_UP);
+    return bd.doubleValue();
+  }
+
+  private void initRunningSubtotal() {
+    runningSubTotal = 0.0;
+
+    for (int i = 0; i < userCartItemEntries.size(); i++) {
+      GroceryItem temp = mHappyDao.getGroceryItemById(userCartItemEntries.get(i).getGroceryItemId());
+
+      runningSubTotal = runningSubTotal + temp.getPrice() * userCartItemEntries.get(i).getHowManyGroceryItemInCart();
+    }
+
+    runningSubTotal = roundTwoDecimals(runningSubTotal, 2);
+  }
+
+  private void initRunningFinalTotal() {
+    runningFinalTotal = + runningSubTotal + runningTax;
+
+    runningFinalTotal = roundTwoDecimals(runningFinalTotal, 2);
+  }
+
+  private void initTaxes() {
+    SharedPreferences sharedPreferences = context.getSharedPreferences("defaultTaxEntry", Context.MODE_PRIVATE);
+    float hi = sharedPreferences.getFloat("tax", 0);
+    runningTax = runningSubTotal * sharedPreferences.getFloat("tax", 0.1f);
+
+    runningTax = roundTwoDecimals(runningTax, 2);
+  }
+
+  private String beautifyTaxes() {
+    String[] splitCalculateSubtotal= runningTax.toString().split("[.]");
+    StringBuilder beautifiedTax = new StringBuilder();
+
+    beautifiedTax.append("$");
+
+    if (splitCalculateSubtotal[1].length() == 1) {
+      beautifiedTax.append(splitCalculateSubtotal[0]).append(".").append(splitCalculateSubtotal[1]).append("0 ");
+    }
+    else {
+      beautifiedTax.append(splitCalculateSubtotal[0]).append(".").append(splitCalculateSubtotal[1]).append(" ");
+    }
+
+    beautifiedTax = new StringBuilder(beautifiedTax.substring(0, beautifiedTax.length() - 1));
+
+    return beautifiedTax.toString();
+  }
+
+  private String beautifyFinalTotal() {
+    String[] splitCalculateFinalTotal = runningFinalTotal.toString().split("[.]");
+    StringBuilder beautifiedCalculateFinalTotal = new StringBuilder();
+
+    beautifiedCalculateFinalTotal.append("$");
+
+    if (splitCalculateFinalTotal[1].length() == 1) {
+      beautifiedCalculateFinalTotal.append(splitCalculateFinalTotal[0]).append(".").append(splitCalculateFinalTotal[1]).append("0 ");
+    }
+    else {
+      beautifiedCalculateFinalTotal.append(splitCalculateFinalTotal[0]).append(".").append(splitCalculateFinalTotal[1]).append(" ");
+    }
+
+    beautifiedCalculateFinalTotal = new StringBuilder(beautifiedCalculateFinalTotal.substring(0, beautifiedCalculateFinalTotal.length() - 1));
+
+    return beautifiedCalculateFinalTotal.toString();
+  }
+
+  private String beautifySubTotal() {
+    String[] splitCalculateSubtotal= runningSubTotal.toString().split("[.]");
+    StringBuilder beautifiedCalculateSubtotal = new StringBuilder();
+
+    beautifiedCalculateSubtotal.append("$");
+
+    if (splitCalculateSubtotal[1].length() == 1) {
+      beautifiedCalculateSubtotal.append(splitCalculateSubtotal[0]).append(".").append(splitCalculateSubtotal[1]).append("0 ");
+    }
+    else {
+      beautifiedCalculateSubtotal.append(splitCalculateSubtotal[0]).append(".").append(splitCalculateSubtotal[1]).append(" ");
+    }
+
+    beautifiedCalculateSubtotal = new StringBuilder(beautifiedCalculateSubtotal.substring(0, beautifiedCalculateSubtotal.length() - 1));
+
+    return beautifiedCalculateSubtotal.toString();
   }
 
   private String howManyGroceryItemInCart(int position) {
