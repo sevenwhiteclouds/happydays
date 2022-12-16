@@ -25,9 +25,9 @@ import java.util.List;
 import java.util.Locale;
 
 public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyViewHolder> {
-  private Context context = null;
-  private List<GroceryItem> groceryItems = null;
-  private CartItem groceryItemToAddToCart = null;
+  private Context context;
+  private List<GroceryItem> groceryItems;
+  private CartItem groceryItemToAddToCart;
   private SharedPreferences mPreferences;
   private HappyDAO mHappyDAO;
 
@@ -94,6 +94,7 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
           mHappyDAO.update(allUserEntriesInCartDatabase.get(positionWhereItemExist));
         }
 
+        Toast.makeText(context, "HappyDays! " + beautifyItemName(groceryItems.get(position).getName()) + " has been added to the cart", Toast.LENGTH_SHORT).show();
       }
     });
   }
@@ -118,7 +119,7 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
 
   private String beautifyItemQuantityAndDenomination(Double beautifyThisItemQuantity, String beautifyThisItemDenomination) {
     String[] splitQuantity = beautifyThisItemQuantity.toString().split("[.]");
-    String[] splitDenomination = beautifyThisItemDenomination.toString().split("\\s");
+    String[] splitDenomination = beautifyThisItemDenomination.split("\\s");
 
     StringBuilder beautifiedItemQuantityAndDenomination = new StringBuilder();
 

@@ -23,7 +23,7 @@ import java.util.Locale;
 public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyViewHolder> {
   private Context context;
   private List<CartItem> userCartItemEntries;
-  private HappyDAO mHappyDao = null;
+  private HappyDAO mHappyDao;
   private Double runningSubTotal;
   private Double runningTax;
   private Double runningFinalTotal;
@@ -97,6 +97,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyView
     cartItemTaxText.setText(beautifyTaxes());
     cartItemFinalTotalText.setText(beautifyFinalTotal());
   }
+
   private double roundTwoDecimals(Double value, int places) {
     if (places < 0) {
       throw new IllegalArgumentException();
