@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "8a5d1bc219daa37d512cd0fcdad62c31",
+    "identityHash": "97317272fa05de0f1013aab1eaa400c4",
     "entities": [
       {
         "tableName": "USER_TABLE",
@@ -115,12 +115,50 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "CART_ITEMS_TABLE",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mCartEntryId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `mUserId` INTEGER NOT NULL, `mGroceryItemId` INTEGER NOT NULL, `mHowManyGroceryItemInCart` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "mCartEntryId",
+            "columnName": "mCartEntryId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mUserId",
+            "columnName": "mUserId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mGroceryItemId",
+            "columnName": "mGroceryItemId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mHowManyGroceryItemInCart",
+            "columnName": "mHowManyGroceryItemInCart",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "mCartEntryId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8a5d1bc219daa37d512cd0fcdad62c31')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '97317272fa05de0f1013aab1eaa400c4')"
     ]
   }
 }

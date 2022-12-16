@@ -6,6 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.kdub.happydays.CartItem;
 import com.kdub.happydays.GroceryItem;
 import com.kdub.happydays.User;
 
@@ -59,4 +60,20 @@ public interface HappyDAO {
 
   @Query("SELECT * FROM " + AppDataBase.GROCERY_ITEM_TABLE + " WHERE mCategory = :category ")
   List<GroceryItem> getGroceryByCategory(String category);
+
+  // starting here is all the cart item entry stuff
+  @Insert
+  void insert(CartItem... cartItems);
+
+  @Update
+  void update(CartItem... cartItems);
+
+  @Delete
+  void delete(CartItem cartItems);
+
+  @Query("SELECT * FROM " + AppDataBase.CART_ITEMS_TABLE)
+  List<CartItem> getAllCartItems();
+
+  @Query("SELECT * FROM " + AppDataBase.CART_ITEMS_TABLE + " WHERE mUserId = :userId ")
+  List<CartItem> getCartItemsByUserId(int userId);
 }

@@ -1,20 +1,15 @@
 package com.kdub.happydays;
 
-import static android.content.Context.MODE_PRIVATE;
-
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
@@ -24,78 +19,62 @@ import com.kdub.happydays.db.HappyDAO;
 import java.util.List;
 import java.util.Locale;
 
-public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyViewHolder> {
-  private Context context = null;
-  private List<GroceryItem> groceryItems = null;
-  private CartItem groceryItemToAddToCart = null;
-  private SharedPreferences mPreferences;
-  private HappyDAO mHappyDAO;
+public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyViewHolder> {
+  private Context context;
+  private List<CartItem> userCartItemEntries;
+  private HappyDAO mHappyDao = null;
 
-  public HomeItemsAdapter(Context context, List<GroceryItem> groceryItems) {
+  public CartItemAdapter(Context context, List<CartItem> userCartItemEntries) {
     this.context = context;
-    this.groceryItems = groceryItems;
+    this.userCartItemEntries = userCartItemEntries;
+    mHappyDao = Room.databaseBuilder(context, AppDataBase.class, AppDataBase.DATABASE_NAME)
+      .allowMainThreadQueries().build().happyDAO();
   }
 
   @NonNull
   @Override
-  public HomeItemsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+  public CartItemAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     LayoutInflater inflater = LayoutInflater.from(context);
-    View view = inflater.inflate(R.layout.home_item, parent, false);
 
-    return new HomeItemsAdapter.MyViewHolder(view);
+    View view = inflater.inflate(R.layout.cart_item, parent, false);
+
+    return new CartItemAdapter.MyViewHolder(view);
   }
 
-  // TODO: find a fix so i don't have to supresslint here
-  @SuppressLint("SetTextI18n")
   @Override
-  public void onBindViewHolder(@NonNull HomeItemsAdapter.MyViewHolder holder, int position) {
-    holder.itemPicture.setImageResource(groceryItems.get(position).getItemImage());
-    holder.itemName.setText(beautifyItemName(groceryItems.get(position).getName()));
-    holder.itemDenomination.setText(beautifyItemQuantityAndDenomination(groceryItems.get(position).getQuantity(), groceryItems.get(position).getDenomination()));
-    holder.itemPrice.setText(beautifyItemPrice(groceryItems.get(position).getPrice()));
-    holder.itemEntire.setOnClickListener(new View.OnClickListener() {
+  public void onBindViewHolder(@NonNull CartItemAdapter.MyViewHolder holder, int position) {
+    // TODO: ability to remove an item, right now we are able to go < -1
+    int itemId = userCartItemEntries.get(position).getGroceryItemId();
+
+    GroceryItem groceryItem = mHappyDao.getGroceryItemById(itemId);
+
+    holder.cartItemImage.setImageResource(groceryItem.getItemImage());
+    holder.cartItemName.setText(beautifyItemName(groceryItem.getName()));
+    holder.cartItemDenomination.setText(beautifyItemQuantityAndDenomination(groceryItem.getQuantity(), groceryItem.getDenomination()));
+    holder.cartItemPrice.setText(beautifyItemPrice(groceryItem.getPrice()));
+    holder.cartItemAmountOfItem.setText(howManyGroceryItemInCart(position));
+    
+    holder.addButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        // TODO: code to add to cart here (when clicked on the orange plus button
-        Toast.makeText(context, "entire item clicked", Toast.LENGTH_SHORT).show();
+        userCartItemEntries.get(position).setHowManyGroceryItemInCart(userCartItemEntries.get(position).getHowManyGroceryItemInCart() + 1);
+        mHappyDao.update(userCartItemEntries.get(position));
+        holder.cartItemAmountOfItem.setText(howManyGroceryItemInCart(position));
       }
     });
 
-    holder.itemAddButton.setOnClickListener(new View.OnClickListener() {
+    holder.removeButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        // TODO: when functioning, and if you have time, refactor into it's own methods
-        mPreferences = context.getSharedPreferences("session", MODE_PRIVATE);
-        mHappyDAO = Room.databaseBuilder(context, AppDataBase.class, AppDataBase.DATABASE_NAME)
-          .allowMainThreadQueries().build().happyDAO();
-
-        groceryItemToAddToCart = new CartItem(mPreferences.getInt("userId", 0), groceryItems.get(position).getGroceryItemId());
-
-        List<CartItem> allUserEntriesInCartDatabase = mHappyDAO.getCartItemsByUserId(mPreferences.getInt("userId", 0));
-
-        // TODO: this is so confusing, desperately needs to be rewritten into seperate methods
-        boolean itemExists = false;
-        int positionWhereItemExist = 0;
-
-        for (int i = 0; i < allUserEntriesInCartDatabase.size(); i++) {
-          if (allUserEntriesInCartDatabase.get(i).equals(groceryItemToAddToCart)) {
-            itemExists = true;
-            positionWhereItemExist = i;
-            break;
-          }
-        }
-
-        if (!itemExists) {
-          mHappyDAO.insert(groceryItemToAddToCart);
-        }
-        else {
-          // lmao these names suck
-          allUserEntriesInCartDatabase.get(positionWhereItemExist).setHowManyGroceryItemInCart(allUserEntriesInCartDatabase.get(positionWhereItemExist).getHowManyGroceryItemInCart() + 1);
-          mHappyDAO.update(allUserEntriesInCartDatabase.get(positionWhereItemExist));
-        }
-
+        userCartItemEntries.get(position).setHowManyGroceryItemInCart(userCartItemEntries.get(position).getHowManyGroceryItemInCart() - 1);
+        mHappyDao.update(userCartItemEntries.get(position));
+        holder.cartItemAmountOfItem.setText(howManyGroceryItemInCart(position));
       }
     });
+  }
+
+  private String howManyGroceryItemInCart(int position) {
+    return String.valueOf(userCartItemEntries.get(position).getHowManyGroceryItemInCart());
   }
 
   private String beautifyItemPrice(Double beautifyThisPrice) {
@@ -164,26 +143,28 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
 
   @Override
   public int getItemCount() {
-    return groceryItems.size();
+    return userCartItemEntries.size();
   }
 
   public static class MyViewHolder extends RecyclerView.ViewHolder {
-    RelativeLayout itemEntire;
-    ImageView itemPicture;
-    TextView itemName;
-    TextView itemDenomination;
-    TextView itemPrice;
-    ImageView itemAddButton;
+    ImageView cartItemImage;
+    TextView cartItemName;
+    TextView cartItemDenomination;
+    TextView cartItemPrice;
+    TextView cartItemAmountOfItem;
+    ImageView addButton;
+    ImageView removeButton;
 
     public MyViewHolder(@NonNull View itemView) {
       super(itemView);
 
-      itemEntire = itemView.findViewById(R.id.recycle_view_relative_layout);
-      itemPicture = itemView.findViewById(R.id.recycle_item_picture);
-      itemName = itemView.findViewById(R.id.recycle_item_name);
-      itemDenomination = itemView.findViewById(R.id.recycle_item_denomination);
-      itemPrice = itemView.findViewById(R.id.recycle_item_price);
-      itemAddButton = itemView.findViewById(R.id.recycle_item_add_button);
+      cartItemImage = itemView.findViewById(R.id.cart_recycle_view_relative_layout_item_image);
+      cartItemName = itemView.findViewById(R.id.cart_recycle_view_relative_layout_item_name);
+      cartItemDenomination = itemView.findViewById(R.id.cart_recycle_view_relative_layout_item_denomination);
+      cartItemPrice = itemView.findViewById(R.id.cart_recycle_view_relative_layout_item_price);
+      cartItemAmountOfItem = itemView.findViewById(R.id.cart_recycle_view_amount_in_cart);
+      addButton = itemView.findViewById(R.id.cart_recycle_view_relative_layout_item_add_button);
+      removeButton = itemView.findViewById(R.id.cart_recycle_view_relative_layout_item_remove_button);
     }
   }
 }
