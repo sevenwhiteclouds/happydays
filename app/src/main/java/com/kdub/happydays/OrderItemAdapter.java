@@ -208,7 +208,6 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.MyVi
 
     CardView entireOrderButton = itemView.findViewById(R.id.orders_card_view_recyle);
     TextView orderNumber = itemView.findViewById(R.id.orders_card_view_order_number);
-    TextView storeNameOrCustomerName = itemView.findViewById(R.id.orders_card_view_store_name);
     TextView orderTotalItems = itemView.findViewById(R.id.orders_card_view_amount_items);
     TextView orderItemOne = itemView.findViewById(R.id.orders_card_view_item_one);
     TextView orderItemTwo = itemView.findViewById(R.id.orders_card_view_item_two);

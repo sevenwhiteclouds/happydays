@@ -36,8 +36,7 @@ public class AccountSettingsAdminFragment extends Fragment {
     manageUsersButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        // TODO: write the action to see all users
-        Toast.makeText(getContext(), "not yet implemented", Toast.LENGTH_SHORT).show();
+        fragmentSwitch(new ManageUsersAdminFragment());
       }
     });
 

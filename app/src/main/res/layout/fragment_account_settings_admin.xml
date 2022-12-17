@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    tools:context=".AccountSettingsAdminFragment" >
+    android:background="@color/white"
+    tools:context=".AccountSettingsAdminFragment">
 
     <TextView
         android:id="@+id/settings_title_header_admin"

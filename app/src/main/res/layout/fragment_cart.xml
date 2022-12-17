@@ -103,7 +103,8 @@
         android:visibility="gone"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="20dp"
-        app:cardElevation="4dp"
+        app:cardElevation="3dp"
+        app:cardMaxElevation="3dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recycle_view_cart">
@@ -205,7 +206,8 @@
         android:visibility="gone"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="20dp"
-        app:cardElevation="4dp"
+        app:cardElevation="3dp"
+        app:cardMaxElevation="3dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/order_info_card_view">

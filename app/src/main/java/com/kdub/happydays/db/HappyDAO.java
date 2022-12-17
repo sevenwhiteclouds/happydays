@@ -46,6 +46,9 @@ public interface HappyDAO {
   @Query("DELETE FROM " + AppDataBase.USER_TABLE + " WHERE mUserId = :userId ")
   void deleteUserByUserId(int userId);
 
+  @Query("SELECT * FROM " + AppDataBase.USER_TABLE + " WHERE mUserId != :userId ")
+  List<User> getAllUsersExcept(int userId);
+
   // starting here is all the grocery item stuff
   @Insert
   void insert(GroceryItem... groceryItems);
