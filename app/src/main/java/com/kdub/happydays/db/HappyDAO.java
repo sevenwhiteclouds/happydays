@@ -102,4 +102,7 @@ public interface HappyDAO {
 
   @Query("DELETE FROM " + AppDataBase.ORDERS_TABLE + " WHERE mUserId = :userId ")
   void deleteAllOrdersByUserId(int userId);
+
+  @Query("SELECT * FROM " + AppDataBase.ORDERS_TABLE + " WHERE mOrderStatus = :pendingOrders " + " ORDER BY mOrderEntryId DESC ")
+  List<Order> getAllPendingOrderDesc(int pendingOrders);
 }

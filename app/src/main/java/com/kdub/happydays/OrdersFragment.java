@@ -28,23 +28,52 @@ public class OrdersFragment extends Fragment {
                            Bundle savedInstanceState) {
     mPreferences = getContext().getSharedPreferences("session", MODE_PRIVATE);
     mHappyDAO = Room.databaseBuilder(getActivity(), AppDataBase.class, AppDataBase.DATABASE_NAME).allowMainThreadQueries().build().happyDAO();
+    boolean isAdmin = mPreferences.getBoolean("isAdmin", false);
     userId = mPreferences.getInt("userId", 0);
     view = inflater.inflate(R.layout.fragment_orders, container, false);
 
-    if (mHappyDAO.getOrdersByUserId(userId).size() == 0) {
-      emptyOrders();
+    if (!isAdmin) {
+      if (mHappyDAO.getOrdersByUserId(userId).size() == 0) {
+        emptyOrders();
+      }
+      else {
+        ordersNotEmpty();
+        RecyclerView recyclerView = view.findViewById(R.id.orders_recycle_view);
+
+        OrderItemAdapter adapter = new OrderItemAdapter(getContext(), mHappyDAO.getOrdersByUserIdDesc(userId));
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
+      }
     }
+    // here is where the admin order recycler view goes
     else {
-      ordersNotEmpty();
-      RecyclerView recyclerView = view.findViewById(R.id.orders_recycle_view);
-
-      OrderItemAdapter adapter = new OrderItemAdapter(getContext(), mHappyDAO.getOrdersByUserIdDesc(userId));
-
-      recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-      recyclerView.setAdapter(adapter);
+      if (mHappyDAO.getAllPendingOrderDesc(0).size() == 0) {
+        emptyOrdersAdmin();
+      }
+      else {
+        ordersNotEmptyAdmin();
+//        RecyclerView recyclerView = view.findViewById(R.id.orders_recycle_view);
+//
+//        OrderItemAdapter adapter = new OrderItemAdapter(getContext(), mHappyDAO.getOrdersByUserIdDesc(userId));
+//
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//        recyclerView.setAdapter(adapter);
+      }
     }
 
     return view;
+  }
+  private void emptyOrdersAdmin() {
+    view.findViewById(R.id.orders_cleared_admin).setVisibility(View.VISIBLE);
+    view.findViewById(R.id.orders_cleared_text_admin).setVisibility(View.VISIBLE);
+    view.findViewById(R.id.orders_cleared_text_two_admin).setVisibility(View.VISIBLE);
+    view.findViewById(R.id.orders_cleared_text_three_admin).setVisibility(View.VISIBLE);
+  }
+
+  private void ordersNotEmptyAdmin() {
+    view.findViewById(R.id.orders_header_text_admin).setVisibility(View.VISIBLE);
+    view.findViewById(R.id.orders_recycle_view_admin).setVisibility(View.VISIBLE);
   }
 
   private void emptyOrders() {
