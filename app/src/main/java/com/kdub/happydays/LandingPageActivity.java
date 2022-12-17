@@ -26,7 +26,6 @@ public class LandingPageActivity extends AppCompatActivity {
     setContentView(mActivityLandingPageBinding.getRoot());
 
     mActivityLandingPageBinding.bottomNavigationView.setOnItemSelectedListener(item -> {
-
       switch (item.getItemId()) {
         case R.id.home: {
           replaceFragment(new HomeFragment());

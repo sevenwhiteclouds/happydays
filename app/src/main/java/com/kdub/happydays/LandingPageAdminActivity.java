@@ -24,11 +24,11 @@ public class LandingPageAdminActivity extends AppCompatActivity {
     getDatabase();
 
     super.onCreate(savedInstanceState);
+    // TODO: write the initial replace fragment to the admin home
     mActivityLandingPageAdminBinding = ActivityLandingPageAdminBinding.inflate(getLayoutInflater());
     setContentView(mActivityLandingPageAdminBinding.getRoot());
 
     mActivityLandingPageAdminBinding.bottomNavigationViewAdmin.setOnItemSelectedListener(item -> {
-
       switch (item.getItemId()) {
         case R.id.home_admin: {
           // TODO: add the code for home
@@ -43,7 +43,7 @@ public class LandingPageAdminActivity extends AppCompatActivity {
           break;
         }
         case R.id.account_settings_admin: {
-          // TODO: add the code for account settings
+          replaceFragment(new AccountSettingsAdminFragment());
           break;
         }
       }

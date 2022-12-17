@@ -1,5 +1,8 @@
 package com.kdub.happydays;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,8 +18,11 @@ public class AboutFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_about, container, false);
+
+    SharedPreferences preferences = getActivity().getSharedPreferences("session", MODE_PRIVATE);
+
+    boolean isAdmin = preferences.getBoolean("isAdmin", false);
 
     Button back = view.findViewById(R.id.back_button_about);
 
@@ -24,7 +30,12 @@ public class AboutFragment extends Fragment {
       @Override
       public void onClick(View view) {
         FragmentTransaction fragment = getActivity().getSupportFragmentManager().beginTransaction();
-        fragment.replace(R.id.frame_layout_normal, new AccountSettingsFragment());
+        if (isAdmin) {
+          fragment.replace(R.id.frame_layout_admin, new AccountSettingsAdminFragment());
+        }
+        else {
+          fragment.replace(R.id.frame_layout_normal, new AccountSettingsFragment());
+        }
         fragment.commit();
       }
     });

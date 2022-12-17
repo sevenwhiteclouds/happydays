@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    tools:context=".AccountSettingsAdminFragment" >
+
+    <TextView
+        android:id="@+id/settings_title_header_admin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="133dp"
+        android:text="Admin Settings"
+        android:textColor="@color/third"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/profile_button_layout_admin"
+        android:layout_width="331dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="88dp"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_title_header_admin">
+
+        <ImageView
+            android:id="@+id/profile_button_icon_admin"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/round_button_background"
+            android:clickable="false"
+            android:padding="8dp"
+            android:src="@drawable/ic_round_person_white_24" />
+
+        <TextView
+            android:id="@+id/profile_button_text_admin"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="30dp"
+            android:layout_toEndOf="@id/profile_button_icon_admin"
+            android:alpha="0.79"
+            android:clickable="false"
+            android:text="Profile"
+            android:textColor="@color/third"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/profile_button_text_admin"
+            android:clickable="false"
+            android:src="@drawable/ic_round_chevron_right_24" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/manage_users_button_layout_admin"
+        android:layout_width="331dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="44dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_button_layout_admin">
+
+        <ImageView
+            android:id="@+id/manage_users_button_icon_admin"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/round_button_background"
+            android:padding="8dp"
+            android:src="@drawable/ic_round_supervised_user_circle_24" />
+
+        <TextView
+            android:id="@+id/manage_users_button_icon_button_text_admin"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="30dp"
+            android:layout_toEndOf="@id/manage_users_button_icon_admin"
+            android:alpha="0.79"
+            android:text="Manage Users"
+            android:textColor="@color/third"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/manage_users_button_icon_button_text_admin"
+            android:src="@drawable/ic_round_chevron_right_24" />
+    </RelativeLayout>
+
+    <!-- about button here -->
+    <RelativeLayout
+        android:id="@+id/about_button_layout_admin"
+        android:layout_width="331dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="44dp"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/manage_users_button_layout_admin">
+
+        <ImageView
+            android:id="@+id/about_button_icon_admin"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/round_button_background"
+            android:clickable="false"
+            android:padding="8dp"
+            android:src="@drawable/ic_outline_read_more_24" />
+
+        <TextView
+            android:id="@+id/about_button_text_admin"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="30dp"
+            android:layout_toEndOf="@id/about_button_icon_admin"
+            android:alpha="0.79"
+            android:clickable="false"
+            android:text="About"
+            android:textColor="@color/third"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/about_button_text_admin"
+            android:clickable="false"
+            android:src="@drawable/ic_round_chevron_right_24" />
+
+    </RelativeLayout>
+
+    <!-- logout button here -->
+    <RelativeLayout
+        android:id="@+id/logout_button_layout_admin"
+        android:layout_width="331dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="44dp"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/about_button_layout_admin">
+
+        <ImageView
+            android:id="@+id/logout_button_icon_admin"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/round_button_background"
+            android:clickable="false"
+            android:padding="8dp"
+            android:src="@drawable/ic_round_logout_24" />
+
+        <TextView
+            android:id="@+id/logout_button_text_admin"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="30dp"
+            android:layout_toEndOf="@id/logout_button_icon_admin"
+            android:alpha="0.79"
+            android:clickable="false"
+            android:text="Logout"
+            android:textColor="@color/third"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/logout_button_text_admin"
+            android:clickable="false"
+            android:src="@drawable/ic_round_chevron_right_24" />
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

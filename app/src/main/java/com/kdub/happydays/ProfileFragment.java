@@ -29,7 +29,7 @@ public class ProfileFragment extends Fragment {
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-    HappyDAO mLoginDao = Room.databaseBuilder(getActivity(), AppDataBase.class, AppDataBase.DATABASE_NAME)
+    HappyDAO happyDAO = Room.databaseBuilder(getActivity(), AppDataBase.class, AppDataBase.DATABASE_NAME)
       .allowMainThreadQueries().build().happyDAO();
 
     EditText firstName = view.findViewById(R.id.show_change_first_name);
@@ -39,8 +39,9 @@ public class ProfileFragment extends Fragment {
     SharedPreferences preferences = getActivity().getSharedPreferences("session", MODE_PRIVATE);
 
     int userId = preferences.getInt("userId", 0);
+    boolean isAdmin = preferences.getBoolean("isAdmin", false);
 
-    user = mLoginDao.getUserByUserId(userId);
+    user = happyDAO.getUserByUserId(userId);
 
     Button back = view.findViewById(R.id.back_button_profile);
     Button saveChanges = view.findViewById(R.id.save_button_profile);
@@ -53,7 +54,16 @@ public class ProfileFragment extends Fragment {
       @Override
       public void onClick(View view) {
         FragmentTransaction fragment = getActivity().getSupportFragmentManager().beginTransaction();
-        fragment.replace(R.id.frame_layout_normal, new AccountSettingsFragment());
+
+        // feels like duck tape work but this is so that i can use this same profile fragment
+        // and return to the correct fragment
+        if (isAdmin) {
+          fragment.replace(R.id.frame_layout_admin, new AccountSettingsAdminFragment());
+        }
+        else {
+          fragment.replace(R.id.frame_layout_normal, new AccountSettingsFragment());
+        }
+
         fragment.commit();
       }
     });
@@ -69,11 +79,20 @@ public class ProfileFragment extends Fragment {
         user.setLastName(lastName.getText().toString());
         user.setPassword(passWord.getText().toString());
 
-        mLoginDao.update(user);
+        happyDAO.update(user);
 
         Toast.makeText(getActivity(), "Happy Days! Changes have been saved. :)", Toast.LENGTH_SHORT).show();
         FragmentTransaction fragment = getActivity().getSupportFragmentManager().beginTransaction();
-        fragment.replace(R.id.frame_layout_normal, new AccountSettingsFragment());
+
+        // feels like duck tape work but this is so that i can use this same profile fragment
+        // and return to the correct fragment
+        if (isAdmin) {
+          fragment.replace(R.id.frame_layout_admin, new AccountSettingsAdminFragment());
+        }
+        else {
+          fragment.replace(R.id.frame_layout_normal, new AccountSettingsFragment());
+        }
+
         fragment.commit();
       }
     });
