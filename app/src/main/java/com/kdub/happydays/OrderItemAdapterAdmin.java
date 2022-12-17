@@ -21,12 +21,12 @@ import java.math.RoundingMode;
 import java.util.List;
 import java.util.Locale;
 
-public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.MyViewHolder> {
+public class OrderItemAdapterAdmin extends RecyclerView.Adapter<OrderItemAdapterAdmin.MyViewHolder> {
   private Context context;
   private HappyDAO mHappyDao;
   private List<Order> userOrders;
 
-  public OrderItemAdapter(Context context, List<Order> userOrders) {
+  public OrderItemAdapterAdmin(Context context, List<Order> userOrders) {
     this.context = context;
     mHappyDao = Room.databaseBuilder(context, AppDataBase.class, AppDataBase.DATABASE_NAME)
       .allowMainThreadQueries().build().happyDAO();
@@ -35,19 +35,22 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.MyVi
 
   @NonNull
   @Override
-  public OrderItemAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+  public OrderItemAdapterAdmin.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     LayoutInflater inflater = LayoutInflater.from(context);
 
-    View view = inflater.inflate(R.layout.order_item, parent, false);
+    View view = inflater.inflate(R.layout.order_item_admin, parent, false);
 
-    return new OrderItemAdapter.MyViewHolder(view);
+    return new OrderItemAdapterAdmin.MyViewHolder(view);
   }
 
   @Override
-  public void onBindViewHolder(@NonNull OrderItemAdapter.MyViewHolder holder, int position) {
+  public void onBindViewHolder(@NonNull OrderItemAdapterAdmin.MyViewHolder holder, int position) {
+    User user = mHappyDao.getUserByUserId(userOrders.get(position).getUserId());
+
+    holder.storeNameOrCustomerName.setText(beautifyNameAndUsername(user.getFirstName(), user.getUserName()));
+
     String[] itemsSplit = userOrders.get(position).getItems().split(",");
     String[] amountSplit = userOrders.get(position).getAmountOfItems().split(",");
-
 
     if (itemsSplit.length == 1) {
       String itemOne = beautifyItemName(mHappyDao.getGroceryItemById(Integer.parseInt(itemsSplit[0])).getName()) +  " x " + beautifyItemQuantity(Double.valueOf(amountSplit[0]));
@@ -84,29 +87,38 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.MyVi
     holder.orderTotalItems.setText(totalItemInOrder);
     holder.orderTotal.setText(beautifyFinalTotal(userOrders.get(position).getTotalOrderPrice()));
 
-    setStatusOfOrder(holder, position);
+    holder.completeButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        userOrders.get(position).setOrderStatus(1);
+        mHappyDao.update(userOrders.get(position));
+        Toast.makeText(context, "Order completed", Toast.LENGTH_SHORT).show();
+      }
+    });
 
     holder.cancelButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        int orderStatus = userOrders.get(position).getOrderStatus();
-
-        if (orderStatus == -1) {
-          Toast.makeText(context, "This order has already been canceled", Toast.LENGTH_SHORT).show();
-        }
-        else if (orderStatus == 1) {
-          Toast.makeText(context, "This order has already been completed", Toast.LENGTH_SHORT).show();
-        }
-        else {
-          userOrders.get(position).setOrderStatus(-1);
-          mHappyDao.update(userOrders.get(position));
-          setStatusOfOrder(holder, position);
-          Toast.makeText(context, "This order has been canceled", Toast.LENGTH_SHORT).show();
-        }
+        userOrders.get(position).setOrderStatus(-1);
+        mHappyDao.update(userOrders.get(position));
+        Toast.makeText(context, "Order canceled", Toast.LENGTH_SHORT).show();
       }
     });
   }
 
+
+  private String beautifyNameAndUsername(String name, String username) {
+    StringBuilder beautifiedNameUsername = new StringBuilder();
+
+    name = name.toLowerCase(Locale.ROOT);
+    name = name.substring(0, 1).toUpperCase() + name.substring(1);
+
+    username = username.toLowerCase(Locale.ROOT);
+
+    beautifiedNameUsername.append(name).append(" (").append(username).append(")");
+
+    return beautifiedNameUsername.toString();
+  }
 
   private String beautifyItemQuantity(Double beautifyThisItemQuantity ) {
     String[] splitQuantity = beautifyThisItemQuantity.toString().split("[.]");
@@ -147,26 +159,6 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.MyVi
     return beautifiedName.toString();
   }
 
-  private void setStatusOfOrder(OrderItemAdapter.MyViewHolder holder, int position) {
-    if (userOrders.get(position).getOrderStatus() == -1) {
-      String canceled ="Canceled";
-      holder.orderStatusText.setTextColor(Color.parseColor("#FFF0484B"));
-      holder.orderStatusText.setText(canceled);
-      holder.orderStatus.setCardBackgroundColor(Color.parseColor("#40F0484B"));
-    }
-    else if (userOrders.get(position).getOrderStatus() == 0) {
-      String pending ="Pending";
-      holder.orderStatusText.setTextColor(Color.parseColor("#FFFDBD1A"));
-      holder.orderStatusText.setText(pending);
-      holder.orderStatus.setCardBackgroundColor(Color.parseColor("#40FDBD1A"));
-    }
-    else {
-      String complete ="Completed";
-      holder.orderStatusText.setTextColor(Color.parseColor("#FF3ED99A"));
-      holder.orderStatusText.setText(complete);
-      holder.orderStatus.setCardBackgroundColor(Color.parseColor("#403ED99A"));
-    }
-  }
 
   private String beautifyFinalTotal(Double total) {
     String roundedTotal = String.valueOf(roundTwoDecimals(total, 2));
@@ -206,17 +198,16 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.MyVi
 
   public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-    CardView entireOrderButton = itemView.findViewById(R.id.orders_card_view_recyle);
-    TextView orderNumber = itemView.findViewById(R.id.orders_card_view_order_number);
-    TextView storeNameOrCustomerName = itemView.findViewById(R.id.orders_card_view_store_name);
-    TextView orderTotalItems = itemView.findViewById(R.id.orders_card_view_amount_items);
-    TextView orderItemOne = itemView.findViewById(R.id.orders_card_view_item_one);
-    TextView orderItemTwo = itemView.findViewById(R.id.orders_card_view_item_two);
-    TextView orderItemThree = itemView.findViewById(R.id.orders_card_view_item_three);
-    TextView orderTotal = itemView.findViewById(R.id.orders_card_view_total_order_price);
-    CardView cancelButton = itemView.findViewById(R.id.orders_card_view_cancel);
-    CardView orderStatus = itemView.findViewById(R.id.orders_card_view_order_status);
-    TextView orderStatusText = itemView.findViewById(R.id.orders_card_view_order_status_text);
+    CardView entireOrderButton = itemView.findViewById(R.id.orders_card_view_recyle_admin);
+    TextView orderNumber = itemView.findViewById(R.id.orders_card_view_order_number_admin);
+    TextView storeNameOrCustomerName = itemView.findViewById(R.id.orders_card_view_customer_info_name_admin);
+    TextView orderTotalItems = itemView.findViewById(R.id.orders_card_view_amount_items_admin);
+    TextView orderItemOne = itemView.findViewById(R.id.orders_card_view_item_one_admin);
+    TextView orderItemTwo = itemView.findViewById(R.id.orders_card_view_item_two_admin);
+    TextView orderItemThree = itemView.findViewById(R.id.orders_card_view_item_three_admin);
+    TextView orderTotal = itemView.findViewById(R.id.orders_card_view_total_order_price_admin);
+    CardView cancelButton = itemView.findViewById(R.id.orders_card_view_cancel_admin);
+    CardView completeButton = itemView.findViewById(R.id.orders_card_view_complete_admin);
 
 
     public MyViewHolder(@NonNull View itemView) {

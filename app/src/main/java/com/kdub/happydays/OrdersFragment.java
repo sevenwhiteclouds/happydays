@@ -46,19 +46,21 @@ public class OrdersFragment extends Fragment {
         recyclerView.setAdapter(adapter);
       }
     }
-    // here is where the admin order recycler view goes
+    // 0 == pending orders
+    // 1 == completed orders
+    // -1 ==  canceled orders
     else {
       if (mHappyDAO.getAllPendingOrderDesc(0).size() == 0) {
         emptyOrdersAdmin();
       }
       else {
         ordersNotEmptyAdmin();
-//        RecyclerView recyclerView = view.findViewById(R.id.orders_recycle_view);
-//
-//        OrderItemAdapter adapter = new OrderItemAdapter(getContext(), mHappyDAO.getOrdersByUserIdDesc(userId));
-//
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        recyclerView.setAdapter(adapter);
+        RecyclerView recyclerView = view.findViewById(R.id.orders_recycle_view_admin);
+
+        OrderItemAdapterAdmin adapter = new OrderItemAdapterAdmin(getContext(), mHappyDAO.getAllPendingOrderDesc(0));
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
       }
     }
 
