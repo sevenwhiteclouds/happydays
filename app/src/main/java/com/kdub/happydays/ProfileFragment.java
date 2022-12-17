@@ -53,7 +53,7 @@ public class ProfileFragment extends Fragment {
       @Override
       public void onClick(View view) {
         FragmentTransaction fragment = getActivity().getSupportFragmentManager().beginTransaction();
-        fragment.replace(R.id.frame_layout, new AccountSettingsFragment());
+        fragment.replace(R.id.frame_layout_admin, new AccountSettingsFragment());
         fragment.commit();
       }
     });
@@ -73,7 +73,7 @@ public class ProfileFragment extends Fragment {
 
         Toast.makeText(getActivity(), "Happy Days! Changes have been saved. :)", Toast.LENGTH_SHORT).show();
         FragmentTransaction fragment = getActivity().getSupportFragmentManager().beginTransaction();
-        fragment.replace(R.id.frame_layout, new AccountSettingsFragment());
+        fragment.replace(R.id.frame_layout_admin, new AccountSettingsFragment());
         fragment.commit();
       }
     });

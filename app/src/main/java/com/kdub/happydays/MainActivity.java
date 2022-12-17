@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
   private HappyDAO mHappyDao;
 
+  private SharedPreferences mPreferences;
+
   // TODO: IMPORTANT if you have time, fix the screen rotation across whole app
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +47,24 @@ public class MainActivity extends AppCompatActivity {
     mButtonLogin = mActivityMainBinding.signInButton;
     mButtonRegister = mActivityMainBinding.createAccountButton;
 
+    // setting the shared preferences
+    mPreferences = getSharedPreferences("session", MODE_PRIVATE);
+
     getDatabase();
 
     if (sessionExists()) {
-      Intent intent = new Intent(getApplicationContext(), LandingPageActivity.class);
-      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-      startActivity(intent);
+      if (mPreferences.getBoolean("isAdmin", false)) {
+        Intent intent = new Intent(getApplicationContext(), LandingPageAdminActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+      }
+      else {
+        Intent intent = new Intent(getApplicationContext(), LandingPageActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+      }
     }
 
     createDefaultUsers();
@@ -78,15 +91,22 @@ public class MainActivity extends AppCompatActivity {
         else if (userId > 0) {
           adminAccount = adminUserCheck(userId);
 
+          Intent intent;
+          if (adminAccount) {
+            intent = new Intent(getApplicationContext(), LandingPageAdminActivity.class);
+          }
+          else {
+            intent = new Intent(getApplicationContext(), LandingPageActivity.class);
+          }
+
           // preparing to take off!
-          Intent intent = new Intent(getApplicationContext(), LandingPageActivity.class);
           intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
           intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
           // saving to shared preferences before starting activity
           saveSession(userId, adminAccount);
 
-          // take off! from line 72 go go go
+          // take off! from line 109 go go go
           startActivity(intent);
         }
       }
@@ -172,7 +192,6 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void saveSession(int userId, boolean isAdmin) {
-    SharedPreferences mPreferences = getSharedPreferences("session", MODE_PRIVATE);
     SharedPreferences.Editor mEditor = mPreferences.edit();
     mEditor.putInt("userId", userId);
     mEditor.putBoolean("isAdmin", isAdmin);
@@ -181,8 +200,6 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private boolean sessionExists() {
-    SharedPreferences mPreferences = getSharedPreferences("session", MODE_PRIVATE);
-
     return mPreferences.contains("userId");
   }
 
@@ -192,8 +209,8 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void createDefaultTaxAmount() {
-    SharedPreferences mPreferences = getSharedPreferences("defaultTaxEntry", MODE_PRIVATE);
-    SharedPreferences.Editor mEditor = mPreferences.edit();
+    SharedPreferences taxEntry = getSharedPreferences("defaultTaxEntry", MODE_PRIVATE);
+    SharedPreferences.Editor mEditor = taxEntry.edit();
     mEditor.putFloat("tax", 0.08f);
     mEditor.apply();
   }

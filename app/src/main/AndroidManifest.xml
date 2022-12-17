@@ -13,6 +13,13 @@
         android:theme="@style/Theme.HappyDays"
         tools:targetApi="31">
         <activity
+            android:name=".LandingPageAdminActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".LandingPageActivity"
             android:exported="false">
             <meta-data

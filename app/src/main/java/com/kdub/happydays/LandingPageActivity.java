@@ -14,7 +14,6 @@ import com.kdub.happydays.db.HappyDAO;
 
 public class LandingPageActivity extends AppCompatActivity {
   private ActivityLandingPageBinding mActivityLandingPageBinding = null;
-
   private HappyDAO mHappyDAO;
 
   @Override
@@ -54,7 +53,7 @@ public class LandingPageActivity extends AppCompatActivity {
   private void replaceFragment(Fragment fragment) {
     FragmentManager fragmentManager = getSupportFragmentManager();
     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-    fragmentTransaction.replace(R.id.frame_layout, fragment);
+    fragmentTransaction.replace(R.id.frame_layout_admin, fragment);
     fragmentTransaction.commit();
   }
 
