@@ -2,13 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/orders_constraint_layout_reycle_parent"
+    android:id="@+id/orders_constraint_layout_reycle_parent_admin"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/orders_card_view_recyle"
+        android:id="@+id/orders_card_view_recyle_admin"
         android:layout_width="0dp"
         android:layout_height="200dp"
         android:layout_marginStart="16dp"
@@ -24,13 +24,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/orders_card_view_child_constraint_layout"
+            android:id="@+id/orders_card_view_child_constraint_layout_admin"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="0dp">
 
             <TextView
-                android:id="@+id/orders_card_view_order_number"
+                android:id="@+id/orders_card_view_order_number_admin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="19dp"
@@ -42,20 +42,20 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/orders_card_view_store_name"
+                android:id="@+id/orders_card_view_customer_info_name_admin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="19dp"
                 android:layout_marginTop="6dp"
-                android:text="HappyDays!"
+                android:text="Keldin (keldin)"
                 android:textColor="#160A12"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/orders_card_view_order_number" />
+                app:layout_constraintTop_toBottomOf="@+id/orders_card_view_order_number_admin" />
 
             <TextView
-                android:id="@+id/orders_card_view_amount_items"
+                android:id="@+id/orders_card_view_amount_items_admin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="19dp"
@@ -64,10 +64,10 @@
                 android:textColor="#53535F"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/orders_card_view_store_name" />
+                app:layout_constraintTop_toBottomOf="@+id/orders_card_view_customer_info_name_admin" />
 
             <TextView
-                android:id="@+id/orders_card_view_item_one"
+                android:id="@+id/orders_card_view_item_one_admin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="19dp"
@@ -77,10 +77,10 @@
                 android:textSize="13sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/orders_card_view_amount_items" />
+                app:layout_constraintTop_toBottomOf="@+id/orders_card_view_amount_items_admin" />
 
             <TextView
-                android:id="@+id/orders_card_view_item_two"
+                android:id="@+id/orders_card_view_item_two_admin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="19dp"
@@ -90,10 +90,10 @@
                 android:textSize="13sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/orders_card_view_item_one" />
+                app:layout_constraintTop_toBottomOf="@+id/orders_card_view_item_one_admin" />
 
             <TextView
-                android:id="@+id/orders_card_view_item_three"
+                android:id="@+id/orders_card_view_item_three_admin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="19dp"
@@ -103,10 +103,10 @@
                 android:textSize="13sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/orders_card_view_item_two" />
+                app:layout_constraintTop_toBottomOf="@id/orders_card_view_item_two_admin" />
 
             <TextView
-                android:id="@+id/orders_card_view_total_order_price"
+                android:id="@+id/orders_card_view_total_order_price_admin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="44dp"
@@ -118,7 +118,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/orders_card_view_cancel"
+                android:id="@+id/orders_card_view_cancel_admin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -129,10 +129,10 @@
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/orders_card_view_item_three">
+                app:layout_constraintTop_toBottomOf="@+id/orders_card_view_item_three_admin">
 
                 <TextView
-                    android:id="@+id/orders_card_view_cancel_text"
+                    android:id="@+id/orders_card_view_cancel_text_admin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="18dp"
@@ -146,33 +146,35 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/orders_card_view_order_status"
+                android:id="@+id/orders_card_view_complete_admin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginBottom="8dp"
-                app:cardBackgroundColor="#40FDBD1A"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#EFEFEF"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/orders_card_view_cancel">
+                app:layout_constraintStart_toEndOf="@+id/orders_card_view_cancel_admin"
+                app:layout_constraintTop_toBottomOf="@+id/orders_card_view_item_three_admin">
 
                 <TextView
-                    android:id="@+id/orders_card_view_order_status_text"
+                    android:id="@+id/orders_card_view_complete_text_admin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="18dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="18dp"
                     android:layout_marginBottom="8dp"
-                    android:text="Completed"
-                    android:textColor="#FDBD1A"
+                    android:text="Complete"
+                    android:textColor="#585964"
                     android:textStyle="bold" />
 
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/orders_card_view_more_info"
+                android:id="@+id/orders_card_view_more_info_admin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="19dp"

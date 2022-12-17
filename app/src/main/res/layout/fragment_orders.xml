@@ -9,6 +9,90 @@
     tools:context=".OrdersFragment">
 
     <TextView
+        android:id="@+id/orders_header_text_admin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:text="Active Orders"
+        android:textColor="@color/third"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/orders_recycle_view_admin"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orders_header_text_admin"
+        tools:listitem="@layout/order_item_admin" />
+
+    <TextView
+        android:id="@+id/orders_cleared_admin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="252dp"
+        android:text="🥳"
+        android:textSize="100sp"
+        android:visibility="gone"
+        app:flow_verticalBias="0.062"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/orders_cleared_text_admin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Woohoo!"
+        android:textColor="@color/secondary"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orders_cleared_admin" />
+
+    <TextView
+        android:id="@+id/orders_cleared_text_two_admin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="All Orders Cleared"
+        android:textColor="@color/secondary"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orders_cleared_text_admin" />
+
+    <TextView
+        android:id="@+id/orders_cleared_text_three_admin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="304dp"
+        android:text="Enjoy the rest of your day."
+        android:textColor="@color/third"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orders_cleared_text_two_admin"
+        app:layout_constraintVertical_bias="0.462" />
+
+    <TextView
         android:id="@+id/orders_header_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,7 +115,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/orders_header_text"
-        tools:listitem="@layout/order_item" />
+        tools:listitem="@layout/order_item">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <TextView
         android:id="@+id/orders_no_order_emoji"
