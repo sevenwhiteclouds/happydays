@@ -19,8 +19,6 @@ public class LandingPageActivity extends AppCompatActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    int userID = getIntent().getIntExtra("userID", 0);
-    boolean adminAccount = getIntent().getBooleanExtra("adminAccount", false);
     getDatabase();
 
     super.onCreate(savedInstanceState);
@@ -51,7 +49,6 @@ public class LandingPageActivity extends AppCompatActivity {
 
       return true;
     });
-
   }
 
   private void replaceFragment(Fragment fragment) {
