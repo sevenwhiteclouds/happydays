@@ -64,12 +64,12 @@ public class ManageUsersAdapterAdmin extends RecyclerView.Adapter<ManageUsersAda
         if (user.getIsAdmin() == 1) {
           user.setIsAdmin(0);
           mUsers.get(position).setIsAdmin(0);
-          Toast.makeText(context, mUsers.get(position).getUserName() + " set as normal.", Toast.LENGTH_LONG).show();
+          Toast.makeText(context, mUsers.get(position).getUserName() + " has been set as normal.", Toast.LENGTH_LONG).show();
         }
         else {
           user.setIsAdmin(1);
           mUsers.get(position).setIsAdmin(1);
-          Toast.makeText(context, mUsers.get(position).getUserName() + " set as an administrator.", Toast.LENGTH_LONG).show();
+          Toast.makeText(context, mUsers.get(position).getUserName() + " has been set as an administrator.", Toast.LENGTH_LONG).show();
         }
 
         mHappyDAO.update(user);
@@ -80,14 +80,24 @@ public class ManageUsersAdapterAdmin extends RecyclerView.Adapter<ManageUsersAda
     holder.resetPassButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
+        User user = mHappyDAO.getUserByUserId(mUsers.get(position).getUserId());
 
+        if (user.getPassword().equals("default")) {
+          Toast.makeText(context, mUsers.get(position).getUserName() + "'s password has already been reset to default.", Toast.LENGTH_LONG).show();
+        }
+        else {
+          user = mHappyDAO.getUserByUserId(mUsers.get(position).getUserId());
+          user.setPassword("default");
+          mHappyDAO.update(user);
+          Toast.makeText(context, mUsers.get(position).getUserName() + "'s password has been set to default.", Toast.LENGTH_LONG).show();
+        }
       }
     });
 
     holder.deleteButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        Toast.makeText(context, mUsers.get(position).getUserName() + " deleted.", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, mUsers.get(position).getUserName() + " has been deleted.", Toast.LENGTH_LONG).show();
         deleteAccount(mUsers.get(position).getUserId());
         mUsers.remove(position);
         notifyItemRemoved(position);
