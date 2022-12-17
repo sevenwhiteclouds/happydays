@@ -252,13 +252,19 @@ public class HomeFragment extends Fragment {
     TextView homeHeadingText = view.findViewById(R.id.home_heading_text);
     TextView subHeadingText = view.findViewById(R.id.home_sub_heading_text_one);
 
-    String subHeadingWord1 = "it's ";
-    String subHeadingWord2 = "<b><font color='#ff5522'>cooking</font></b>";
-    String subHeadingWord3 = " time!";
+    StringBuilder subHeadingMessage = new StringBuilder();
+    subHeadingMessage.append("it's ");
+    if (!preferences.getBoolean("isAdmin", false)) {
+      subHeadingMessage.append("<b><font color='#ff5522'>cooking</font></b>");
+    }
+    else {
+      subHeadingMessage.append("<b><font color='#ff5522'>working</font></b>");
+    }
+    subHeadingMessage.append(" time!");
 
     // not really happy  about using html.fromhtml considering i had to do hack
     // to get it to stop giving me the deprecated message. find a better solution?
-    subHeadingText.setText(Html.fromHtml(subHeadingWord1 + subHeadingWord2 + subHeadingWord3, HtmlCompat.FROM_HTML_MODE_LEGACY));
+    subHeadingText.setText(Html.fromHtml(subHeadingMessage.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY));
 
     int userId = preferences.getInt("userId", 0);
     String firstName = mHappyDao.getUserByUserId(userId).getFirstName();

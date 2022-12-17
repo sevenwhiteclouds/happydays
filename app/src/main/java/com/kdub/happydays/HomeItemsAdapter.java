@@ -34,6 +34,7 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
   public HomeItemsAdapter(Context context, List<GroceryItem> groceryItems) {
     this.context = context;
     this.groceryItems = groceryItems;
+    mPreferences = context.getSharedPreferences("session", MODE_PRIVATE);
   }
 
   @NonNull
@@ -61,42 +62,44 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
       }
     });
 
-    holder.itemAddButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        // TODO: refactor into separate methods?
-        mPreferences = context.getSharedPreferences("session", MODE_PRIVATE);
-        mHappyDAO = Room.databaseBuilder(context, AppDataBase.class, AppDataBase.DATABASE_NAME)
-          .allowMainThreadQueries().build().happyDAO();
+    if (mPreferences.getBoolean("isAdmin", false)) {
+      holder.itemAddButton.setVisibility(View.GONE);
+    }
+    else {
+      holder.itemAddButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+          mHappyDAO = Room.databaseBuilder(context, AppDataBase.class, AppDataBase.DATABASE_NAME)
+            .allowMainThreadQueries().build().happyDAO();
 
-        groceryItemToAddToCart = new CartItem(mPreferences.getInt("userId", 0), groceryItems.get(position).getGroceryItemId());
+          groceryItemToAddToCart = new CartItem(mPreferences.getInt("userId", 0), groceryItems.get(position).getGroceryItemId());
 
-        List<CartItem> allUserEntriesInCartDatabase = mHappyDAO.getCartItemsByUserId(mPreferences.getInt("userId", 0));
+          List<CartItem> allUserEntriesInCartDatabase = mHappyDAO.getCartItemsByUserId(mPreferences.getInt("userId", 0));
 
-        // TODO: this is so confusing, desperately needs to be rewritten into separate methods
-        boolean itemExists = false;
-        int positionWhereItemExist = 0;
+          boolean itemExists = false;
+          int positionWhereItemExist = 0;
 
-        for (int i = 0; i < allUserEntriesInCartDatabase.size(); i++) {
-          if (allUserEntriesInCartDatabase.get(i).equals(groceryItemToAddToCart)) {
-            itemExists = true;
-            positionWhereItemExist = i;
-            break;
+          for (int i = 0; i < allUserEntriesInCartDatabase.size(); i++) {
+            if (allUserEntriesInCartDatabase.get(i).equals(groceryItemToAddToCart)) {
+              itemExists = true;
+              positionWhereItemExist = i;
+              break;
+            }
           }
-        }
 
-        if (!itemExists) {
-          mHappyDAO.insert(groceryItemToAddToCart);
-        }
-        else {
-          // lmao these names suck
-          allUserEntriesInCartDatabase.get(positionWhereItemExist).setHowManyGroceryItemInCart(allUserEntriesInCartDatabase.get(positionWhereItemExist).getHowManyGroceryItemInCart() + 1);
-          mHappyDAO.update(allUserEntriesInCartDatabase.get(positionWhereItemExist));
-        }
+          if (!itemExists) {
+            mHappyDAO.insert(groceryItemToAddToCart);
+          }
+          else {
+            // lmao these names suck
+            allUserEntriesInCartDatabase.get(positionWhereItemExist).setHowManyGroceryItemInCart(allUserEntriesInCartDatabase.get(positionWhereItemExist).getHowManyGroceryItemInCart() + 1);
+            mHappyDAO.update(allUserEntriesInCartDatabase.get(positionWhereItemExist));
+          }
 
-        Toast.makeText(context, "HappyDays! " + beautifyItemName(groceryItems.get(position).getName()) + " has been added to the cart", Toast.LENGTH_SHORT).show();
-      }
-    });
+          Toast.makeText(context, "HappyDays! " + beautifyItemName(groceryItems.get(position).getName()) + " has been added to the cart", Toast.LENGTH_SHORT).show();
+        }
+      });
+    }
   }
 
   private String beautifyItemPrice(Double beautifyThisPrice) {

@@ -75,6 +75,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="141dp"
             android:layout_marginEnd="16dp"
+            android:visibility="visible"
             app:srcCompat="@drawable/ic_round_add_circle_24"
             app:tint="@color/secondary" />
 

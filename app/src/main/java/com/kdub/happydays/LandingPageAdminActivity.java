@@ -9,6 +9,7 @@ import androidx.room.Room;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.android.material.navigation.NavigationBarView;
 import com.kdub.happydays.databinding.ActivityLandingPageAdminBinding;
@@ -24,14 +25,14 @@ public class LandingPageAdminActivity extends AppCompatActivity {
     getDatabase();
 
     super.onCreate(savedInstanceState);
-    // TODO: write the initial replace fragment to the admin home
+    replaceFragment(new HomeFragment());
     mActivityLandingPageAdminBinding = ActivityLandingPageAdminBinding.inflate(getLayoutInflater());
     setContentView(mActivityLandingPageAdminBinding.getRoot());
 
     mActivityLandingPageAdminBinding.bottomNavigationViewAdmin.setOnItemSelectedListener(item -> {
       switch (item.getItemId()) {
         case R.id.home_admin: {
-          // TODO: add the code for home
+          replaceFragment(new HomeFragment());
           break;
         }
         case R.id.add_item_admin: {
