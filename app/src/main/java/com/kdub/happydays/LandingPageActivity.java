@@ -53,7 +53,7 @@ public class LandingPageActivity extends AppCompatActivity {
   private void replaceFragment(Fragment fragment) {
     FragmentManager fragmentManager = getSupportFragmentManager();
     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-    fragmentTransaction.replace(R.id.frame_layout_admin, fragment);
+    fragmentTransaction.replace(R.id.frame_layout_normal, fragment);
     fragmentTransaction.commit();
   }
 

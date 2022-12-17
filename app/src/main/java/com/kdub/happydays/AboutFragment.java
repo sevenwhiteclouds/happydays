@@ -24,7 +24,7 @@ public class AboutFragment extends Fragment {
       @Override
       public void onClick(View view) {
         FragmentTransaction fragment = getActivity().getSupportFragmentManager().beginTransaction();
-        fragment.replace(R.id.frame_layout_admin, new AccountSettingsFragment());
+        fragment.replace(R.id.frame_layout_normal, new AccountSettingsFragment());
         fragment.commit();
       }
     });

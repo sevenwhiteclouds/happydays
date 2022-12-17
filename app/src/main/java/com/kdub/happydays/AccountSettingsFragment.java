@@ -120,7 +120,7 @@ public class AccountSettingsFragment extends Fragment {
 
   private void fragmentSwitch(Fragment switchHere) {
     FragmentTransaction fragment = getActivity().getSupportFragmentManager().beginTransaction();
-    fragment.replace(R.id.frame_layout_admin, switchHere);
+    fragment.replace(R.id.frame_layout_normal, switchHere);
     fragment.commit();
   }
 }
