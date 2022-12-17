@@ -49,7 +49,7 @@ public class CartFragment extends Fragment {
       TextView cartItemTaxText = view.findViewById(R.id.order_info_tax_money_amount);
       TextView cartItemFinalTotalText = view.findViewById(R.id.order_info_total_money_amount);
 
-      CartItemAdapter adapter = new CartItemAdapter(cartItemSubTotalText, cartItemTaxText, cartItemFinalTotalText, getContext(), mHappyDAO.getCartItemsByUserId(mPreferences.getInt("userId", 0)));
+      CartItemAdapter adapter = new CartItemAdapter(view, cartItemSubTotalText, cartItemTaxText, cartItemFinalTotalText, getContext(), mHappyDAO.getCartItemsByUserId(mPreferences.getInt("userId", 0)));
       recyclerView.setAdapter(adapter);
       recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

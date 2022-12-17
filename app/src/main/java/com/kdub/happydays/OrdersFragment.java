@@ -57,7 +57,7 @@ public class OrdersFragment extends Fragment {
         ordersNotEmptyAdmin();
         RecyclerView recyclerView = view.findViewById(R.id.orders_recycle_view_admin);
 
-        OrderItemAdapterAdmin adapter = new OrderItemAdapterAdmin(getContext(), mHappyDAO.getAllPendingOrderDesc(0));
+        OrderItemAdapterAdmin adapter = new OrderItemAdapterAdmin(view, getContext(), mHappyDAO.getAllPendingOrderDesc(0));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);

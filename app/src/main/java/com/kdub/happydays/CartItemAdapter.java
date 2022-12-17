@@ -30,8 +30,10 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyView
   private TextView cartItemSubTotalText;
   private TextView cartItemTaxText;
   private TextView cartItemFinalTotalText;
+  private View outSideView;
 
-  public CartItemAdapter(TextView cartItemSubTotalText, TextView cartItemTaxText, TextView cartItemFinalTotalText, Context context, List<CartItem> userCartItemEntries) {
+  public CartItemAdapter(View outSideView, TextView cartItemSubTotalText, TextView cartItemTaxText, TextView cartItemFinalTotalText, Context context, List<CartItem> userCartItemEntries) {
+    this.outSideView = outSideView;
     this.cartItemSubTotalText = cartItemSubTotalText;
     this.cartItemTaxText = cartItemTaxText;
     this.cartItemFinalTotalText = cartItemFinalTotalText;
@@ -80,12 +82,33 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyView
     holder.removeButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        userCartItemEntries.get(position).setHowManyGroceryItemInCart(userCartItemEntries.get(position).getHowManyGroceryItemInCart() - 1);
-        mHappyDao.update(userCartItemEntries.get(position));
-        holder.cartItemAmountOfItem.setText(howManyGroceryItemInCart(position));
+        if (userCartItemEntries.get(position).getHowManyGroceryItemInCart() > 1) {
+          userCartItemEntries.get(position).setHowManyGroceryItemInCart(userCartItemEntries.get(position).getHowManyGroceryItemInCart() - 1);
+          mHappyDao.update(userCartItemEntries.get(position));
+          holder.cartItemAmountOfItem.setText(howManyGroceryItemInCart(position));
+        }
+        else {
+          mHappyDao.delete(userCartItemEntries.get(position));
+          userCartItemEntries.remove(position);
+          notifyItemRemoved(position);
+          notifyItemRangeChanged(position, userCartItemEntries.size());
+        }
+
         inits();
+
+        if (userCartItemEntries.size() == 0) {
+          emptyCart();
+        }
       }
     });
+  }
+
+  private void emptyCart() {
+    outSideView.findViewById(R.id.confirm_order_card_view).setVisibility(View.GONE);
+    outSideView.findViewById(R.id.order_info_card_view).setVisibility(View.GONE);
+    outSideView.findViewById(R.id.cart_header_text).setVisibility(View.GONE);
+    outSideView.findViewById(R.id.cart_sad_face).setVisibility(View.VISIBLE);
+    outSideView.findViewById(R.id.cart_empty_message).setVisibility(View.VISIBLE);
   }
 
   private void inits() {

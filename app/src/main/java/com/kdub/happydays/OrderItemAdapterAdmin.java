@@ -24,9 +24,11 @@ import java.util.Locale;
 public class OrderItemAdapterAdmin extends RecyclerView.Adapter<OrderItemAdapterAdmin.MyViewHolder> {
   private Context context;
   private HappyDAO mHappyDao;
+  private View view;
   private List<Order> userOrders;
 
-  public OrderItemAdapterAdmin(Context context, List<Order> userOrders) {
+  public OrderItemAdapterAdmin(View view, Context context, List<Order> userOrders) {
+    this.view = view;
     this.context = context;
     mHappyDao = Room.databaseBuilder(context, AppDataBase.class, AppDataBase.DATABASE_NAME)
       .allowMainThreadQueries().build().happyDAO();
@@ -92,6 +94,14 @@ public class OrderItemAdapterAdmin extends RecyclerView.Adapter<OrderItemAdapter
       public void onClick(View view) {
         userOrders.get(position).setOrderStatus(1);
         mHappyDao.update(userOrders.get(position));
+        userOrders.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, userOrders.size());
+
+        if (userOrders.size() == 0) {
+          emptyOrders();
+        }
+
         Toast.makeText(context, "Order completed", Toast.LENGTH_SHORT).show();
       }
     });
@@ -101,11 +111,28 @@ public class OrderItemAdapterAdmin extends RecyclerView.Adapter<OrderItemAdapter
       public void onClick(View view) {
         userOrders.get(position).setOrderStatus(-1);
         mHappyDao.update(userOrders.get(position));
+        userOrders.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, userOrders.size());
+
+        if (userOrders.size() == 0) {
+          emptyOrders();
+        }
+
         Toast.makeText(context, "Order canceled", Toast.LENGTH_SHORT).show();
       }
     });
   }
 
+
+  private void emptyOrders() {
+    view.findViewById(R.id.orders_header_text_admin).setVisibility(View.GONE);
+    view.findViewById(R.id.orders_recycle_view_admin).setVisibility(View.GONE);
+    view.findViewById(R.id.orders_cleared_admin).setVisibility(View.VISIBLE);
+    view.findViewById(R.id.orders_cleared_text_admin).setVisibility(View.VISIBLE);
+    view.findViewById(R.id.orders_cleared_text_two_admin).setVisibility(View.VISIBLE);
+    view.findViewById(R.id.orders_cleared_text_three_admin).setVisibility(View.VISIBLE);
+  }
 
   private String beautifyNameAndUsername(String name, String username) {
     StringBuilder beautifiedNameUsername = new StringBuilder();
