@@ -7,19 +7,25 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import android.text.Html;
 import android.view.LayoutInflater;
+import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kdub.happydays.db.AppDataBase;
 import com.kdub.happydays.db.HappyDAO;
@@ -95,6 +101,18 @@ public class HomeFragment extends Fragment {
 
     recyclerView.setLayoutManager(gridLayoutManager);
     recyclerView.setAdapter(adapter);
+
+    CardView searchBar = view.findViewById(R.id.search_bar_card_view);
+
+    searchBar.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout_normal, new SearchItemHomeFragment());
+        fragmentTransaction.commit();
+      }
+    });
 
     button0.setOnClickListener(new View.OnClickListener() {
       @Override
