@@ -3,6 +3,7 @@ package com.kdub.happydays;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -92,7 +94,7 @@ public class HomeFragment extends Fragment {
     button12 = view.findViewById(R.id.category_button_12);
 
     GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-    HomeItemsAdapter adapter = new HomeItemsAdapter(getContext(), (ArrayList<GroceryItem>) mHappyDao.getAllGroceryItems());
+    HomeItemsAdapter adapter = new HomeItemsAdapter(getActivity(), getContext(), (ArrayList<GroceryItem>) mHappyDao.getAllGroceryItems());
 
     RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
 
@@ -230,10 +232,10 @@ public class HomeFragment extends Fragment {
     HomeItemsAdapter adapter = null;
 
     if (category.equals("all")) {
-      adapter = new HomeItemsAdapter(getContext(), (ArrayList<GroceryItem>) mHappyDao.getAllGroceryItems());
+      adapter = new HomeItemsAdapter(getActivity(), getContext(), (ArrayList<GroceryItem>) mHappyDao.getAllGroceryItems());
     }
     else {
-      adapter = new HomeItemsAdapter(getContext(), (ArrayList<GroceryItem>) mHappyDao.getGroceryByCategory(category));
+      adapter = new HomeItemsAdapter(getActivity(), getContext(), (ArrayList<GroceryItem>) mHappyDao.getGroceryByCategory(category));
     }
 
     RecyclerView recyclerView = getView().findViewById(R.id.recycler_view);

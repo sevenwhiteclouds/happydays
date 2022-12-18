@@ -3,6 +3,7 @@ package com.kdub.happydays;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
@@ -14,6 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
@@ -28,12 +32,16 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
   private List<GroceryItem> groceryItems;
   private CartItem groceryItemToAddToCart;
   private SharedPreferences mPreferences;
+  private SharedPreferences mPreferencesItemId;
   private HappyDAO mHappyDAO;
+  private FragmentActivity outSideActivity;
 
-  public HomeItemsAdapter(Context context, List<GroceryItem> groceryItems) {
+  public HomeItemsAdapter(FragmentActivity activity, Context context, List<GroceryItem> groceryItems) {
+    this.outSideActivity = activity;
     this.context = context;
     this.groceryItems = groceryItems;
     mPreferences = context.getSharedPreferences("session", MODE_PRIVATE);
+    mPreferencesItemId = context.getSharedPreferences("itemIdSave", MODE_PRIVATE);
   }
 
   @NonNull
@@ -56,8 +64,18 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.MyVi
     holder.itemEntire.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        // TODO: code to view the entire item here
-        Toast.makeText(context, "entire item clicked", Toast.LENGTH_SHORT).show();
+        FragmentManager fragmentManager = outSideActivity.getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        SharedPreferences.Editor mEditorItemId = mPreferencesItemId.edit();
+        if (mPreferences.getBoolean("isAdmin", false)) {
+          fragmentTransaction.replace(R.id.frame_layout_admin, new ViewEntireItemFragment());
+        }
+        else {
+          fragmentTransaction.replace(R.id.frame_layout_normal, new ViewEntireItemFragment());
+        }
+        mEditorItemId.putInt("itemId", groceryItems.get(position).getGroceryItemId());
+        mEditorItemId.apply();
+        fragmentTransaction.commit();
       }
     });
 
