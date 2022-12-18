@@ -173,8 +173,8 @@ public class MainActivity extends AppCompatActivity {
       allDefaultItems.add(new GroceryItem("Bread", "Ezekiel Bread", 1, "piece", 6.49, R.drawable.bread));
       allDefaultItems.add(new GroceryItem("produce", "Grapefruit", 10, "piece", 5.15, R.drawable.produce));
       allDefaultItems.add(new GroceryItem("produce", "Strawberries", 15, "piece", 7.65, R.drawable.produce));
-      allDefaultItems.add(new GroceryItem("dry/baking goods", "rice", 2.5, "lb", 3.20, R.drawable.bake));
-      allDefaultItems.add(new GroceryItem("dry/baking goods", "rice", 2.5, "lb", 3.20, R.drawable.bake));
+      allDefaultItems.add(new GroceryItem("baking goods", "rice", 2.5, "lb", 3.20, R.drawable.bake));
+      allDefaultItems.add(new GroceryItem("baking goods", "rice", 2.5, "lb", 3.20, R.drawable.bake));
       allDefaultItems.add(new GroceryItem("meat", "Bacon", 10, "piece", 4.20, R.drawable.meat));
       allDefaultItems.add(new GroceryItem("dairy", "milk", 1, "gal", 3.25, R.drawable.dairy));
       allDefaultItems.add(new GroceryItem("frozen goods", "ice cream", 1, "piece", 4.25, R.drawable.frozen));

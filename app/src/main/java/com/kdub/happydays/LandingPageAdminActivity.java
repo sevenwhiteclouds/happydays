@@ -36,7 +36,7 @@ public class LandingPageAdminActivity extends AppCompatActivity {
           break;
         }
         case R.id.add_item_admin: {
-          // TODO: add the code for add item
+          replaceFragment(new AddItemAdminFragment());
           break;
         }
         case R.id.orders_admin: {

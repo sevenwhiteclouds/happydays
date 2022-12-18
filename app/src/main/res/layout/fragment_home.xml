@@ -38,7 +38,7 @@
         app:layout_constraintTop_toBottomOf="@+id/home_heading_text" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/search_bar_card_view"
+        android:id="@+id/fragment_search_for_item"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginStart="16dp"
@@ -67,7 +67,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/search_bar_card_view_text"
+                android:id="@+id/search_bar_card_view_text_fragment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Search for any product..."
@@ -90,7 +90,7 @@
         android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_bar_card_view"
+        app:layout_constraintTop_toBottomOf="@id/fragment_search_for_item"
         tools:ignore="SpeakableTextPresentCheck">
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -20,12 +20,9 @@ import androidx.room.Room;
 
 import android.text.Html;
 import android.view.LayoutInflater;
-import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.kdub.happydays.db.AppDataBase;
 import com.kdub.happydays.db.HappyDAO;
@@ -102,14 +99,19 @@ public class HomeFragment extends Fragment {
     recyclerView.setLayoutManager(gridLayoutManager);
     recyclerView.setAdapter(adapter);
 
-    CardView searchBar = view.findViewById(R.id.search_bar_card_view);
+    CardView searchBar = view.findViewById(R.id.fragment_search_for_item);
 
     searchBar.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout_normal, new SearchItemHomeFragment());
+        if (preferences.getBoolean("isAdmin", false)) {
+          fragmentTransaction.replace(R.id.frame_layout_admin, new SearchItemHomeFragment());
+        }
+        else {
+          fragmentTransaction.replace(R.id.frame_layout_normal, new SearchItemHomeFragment());
+        }
         fragmentTransaction.commit();
       }
     });
