@@ -15,8 +15,6 @@ import android.widget.Toast;
 import com.kdub.happydays.db.AppDataBase;
 import com.kdub.happydays.db.HappyDAO;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 import java.util.Locale;
 
@@ -49,43 +47,42 @@ public class AddItemAdminFragment extends Fragment {
 
         categoryToString = categoryToString.toLowerCase(Locale.ROOT);
 
-        switch (categoryToString) {
-          case "produce" : {
-            itemImage = R.drawable.produce;
-          }
-          case "bread" : {
-            itemImage = R.drawable.bread;
-          }
-          case "meat" : {
-            itemImage = R.drawable.meat;
-          }
-          case "dairy" : {
-            itemImage = R.drawable.dairy;
-          }
-          case "frozen goods" : {
-            itemImage = R.drawable.frozen;
-          }
-          case "canned goods" : {
-            itemImage = R.drawable.canned_food;
-          }
-          case "beverages" : {
-            itemImage = R.drawable.beverages;
-          }
-          case "baking goods" : {
-            itemImage = R.drawable.bake;
-          }
-          case "cleaners" : {
-            itemImage = R.drawable.cleaners;
-          }
-          case "paper goods" : {
-            itemImage = R.drawable.paper_goods;
-          }
-          case "personal care" : {
-            itemImage = R.drawable.personal_hygiene;
-          }
-          case "other" : {
-            itemImage = R.drawable.other;
-          }
+        if (categoryToString.equals("produce")) {
+          itemImage = R.drawable.produce;
+
+        }
+        else if (categoryToString.equals("bread")) {
+          itemImage = R.drawable.bread;
+        }
+        else if (categoryToString.equals("meat")) {
+          itemImage = R.drawable.meat;
+        }
+        else if (categoryToString.equals("dairy")) {
+          itemImage = R.drawable.dairy;
+        }
+        else if (categoryToString.equals("frozen goods")) {
+          itemImage = R.drawable.frozen;
+        }
+        else if (categoryToString.equals("canned goods")) {
+          itemImage = R.drawable.canned_food;
+        }
+        else if (categoryToString.equals("beverages")) {
+          itemImage = R.drawable.beverages;
+        }
+        else if (categoryToString.equals("baking goods")) {
+          itemImage = R.drawable.bake;
+        }
+        else if (categoryToString.equals("cleaners")) {
+          itemImage = R.drawable.cleaners;
+        }
+        else if (categoryToString.equals("paper goods")) {
+          itemImage = R.drawable.paper_goods;
+        }
+        else if (categoryToString.equals("personal care")) {
+          itemImage = R.drawable.personal_hygiene;
+        }
+        else {
+          itemImage = R.drawable.other;
         }
 
         GroceryItem item = new GroceryItem(categoryToString, nameToString, quantityToString, denominationToString, priceToString, itemImage);
