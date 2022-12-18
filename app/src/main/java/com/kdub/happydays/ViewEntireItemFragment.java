@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,10 +42,13 @@ public class ViewEntireItemFragment extends Fragment {
     Button backButton = view.findViewById(R.id.back_button_view_entire_item);
     Button addButton = view.findViewById(R.id.button_entire_item_add_to_cart);
     TextView itemName = view.findViewById(R.id.item_name_view_item);
+    ImageView itemImage = view.findViewById(R.id.item_picture_entire_item);
 
     String name = beautifyItemName(happyDao.getGroceryItemById(itemId).getName());
 
     itemName.setText(name);
+
+    itemImage.setImageResource(happyDao.getGroceryItemById(itemId).getItemImage());
 
     backButton.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -60,36 +64,55 @@ public class ViewEntireItemFragment extends Fragment {
       }
     });
 
-    addButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        CartItem groceryItemToAddToCart = new CartItem(preferences.getInt("userId", 0), itemId);
+    if (!isAdmin) {
+      addButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+          CartItem groceryItemToAddToCart = new CartItem(preferences.getInt("userId", 0), itemId);
 
-        List<CartItem> allUserEntriesInCartDatabase = happyDao.getCartItemsByUserId(preferences.getInt("userId", 0));
+          List<CartItem> allUserEntriesInCartDatabase = happyDao.getCartItemsByUserId(preferences.getInt("userId", 0));
 
-        boolean itemExists = false;
-        int positionWhereItemExist = 0;
+          boolean itemExists = false;
+          int positionWhereItemExist = 0;
 
-        for (int i = 0; i < allUserEntriesInCartDatabase.size(); i++) {
-          if (allUserEntriesInCartDatabase.get(i).equals(groceryItemToAddToCart)) {
-            itemExists = true;
-            positionWhereItemExist = i;
-            break;
+          for (int i = 0; i < allUserEntriesInCartDatabase.size(); i++) {
+            if (allUserEntriesInCartDatabase.get(i).equals(groceryItemToAddToCart)) {
+              itemExists = true;
+              positionWhereItemExist = i;
+              break;
+            }
           }
-        }
 
-        if (!itemExists) {
-          happyDao.insert(groceryItemToAddToCart);
-        }
-        else {
-          // lmao these names suck
-          allUserEntriesInCartDatabase.get(positionWhereItemExist).setHowManyGroceryItemInCart(allUserEntriesInCartDatabase.get(positionWhereItemExist).getHowManyGroceryItemInCart() + 1);
-          happyDao.update(allUserEntriesInCartDatabase.get(positionWhereItemExist));
-        }
+          if (!itemExists) {
+            happyDao.insert(groceryItemToAddToCart);
+          }
+          else {
+            // lmao these names suck
+            allUserEntriesInCartDatabase.get(positionWhereItemExist).setHowManyGroceryItemInCart(allUserEntriesInCartDatabase.get(positionWhereItemExist).getHowManyGroceryItemInCart() + 1);
+            happyDao.update(allUserEntriesInCartDatabase.get(positionWhereItemExist));
+          }
 
-        Toast.makeText(getContext(), "HappyDays! " + beautifyItemName(happyDao.getGroceryItemById(itemId).getName()) + " has been added to the cart", Toast.LENGTH_SHORT).show();
-      }
-    });
+          Toast.makeText(getContext(), "HappyDays! " + beautifyItemName(happyDao.getGroceryItemById(itemId).getName()) + " has been added to the cart", Toast.LENGTH_SHORT).show();
+        }
+      });
+    }
+    else {
+      String deleteButton = "Delete";
+      addButton.setText(deleteButton);
+
+      addButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+          GroceryItem itemToDelete = happyDao.getGroceryItemById(itemId);
+          Toast.makeText(getContext(), beautifyItemName(happyDao.getGroceryItemById(itemId).getName()) + " has been added delete.", Toast.LENGTH_SHORT).show();
+          happyDao.delete(itemToDelete);
+
+          FragmentTransaction fragment = getActivity().getSupportFragmentManager().beginTransaction();
+          fragment.replace(R.id.frame_layout_admin, new HomeFragment());
+          fragment.commit();
+        }
+      });
+    }
 
     return view;
   }
